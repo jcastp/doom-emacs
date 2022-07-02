@@ -1221,3 +1221,23 @@ Translate a work
     (eww (concat "https://www.deepl.com/translator#en/es/" palabra))
   )
 #+end_src
+
+* others
+** elfeed
+#+begin_src emacs-lisp
+(setq elfeed-db-directory "~/Nextcloud/config/.emacs.d/elfeed")
+(global-set-key (kbd "C-x w") 'elfeed)
+
+(setq elfeed-feeds
+      '(
+        ;; security
+        ("https://krebsonsecurity.com/feed/" security)
+        ("https://www.schneier.com/feed/atom" security)
+        ;; writing
+        "https://www.helpingwritersbecomeauthors.com/feed/"
+        "http://thewritepractice.com/feed/"
+        ;; emacs
+        "https://sachachua.com/blog/feed"
+        )
+      )
+#+end_src

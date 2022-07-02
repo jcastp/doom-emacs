@@ -920,3 +920,19 @@
   (interactive "s¿Qué palabra quieres buscar? ")
   (eww (concat "https://www.deepl.com/translator#en/es/" palabra))
 )
+
+(setq elfeed-db-directory "~/Nextcloud/config/.emacs.d/elfeed")
+(global-set-key (kbd "C-x w") 'elfeed)
+
+(setq elfeed-feeds
+      '(
+        ;; security
+        ("https://krebsonsecurity.com/feed/" security)
+        ("https://www.schneier.com/feed/atom" security)
+        ;; writing
+        "https://www.helpingwritersbecomeauthors.com/feed/"
+        "http://thewritepractice.com/feed/"
+        ;; emacs
+        "https://sachachua.com/blog/feed"
+        )
+      )
