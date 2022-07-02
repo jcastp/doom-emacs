@@ -124,6 +124,8 @@
 ;; Once you open imenu, focus on it
 (setq imenu-list-focus-after-activation t)
 
+(global-set-key (kbd "C-s") #'consult-line)
+
 ;; Adds a timestamp to the state
 (setq org-log-done 'time)
 

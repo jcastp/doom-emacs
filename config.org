@@ -234,6 +234,11 @@ Better menus
 ;; Once you open imenu, focus on it
 (setq imenu-list-focus-after-activation t)
 #+end_src
+** consult
+Better search
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-s") #'consult-line)
+#+end_src
 * orgmode
 ** Custom notes and timestamp
 Put a note or a timestamp when something changes. For example:
