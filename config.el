@@ -1,76 +1,241 @@
-;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+(setq user-full-name "Javier Castilla"
+      user-mail-address "jcastp@pm.me")
 
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
+;; working laptop vm
+(defvar my-worksystem-p (equal (system-name) "lubuntuwork"))
+;; My desktop machine, able to run anything
+(defvar my-desktopsystem-p (equal (system-name) "olimpo"))
+;; Writing machines, probably we can strip some features
+(defvar my-writinglaptop-p
+  (or (equal (system-name) "argos") (equal (system-name) "caliope"))
+  )
+
+(defvar my-homeenvironment-p (string= (getenv "WORKING") "HOME"))
+(defvar my-workenvironment-p (string= (getenv "WORKING") "WORK"))
+
+(global-unset-key (kbd "C-z"))
+
+(key-chord-mode 1)
+;; Max time delay between two key presses to be considered a key chord
+(setq key-chord-two-keys-delay 0.1)
+;; Max time delay between two presses of the same key to be considered a key chord.
+;; Should normally be a little longer than `key-chord-two-keys-delay'.
+(setq key-chord-one-key-delay 0.2) ; default 0.2
+
+;;  (key-chord-define-global "ññ" 'eshell)
+;;  (key-chord-define-global "kk" 'other-window)
+  (key-chord-define-global "hh" 'ace-window)
+  (key-chord-define-global "jj" 'avy-goto-char-2)
+  (key-chord-define-global "jl" 'avy-goto-line)
+;;  (key-chord-define-global "zz" 'undo-tree-visualize)
+  ;(key-chord-define-global "ww" 'hydra-move/body)
+  ;(key-chord-define-global "yy" 'hydra-buffer-mgmt/body)
+
+(setq org-roam-v2-ack t)
+(setq org-roam-directory (file-truename "~/Nextcloud/personal/roam"))
+
+;; ("C-c n l" . org-roam-buffer-toggle)
+;; ("C-c n f" . org-roam-node-find)
+;; ("C-c n i" . org-roam-node-insert)
+;; ("C-c n c" . org-roam-capture)
+;; :map org-roam-dailies-map
+;; ("Y" . org-roam-dailies-capture-yesterday)
+;; ("T" . org-roam-dailies-capture-tomorrow)
+;; :bind-keymap
+;; ("C-c n d" . org-roam-dailies-map)
+
+;; provide org-roam completion links outside org files.
+(setq org-roam-completion-everywhere t)
+;; Location of the roam database
+(setq org-roam-db-location (file-truename "~/Nextcloud/personal/roam/org-roam.db"))
+;; Ensure the keymap is available
+;;(require 'org-roam-dailies)
+;; org-roam export: https://www.orgroam.com/manual.html#org_002droam_002dexport
+;;      (require 'org-roam-export)
+;; autosync
+(org-roam-db-autosync-mode 1)
+
+(setq org-roam-capture-templates
+      '(
+        ;; default template
+        ("d" "default" plain
+         "* TODO ${title}\n%?"
+         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+         :unnarrowed t)
+        ("b" "book notes" plain (file "~/.emacs.d/roamtemplates/BookNoteTemplate.org")
+         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: book")
+         :unnarrowed t)
+        ("w" "writing idea" plain (file "~/.emacs.d/roamtemplates/WritingIdea.org")
+         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: writing")
+         :unnarrowed t)
+        ("c" "writing character" plain (file "~/.emacs.d/roamtemplates/CharacterIdea.org")
+         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: writing character")
+         :unnarrowed t)
+        )
+      )
+
+(setq org-roam-node-display-template
+   (concat "${title:*} "
+           (propertize "${tags:20}" 'face 'org-tag)))
+
+;; Daily notes for org-roam
+;; Directory is relative to org-roam-directory
+(setq org-roam-dailies-directory "daily/")
+
+;; Capture template for the dailies
+(setq org-roam-dailies-capture-templates
+    '(("d" "default" entry
+       "* %?"
+       :if-new (file+head "%<%Y-%m-%d>.org"
+                          "#+title: %<%Y-%m-%d>\n#+filetags: daily\n"))))
+
+;; we want to load these functions if org-roam is present
+(if (not(require 'org-roam nil t))
+        ;; if condition
+        (message "org-roam not found")
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; else condition
+
+  (setq my/roamtag "roamtag")
+
+  (defun vulpea-buffer-prop-set (name value)
+      "Set a file property called NAME to VALUE in buffer file.
+        If the property is already set, replace its value."
+      (setq name (downcase name))
+      (org-with-point-at 1
+        (let ((case-fold-search t))
+          (if (re-search-forward (concat "^#\\+" name ":\\(.*\\)")
+                                 (point-max) t)
+              (replace-match (concat "#+" name ": " value) 'fixedcase)
+            (while (and (not (eobp))
+                        (looking-at "^[#:]"))
+              (if (save-excursion (end-of-line) (eobp))
+                  (progn
+                    (end-of-line)
+                    (insert "\n"))
+                (forward-line)
+                (beginning-of-line)))
+            (insert "#+" name ": " value "\n")))))
+
+  (defun vulpea-buffer-prop-set-list (name values &optional separators)
+    "Set a file property called NAME to VALUES in current buffer.
+        VALUES are quoted and combined into single string using
+        `combine-and-quote-strings'.
+        If SEPARATORS is non-nil, it should be a regular expression
+        matching text that separates, but is not part of, the substrings.
+        If nil it defaults to `split-string-default-separators', normally
+        \"[ \f\t\n\r\v]+\", and OMIT-NULLS is forced to t.
+        If the property is already set, replace its value."
+    (vulpea-buffer-prop-set
+     name (combine-and-quote-strings values separators)))
+
+  (defun vulpea-buffer-tags-set (&rest tags)
+    "Set TAGS in current buffer.
+          If filetags value is already set, replace it."
+    (vulpea-buffer-prop-set "filetags" (string-join tags " ")))
+
+  (defun vulpea-buffer-prop-get (name)
+    "Get a buffer property called NAME as a string."
+    (org-with-point-at 1
+      (when (re-search-forward (concat "^#\\+" name ": \\(.*\\)")
+                               (point-max) t)
+        (buffer-substring-no-properties
+         (match-beginning 1)
+         (match-end 1)))))
 
 
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets. It is optional.
-(setq user-full-name "John Doe"
-      user-mail-address "john@doe.com")
+  (defun vulpea-buffer-prop-get-list (name &optional separators)
+    "Get a buffer property NAME as a list using SEPARATORS.
+            If SEPARATORS is non-nil, it should be a regular expression
+            matching text that separates, but is not part of, the substrings.
+            If nil it defaults to `split-string-default-separators', normally
+            \"[ \f\t\n\r\v]+\", and OMIT-NULLS is forced to t."
+    (let ((value (vulpea-buffer-prop-get name)))
+      (when (and value (not (string-empty-p value)))
+        (split-string-and-unquote value separators))))
 
-;; Doom exposes five (optional) variables for controlling fonts in Doom:
-;;
-;; - `doom-font' -- the primary font to use
-;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
-;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-;; - `doom-unicode-font' -- for unicode glyphs
-;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
-;;
-;; See 'C-h v doom-font' for documentation and more examples of what they
-;; accept. For example:
-;;
-;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
-;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
-;;
-;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
-;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
-;; refresh your font settings. If Emacs still can't find your font, it likely
-;; wasn't installed correctly. Font issues are rarely Doom issues!
+  (defun vulpea-buffer-tags-get ()
+    "Return filetags value in current buffer."
+    (vulpea-buffer-prop-get-list "filetags" " "))
 
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
-
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
+  (defun vulpea-buffer-tags-add (tag)
+    "Add a TAG to filetags in current buffer."
+    (let* ((tags (vulpea-buffer-tags-get))
+           (tags (append tags (list tag))))
+      (apply #'vulpea-buffer-tags-set tags)))
 
 
-;; Whenever you reconfigure a package, make sure to wrap your config in an
-;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
-;;
-;;   (after! PACKAGE
-;;     (setq x y))
-;;
-;; The exceptions to this rule:
-;;
-;;   - Setting file/directory variables (like `org-directory')
-;;   - Setting variables which explicitly tell you to set them before their
-;;     package is loaded (see 'C-h v VARIABLE' to look up their documentation).
-;;   - Setting doom variables (which start with 'doom-' or '+').
-;;
-;; Here are some additional functions/macros that will help you configure Doom.
-;;
-;; - `load!' for loading external *.el files relative to this one
-;; - `use-package!' for configuring packages
-;; - `after!' for running code after a package has loaded
-;; - `add-load-path!' for adding directories to the `load-path', relative to
-;;   this file. Emacs searches the `load-path' when you load packages with
-;;   `require' or `use-package'.
-;; - `map!' for binding new keys
-;;
-;; To get information about any of these functions/macros, move the cursor over
-;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
-;; This will open documentation for it, including demos of how they are used.
-;; Alternatively, use `C-h o' to look up a symbol (functions, variables, faces,
-;; etc).
-;;
-;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
-;; they are implemented.
+
+  (defun vulpea-project-p ()
+    "Return non-nil if current buffer has any todo entry.
+
+                TODO entries marked as done are ignored, meaning the this
+                function returns nil if current buffer contains only completed
+                tasks."
+    (seq-find                                 ; (3)
+     (lambda (type)
+       (eq type 'todo))
+     (org-element-map                         ; (2)
+         (org-element-parse-buffer 'headline) ; (1)
+         'headline
+       (lambda (h)
+         (org-element-property :todo-type h)))))
+
+  (defun vulpea-project-update-tag ()
+    "Update PROJECT tag in the current buffer."
+    (when (and (not (active-minibuffer-window))
+               (vulpea-buffer-p))
+      (save-excursion
+        (goto-char (point-min))
+        (let* ((tags (vulpea-buffer-tags-get))
+               (original-tags tags))
+          (if (vulpea-project-p)
+              (setq tags (cons "roamtag" tags))
+            (setq tags (remove "roamtag" tags)))
+
+          ;; cleanup duplicates
+          (setq tags (seq-uniq tags))
+
+          ;; update tags if changed
+          (when (or (seq-difference tags original-tags)
+                    (seq-difference original-tags tags))
+            (apply #'vulpea-buffer-tags-set tags))))))
+
+  (defun vulpea-buffer-p ()
+    "Return non-nil if the currently visited buffer is a note."
+    (and buffer-file-name
+         (string-prefix-p
+          (expand-file-name (file-name-as-directory org-roam-directory))
+          (file-name-directory buffer-file-name))))
+
+  (defun vulpea-project-files ()
+    "Return a list of note files containing 'roamtag' tag." ;
+    (seq-uniq
+     (seq-map
+      #'car
+      (org-roam-db-query
+       [:select [nodes:file]
+                :from tags
+                :left-join nodes
+                :on (= tags:node-id nodes:id)
+                :where (like tag (quote "%\"roamtag\"%"))]))))
+
+  ;; This will overwrite the current agenda files, and we don't want that
+  (defun vulpea-agenda-files-update (&rest _)
+    "Update the value of `org-agenda-files'."
+    (setq org-agenda-files (vulpea-project-files)))
+
+  (defun inject-vulpea-project-files (org-agenda-files)
+    (append org-agenda-files (vulpea-project-files)))
+  (advice-add 'org-agenda-files :filter-return #'inject-vulpea-project-files)
+
+  (add-hook 'find-file-hook #'vulpea-project-update-tag)
+  (add-hook 'before-save-hook #'vulpea-project-update-tag)
+
+  ;; original code that overwrites the agenda files
+  ;;  (advice-add 'org-agenda :before #'vulpea-agenda-files-update)
+  ;;  (advice-add 'org-todo-list :before #'vulpea-agenda-files-update)
+  )
+
+;;   :hook (org-roam . org-roam-ui-mode)
+(add-hook! 'org-roam 'org-roam-ui-mode)

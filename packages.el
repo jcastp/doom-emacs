@@ -48,3 +48,15 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
+
+;; key chords to execute commands on rapid key pressing
+(package! key-chord
+  :recipe (:host github :repo "emacsorphanage/key-chord"))
+
+;; org-roam-ui - web interface to explore org-roam notes
+(package! org-roam-ui
+  :recipe (:host github :repo "org-roam/org-roam-ui"))
+
+;; Check what keys are free to assign
+(package! free-keys
+  :recipe (:host github :repo "Fuco1/free-keys"))
