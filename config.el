@@ -937,10 +937,10 @@
   ;;  (advice-add 'org-todo-list :before #'vulpea-agenda-files-update)
   )
 
-;;   :hook (org-roam . org-roam-ui-mode)
-;; (after! org-roam
-;;   (add-hook! 'org-roam 'org-roam-ui-mode)
-;; )
+(use-package! org-roam-ui
+  :after org-roam
+  :hook (org-roam . org-roam-ui-mode)
+  )
 
 (global-set-key (kbd "C-c 9") 'wc-mode)
 

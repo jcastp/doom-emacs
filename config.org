@@ -1193,13 +1193,13 @@ https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html
 *** org-roam-ui
 Load org-roam UI and all its dependencies.
 
-
 #+begin_src emacs-lisp
-  ;;   :hook (org-roam . org-roam-ui-mode)
-;; (after! org-roam
-;;   (add-hook! 'org-roam 'org-roam-ui-mode)
-;; )
+(use-package! org-roam-ui
+  :after org-roam
+  :hook (org-roam . org-roam-ui-mode)
+  )
 #+end_src
+
 * Writing
 ** TODO Word count
 Word counting with objective.

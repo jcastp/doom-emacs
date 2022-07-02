@@ -57,9 +57,6 @@
 (package! org-roam-ui
   :recipe (:host github :repo "org-roam/org-roam-ui")
   )
-(use-package! org-roam-ui
-  :hook (org-roam . org-roam-ui-mode)
-  )
 
 ;; Check what keys are free to assign
 (package! free-keys
