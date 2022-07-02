@@ -55,7 +55,11 @@
 
 ;; org-roam-ui - web interface to explore org-roam notes
 (package! org-roam-ui
-  :recipe (:host github :repo "org-roam/org-roam-ui"))
+  :recipe (:host github :repo "org-roam/org-roam-ui")
+  )
+(use-package! org-roam-ui
+  :hook (org-roam . org-roam-ui-mode)
+  )
 
 ;; Check what keys are free to assign
 (package! free-keys
@@ -74,7 +78,8 @@
   :recipe (:host github :repo "bmag/imenu-list"))
 
 ;; org-ql
-(package! org-ql)
+(package! org-ql
+  :recipe (:host github :repo "alphapapa/org-ql"))
 
 ;; better word count
 (package! wc-mode

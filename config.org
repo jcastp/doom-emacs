@@ -50,7 +50,7 @@ Change dired buffers when the directory is changed:
 
 #+begin_src emacs-lisp
   ;; auto refresh dired when file changes
-  (add-hook 'dired-mode-hook 'auto-revert-mode)
+  (add-hook! 'dired-mode-hook 'auto-revert-mode)
 #+end_src
 ** Bookmarks
 All the config related to the bookmarks.
@@ -87,7 +87,7 @@ This conflicts with orgmode archive C-c $
 https://www.gnu.org/software/emacs/manual/html_node/emacs/Spelling.html
 
 #+begin_src emacs-lisp
-  (add-hook 'text-mode-hook 'flyspell-mode)
+  (add-hook! 'text-mode-hook 'flyspell-mode)
 
   ; inverse video for mispellings
   (global-font-lock-mode t)
@@ -104,21 +104,24 @@ When the windows moves, the cursor gets highlighted.
 https://github.com/Malabarba/beacon
 
 #+begin_src emacs-lisp
-(beacon-mode 1)
-(setq beacon-push-mark 35
-      beacon-blink-duration 0.5
-      beacon-blink-delay 0.5
-      beacon-blink-when-focused t
-      beacon-color "deep sky blue")
+(after! beacon
+  (beacon-mode 1)
+  (setq beacon-push-mark 35
+        beacon-blink-duration 0.5
+        beacon-blink-delay 0.5
+        beacon-blink-when-focused t
+        beacon-color "deep sky blue")
+  )
 #+end_src
 ** guess-language
 Guess the language based on the text of the file, and use the corresponding dictionary to do the spell correction.
 https://github.com/tmalsburg/guess-language.el
 
 #+begin_src emacs-lisp
-(setq guess-language-languages '(es en))
-(setq guess-language-min-paragraph-length 80)
-
+(after! guess-language
+  (setq guess-language-languages '(es en))
+  (setq guess-language-min-paragraph-length 80)
+)
 #+end_src
 ** electric pair mode
 To automatically close parenthesis and and other punctuation signs.
@@ -208,12 +211,14 @@ https://www.gnu.org/software/emacs/manual/html_node/emacs/Uniquify.html
 Shortcuts to commands using just quick key combinations.
 
 #+begin_src emacs-lisp
-(key-chord-mode 1)
-;; Max time delay between two key presses to be considered a key chord
-(setq key-chord-two-keys-delay 0.1)
-;; Max time delay between two presses of the same key to be considered a key chord.
-;; Should normally be a little longer than `key-chord-two-keys-delay'.
-(setq key-chord-one-key-delay 0.2) ; default 0.2
+(after! key-chord
+  (key-chord-mode 1)
+  ;; Max time delay between two key presses to be considered a key chord
+  (setq key-chord-two-keys-delay 0.1)
+  ;; Max time delay between two presses of the same key to be considered a key chord.
+  ;; Should normally be a little longer than `key-chord-two-keys-delay'.
+  (setq key-chord-one-key-delay 0.2) ; default 0.2
+)
 #+end_src
 
 *** key chords for functions
@@ -233,15 +238,17 @@ Description of the configured key chords.
 ** imenu-list
 Better menus
 #+begin_src emacs-lisp
-;; put the imenu in the position we want to
-(setq imenu-list-position 'right)
-;; Establish the depth of the entries shown
-(setq org-imenu-depth 5)
-;; map the keys
-(global-unset-key (kbd "M-i"))
-(global-set-key (kbd "M-g I") #'imenu-list-smart-toggle)
-;; Once you open imenu, focus on it
-(setq imenu-list-focus-after-activation t)
+(after! imenu-list
+  ;; put the imenu in the position we want to
+  (setq imenu-list-position 'right)
+  ;; Establish the depth of the entries shown
+  (setq org-imenu-depth 5)
+  ;; map the keys
+  (global-unset-key (kbd "M-i"))
+  (global-set-key (kbd "M-g I") #'imenu-list-smart-toggle)
+  ;; Once you open imenu, focus on it
+  (setq imenu-list-focus-after-activation t)
+  )
 #+end_src
 ** consult
 Better search
@@ -1186,9 +1193,12 @@ https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html
 *** org-roam-ui
 Load org-roam UI and all its dependencies.
 
+
 #+begin_src emacs-lisp
   ;;   :hook (org-roam . org-roam-ui-mode)
-(add-hook! 'org-roam 'org-roam-ui-mode)
+;; (after! org-roam
+;;   (add-hook! 'org-roam 'org-roam-ui-mode)
+;; )
 #+end_src
 * Writing
 ** TODO Word count

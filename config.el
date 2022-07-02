@@ -21,7 +21,7 @@
 (global-auto-revert-mode 1)
 
 ;; auto refresh dired when file changes
-(add-hook 'dired-mode-hook 'auto-revert-mode)
+(add-hook! 'dired-mode-hook 'auto-revert-mode)
 
 (setq bookmark-default-file "~/Nextcloud/config/.emacs.d/bookmarks")  ;;define file to use.
 (setq bookmark-save-flag 1)  ;save bookmarks to .emacs.bmk after each entry
@@ -36,7 +36,7 @@
 (setq-default abbrev-mode t)
 (setq save-abbrevs 'silent)        ;; save abbrevs when files are saved
 
-(add-hook 'text-mode-hook 'flyspell-mode)
+(add-hook! 'text-mode-hook 'flyspell-mode)
 
 ; inverse video for mispellings
 (global-font-lock-mode t)
@@ -48,15 +48,19 @@
 ; save the dictionary without asking
 (setq ispell-silently-savep t)
 
-(beacon-mode 1)
-(setq beacon-push-mark 35
-      beacon-blink-duration 0.5
-      beacon-blink-delay 0.5
-      beacon-blink-when-focused t
-      beacon-color "deep sky blue")
+(after! beacon
+  (beacon-mode 1)
+  (setq beacon-push-mark 35
+        beacon-blink-duration 0.5
+        beacon-blink-delay 0.5
+        beacon-blink-when-focused t
+        beacon-color "deep sky blue")
+  )
 
-(setq guess-language-languages '(es en))
-(setq guess-language-min-paragraph-length 80)
+(after! guess-language
+  (setq guess-language-languages '(es en))
+  (setq guess-language-min-paragraph-length 80)
+)
 
 (electric-pair-mode 1)
 ;; make electric-pair-mode work on more sets of punctuation signs.
@@ -103,12 +107,14 @@
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
 
-(key-chord-mode 1)
-;; Max time delay between two key presses to be considered a key chord
-(setq key-chord-two-keys-delay 0.1)
-;; Max time delay between two presses of the same key to be considered a key chord.
-;; Should normally be a little longer than `key-chord-two-keys-delay'.
-(setq key-chord-one-key-delay 0.2) ; default 0.2
+(after! key-chord
+  (key-chord-mode 1)
+  ;; Max time delay between two key presses to be considered a key chord
+  (setq key-chord-two-keys-delay 0.1)
+  ;; Max time delay between two presses of the same key to be considered a key chord.
+  ;; Should normally be a little longer than `key-chord-two-keys-delay'.
+  (setq key-chord-one-key-delay 0.2) ; default 0.2
+)
 
 (key-chord-define-global "ññ" 'eshell)
 ;;  (key-chord-define-global "kk" 'other-window)
@@ -119,15 +125,17 @@
   ;(key-chord-define-global "ww" 'hydra-move/body)
   ;(key-chord-define-global "yy" 'hydra-buffer-mgmt/body)
 
-;; put the imenu in the position we want to
-(setq imenu-list-position 'right)
-;; Establish the depth of the entries shown
-(setq org-imenu-depth 5)
-;; map the keys
-(global-unset-key (kbd "M-i"))
-(global-set-key (kbd "M-g I") #'imenu-list-smart-toggle)
-;; Once you open imenu, focus on it
-(setq imenu-list-focus-after-activation t)
+(after! imenu-list
+  ;; put the imenu in the position we want to
+  (setq imenu-list-position 'right)
+  ;; Establish the depth of the entries shown
+  (setq org-imenu-depth 5)
+  ;; map the keys
+  (global-unset-key (kbd "M-i"))
+  (global-set-key (kbd "M-g I") #'imenu-list-smart-toggle)
+  ;; Once you open imenu, focus on it
+  (setq imenu-list-focus-after-activation t)
+  )
 
 (global-set-key (kbd "C-s") #'consult-line)
 
@@ -930,7 +938,9 @@
   )
 
 ;;   :hook (org-roam . org-roam-ui-mode)
-(add-hook! 'org-roam 'org-roam-ui-mode)
+;; (after! org-roam
+;;   (add-hook! 'org-roam 'org-roam-ui-mode)
+;; )
 
 (global-set-key (kbd "C-c 9") 'wc-mode)
 
