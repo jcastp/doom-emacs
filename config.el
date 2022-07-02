@@ -95,6 +95,11 @@
 ;; Check if it is worth to enable the tab-bar-history-mode
 ;; and configure the commands to browse the history
 
+(custom-set-faces!
+  '(aw-leading-char-face
+    :foreground "white" :background "red"
+    :weight bold :height 2.5 :box (:line-width 10 :color "red")))
+
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
 
@@ -105,7 +110,7 @@
 ;; Should normally be a little longer than `key-chord-two-keys-delay'.
 (setq key-chord-one-key-delay 0.2) ; default 0.2
 
-;;  (key-chord-define-global "ññ" 'eshell)
+(key-chord-define-global "ññ" 'eshell)
 ;;  (key-chord-define-global "kk" 'other-window)
   (key-chord-define-global "hh" 'ace-window)
   (key-chord-define-global "jj" 'avy-goto-char-2)
