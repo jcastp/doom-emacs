@@ -15,6 +15,89 @@
 
 (global-unset-key (kbd "C-z"))
 
+(global-set-key (kbd "M-p") 'backward-paragraph)
+(global-set-key (kbd "M-n") 'forward-paragraph)
+
+(global-auto-revert-mode 1)
+
+;; auto refresh dired when file changes
+(add-hook 'dired-mode-hook 'auto-revert-mode)
+
+(setq bookmark-default-file "~/Nextcloud/config/.emacs.d/bookmarks")  ;;define file to use.
+(setq bookmark-save-flag 1)  ;save bookmarks to .emacs.bmk after each entry
+
+(setq browse-url-firefox-program "firefox-esr")
+(setq browse-url-browser-function 'browse-url-firefox)
+
+(global-set-key (kbd "C-z") #'undo)
+
+;;where do we read the abbrevs from
+(setq abbrev-file-name "~/Nextcloud/config/.emacs.d/abbrev_defs")
+(setq-default abbrev-mode t)
+(setq save-abbrevs 'silent)        ;; save abbrevs when files are saved
+
+(add-hook 'text-mode-hook 'flyspell-mode)
+
+; inverse video for mispellings
+(global-font-lock-mode t)
+;;  (custom-set-faces '(flyspell-incorrect ((t (:inverse-video t)))))
+
+; custom location of the dictionary
+(setq ispell-personal-dictionary "~/Nextcloud/config/.emacs.d/dict")
+
+; save the dictionary without asking
+(setq ispell-silently-savep t)
+
+(beacon-mode 1)
+(setq beacon-push-mark 35
+      beacon-blink-duration 0.5
+      beacon-blink-delay 0.5
+      beacon-blink-when-focused t
+      beacon-color "deep sky blue")
+
+(setq guess-language-languages '(es en))
+(setq guess-language-min-paragraph-length 80)
+
+(electric-pair-mode 1)
+;; make electric-pair-mode work on more sets of punctuation signs.
+(setq electric-pair-pairs
+       '(
+         (?\¡ . ?\!)
+         (?\¿ . ?\?)
+         )
+ )
+
+(setq electric-pair-inhibit-predicate
+       `(lambda (c)
+          (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c)))
+)
+
+(global-set-key (kbd "M-+") 'text-scale-increase)
+(global-set-key (kbd "M--") 'text-scale-decrease)
+
+(setq-default frame-title-format "%b - (%f)")
+
+(setq display-time-day-and-date t
+      display-time-24hr-format t)
+(display-time)
+
+(defun my/org-tree-open-in-right-frame ()
+    (interactive)
+    (org-tree-to-indirect-buffer)
+    (windmove-right)
+)
+(global-set-key (kbd "C-c 8" ) 'my/org-tree-open-in-right-frame)
+
+;;(tab-bar-mode 1)
+;; Map the not mapped but useful functions
+(global-set-key (kbd "C-x t s") 'tab-list)
+(global-set-key (kbd "C-x t a") 'tab-recent)
+;; Check if it is worth to enable the tab-bar-history-mode
+;; and configure the commands to browse the history
+
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'forward)
+
 (key-chord-mode 1)
 ;; Max time delay between two key presses to be considered a key chord
 (setq key-chord-two-keys-delay 0.1)
@@ -30,6 +113,567 @@
 ;;  (key-chord-define-global "zz" 'undo-tree-visualize)
   ;(key-chord-define-global "ww" 'hydra-move/body)
   ;(key-chord-define-global "yy" 'hydra-buffer-mgmt/body)
+
+;; put the imenu in the position we want to
+(setq imenu-list-position 'right)
+;; Establish the depth of the entries shown
+(setq org-imenu-depth 5)
+;; map the keys
+(global-unset-key (kbd "M-i"))
+(global-set-key (kbd "M-g I") #'imenu-list-smart-toggle)
+;; Once you open imenu, focus on it
+(setq imenu-list-focus-after-activation t)
+
+;; Adds a timestamp to the state
+(setq org-log-done 'time)
+
+;; Adds a custom note to the state
+(setq org-log-done 'note)
+
+;; When the deadline or the schedule date is moved.
+;; to keep track of how many times I have moved a task to the future.
+(setq org-log-redeadline (quote time))
+(setq org-log-reschedule (quote time))
+
+(setq org-todo-keywords
+  '(
+    ;; Status for tasks
+    (sequence "TODO(t)" "ONGOING(r!)" "WAITING(w@/!)" "|" "DONE(d!)" "CANCELED(c@/!)")
+    ;; Status for writing
+    (sequence "TOWRITE(y)" "TOREVIEW(u@/!)" "REDO(i@/!)" "|" "FINISHED(o!)" "PURGE(p@/!)")
+  )
+  )
+
+(setq org-agenda-files '(
+                         "~/Nextcloud/agenda/tasks.org"
+                         "~/Nextcloud/agenda/inbox.org"
+                         )
+)
+
+(setq org-agenda-skip-scheduled-if-done t)
+(setq org-agenda-skip-deadline-if-done t)
+(setq org-agenda-skip-timestamp-if-done t)
+
+(setq org-agenda-custom-commands
+     '(
+       ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+       ; Custom agenda commands
+       ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+       ("c" . "My Custom Agendas")
+
+       ;; All the unescheduled tasks
+        ("cu" "Unscheduled TODO"
+          ((tags-todo "-backlog"
+                ((org-agenda-overriding-header "\nUnscheduled TODO")
+                 (org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp)))))
+            nil
+         nil)
+
+        ;; All the HIGH priority tasks, no backlog
+         ("ch" "high priority tasks"
+           (
+             (tags-todo "+PRIORITY=\"A\"-backlog"
+                (
+                 (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                 (org-agenda-overriding-header "High-priority unfinished tasks:")
+                 )
+
+                )
+
+             )
+           )
+
+         ;; All tasks, sorted and grouped
+         ("ct" "all tasks, sorted"
+           (
+            ;; High priority tasks, no backlog
+            (
+             tags-todo "+PRIORITY=\"A\"-backlog"
+                (
+                  (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                  (org-agenda-overriding-header "High-priority unfinished tasks:")
+                  (org-agenda-prefix-format " %10c %5e ")
+
+                  )
+                )
+            ;; Ongoing tasks that needs effort from my side
+            (tags-todo "-backlog-books/ONGOING"
+              (
+               (org-agenda-overriding-header "Ongoing tasks:")
+               (org-agenda-prefix-format " %10c %5e ")
+               )
+              )
+
+            ;; Tasks scheduled today
+            (agenda ""
+                 (
+                  (org-agenda-time-grid nil)
+                  (org-schedule-warning-days 1)        ;; [1]
+                  (org-agenda-entry-types '(:scheduled))  ;; [2]
+                  (org-agenda-overriding-header "Scheduled today tasks:")
+                  (org-agenda-prefix-format " %10c %5e ")
+                  )
+                 )
+
+            ;; Tasks that are waiting on something
+            (tags-todo "-backlog-books/WAITING"
+              (
+               (org-agenda-overriding-header "Waiting tasks:")
+               (org-agenda-prefix-format " %10c %5e ")
+               )
+              )
+
+            ;; Tasks still not started, that are not high priority
+            (tags-todo "-backlog-books-calendar +PRIORITY={B\\|C}/TODO"
+              (
+               (org-agenda-overriding-header "TODO tasks:")
+               (org-agenda-prefix-format " %10c %5e ")
+               )
+              )
+
+            ;; Calendar tasks
+            (tags-todo "calendar"
+              (
+               (org-agenda-overriding-header "Calendar tasks:")
+               (org-agenda-prefix-format " %10c %5e ")
+               )
+              )
+
+            ;; Stuck tasks and projects
+            (stuck ""
+              (
+               (org-agenda-overriding-header "Stuck tasks:")
+               (org-agenda-prefix-format " %10c %5e ")
+               )
+              )
+
+            ;; end configuration all tasks sorted and grouped
+            )
+           )
+
+         ;;;;;;;;;;;;
+         ;; Time based queries
+         ;;;;;;;;;;;;
+         ;; 'In a day' tasks
+         ("d" "Today"
+           (
+            (agenda "" ((org-agenda-span 1)
+                        (org-agenda-sorting-strategy
+                         (quote ((agenda time-up priority-down tag-up) ))
+                         )
+                         ; this will show tasks with a deadline of 2 days more
+                        (org-deadline-warning-days 2)
+
+
+                        )
+                    )
+            )
+           )
+
+         ; 'In a week' tasks
+         ("w" "Week ahead"
+            (
+             (agenda "" ((org-agenda-span 7)
+                         (org-agenda-sorting-strategy
+                          (quote ((agenda time-up priority-down tag-up) ))
+                          )
+                         (org-deadline-warning-days 0)
+                         )
+                     )
+             )
+            )
+
+         ;;;;;;;;;;;;;;;;;;;;;;;
+         ;; Location/context based queries
+         ;;;;;;;;;;;;;;;;;;;;;;;
+
+         ; only shows home tagged entries
+         ("h" "At home" tags-todo "+home-backlog"
+           (
+             (org-agenda-overriding-header "Home")
+           )
+         )
+
+         ; only shows outside tagged entries
+         ("o" "Outside tasks" tags-todo "+outside-backlog"
+           (
+             (org-agenda-overriding-header "Outside")
+           )
+         )
+
+         ;;;;;;;;;;;;;;;;
+         ; backlog entries
+         ("b" "Backlog entries" tags-todo "+backlog-objetivos-calendar"
+           (
+             (org-agenda-overriding-header "Backlog")
+           )
+         )
+
+     )
+)
+
+(setq org-agenda-span 15)
+(setq org-agenda-start-on-weekday nil)
+
+(setq org-refile-targets '(
+                            (nil :maxlevel . 9)
+                            (org-agenda-files :maxlevel . 9)
+                            ("referencias.org" :maxlevel . 9)
+                            ("maybe.org" :maxlevel . 9)
+                            ("books.org" :maxlevel . 9)
+                            ("~/Nextcloud/escritura/ideas/ideas.org" :maxlevel . 9)
+
+                            )
+)
+(setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
+(setq org-refile-use-outline-path t)                  ; Show full paths for refiling
+
+;; don't show the "validate" link on org-html exports
+(setq org-html-validation-link nil)
+
+(load "~/Nextcloud/config/.emacs.d/vendor/ox-extra/ox-extra.el")
+(require 'ox-extra)
+(ox-extras-activate '(ignore-headlines))
+
+(require 'ox-md)
+
+(add-to-list 'org-latex-classes
+     '("memoir"
+               "\\documentclass[a4paper,17pt,openright,twoside]{memoir}
+\\usepackage{ucs}
+\\usepackage[utf8]{inputenc}
+\\usepackage[spanish]{babel}
+\\usepackage{fontenc}
+\\usepackage{graphicx}
+
+\% Para poner notas en los márgenes
+\\usepackage{todonotes}
+
+\% Para tachar palabras
+\\usepackage[normalem]{ulem}
+
+\\usepackage{hyperref}
+\\usepackage{parskip}
+\\usepackage{fourier}
+
+\\renewcommand*\\rmdefault{put}
+
+\\newcommand{\\fin}{\\plainbreak*{3}}
+
+% command to add edit notes with tiny size
+\\newcommand{\\edit}[1] {\\todo[inline]{#1}}
+\\newcommand{\\adendo}[1] {\\todo[size=\\tiny]{#1}}
+
+% Chapter style
+ \\chapterstyle{dash}
+
+% How the page is formatted
+  \\pagestyle{Ruled}
+
+
+
+               [NO-DEFAULT-PACKAGES]
+               [NO-PACKAGES]"
+               ("\\part{%s}" . "\\part*{%s}")
+               ("\\chapter{%s}" . "\\chapter*{%s}")
+               ("\\section*{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
+             )
+
+(add-to-list 'org-latex-classes
+     '("memoir_draft"
+               "\\documentclass[a4paper,17pt,draft,openright,twoside]{memoir}
+\\usepackage{ucs}
+\\usepackage[utf8]{inputenc}
+\\usepackage[spanish]{babel}
+\\usepackage{fontenc}
+\\usepackage{graphicx}
+
+\% Para poner notas en los márgenes
+\\usepackage{todonotes}
+
+\% Para tachar palabras
+\\usepackage[normalem]{ulem}
+
+\\usepackage{hyperref}
+\\usepackage{parskip}
+\\usepackage{fourier}
+
+\\renewcommand*\\rmdefault{put}
+
+\\newcommand{\\fin}{\\plainbreak*{3}}
+
+\% command to add edit notes with tiny size
+\\newcommand{\\edit}[1] {\\todo[inline]{#1}}
+\\newcommand{\\adendo}[1] {\\todo[size=\\tiny]{#1}}
+
+\% Chapter style
+\\chapterstyle{dash}
+
+\% How the page is formatted
+\\pagestyle{Ruled}
+
+
+
+
+
+               [NO-DEFAULT-PACKAGES]
+               [NO-PACKAGES]"
+               ("\\part{%s}" . "\\part*{%s}")
+               ("\\chapter{%s}" . "\\chapter*{%s}")
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection*{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection*{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph*{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph*{%s}" . "\\subparagraph*{%s}"))
+             )
+
+(add-to-list 'org-latex-classes
+     '("memoir"
+               "\\documentclass[a4paper,17pt,openright,twoside]{memoir}
+\\usepackage{ucs}
+\\usepackage[utf8]{inputenc}
+\\usepackage[spanish]{babel}
+\\usepackage{fontenc}
+\\usepackage{graphicx}
+
+\% Para poner notas en los márgenes
+\\usepackage{todonotes}
+
+\% Para tachar palabras
+\\usepackage[normalem]{ulem}
+
+\\usepackage{hyperref}
+\\usepackage{parskip}
+\\usepackage{fourier}
+
+\\renewcommand*\\rmdefault{put}
+
+\\newcommand{\\fin}{\\plainbreak*{3}}
+
+% command to add edit notes with tiny size
+\\newcommand{\\edit}[1] {\\todo[inline]{#1}}
+\\newcommand{\\adendo}[1] {\\todo[size=\\tiny]{#1}}
+
+% Chapter style
+ \\chapterstyle{dash}
+
+% How the page is formatted
+  \\pagestyle{Ruled}
+
+
+
+               [NO-DEFAULT-PACKAGES]
+               [NO-PACKAGES]"
+
+               ("\\chapter{%s}" . "\\chapter*{%s}")
+               ("\\section*{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
+             )
+
+(add-to-list 'org-latex-classes
+     '("memoir_draft"
+               "\\documentclass[a4paper,17pt,draft,openright,twoside]{memoir}
+\\usepackage{ucs}
+\\usepackage[utf8]{inputenc}
+\\usepackage[spanish]{babel}
+\\usepackage{fontenc}
+\\usepackage{graphicx}
+
+\% Para poner notas en los márgenes
+\\usepackage{todonotes}
+
+\% Para tachar palabras
+\\usepackage[normalem]{ulem}
+
+\\usepackage{hyperref}
+\\usepackage{parskip}
+\\usepackage{fourier}
+
+\\renewcommand*\\rmdefault{put}
+
+\\newcommand{\\fin}{\\plainbreak*{3}}
+
+\% command to add edit notes with tiny size
+\\newcommand{\\edit}[1] {\\todo[inline]{#1}}
+\\newcommand{\\adendo}[1] {\\todo[size=\\tiny]{#1}}
+
+\% Chapter style
+\\chapterstyle{dash}
+
+\% How the page is formatted
+\\pagestyle{Ruled}
+
+
+
+
+
+               [NO-DEFAULT-PACKAGES]
+               [NO-PACKAGES]"
+
+               ("\\chapter{%s}" . "\\chapter*{%s}")
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection*{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection*{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph*{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph*{%s}" . "\\subparagraph*{%s}"))
+             )
+
+(add-to-list 'org-latex-classes
+     '("reporting"
+               "\\documentclass[a4paper,17pt,openright,twoside]{article}
+\\usepackage{ucs}
+\\usepackage[utf8]{inputenc}
+\\usepackage[spanish]{babel}
+\\usepackage{fontenc}
+\\usepackage{graphicx}
+
+\% Para poner notas en los márgenes
+\\usepackage{todonotes}
+
+\% Para tachar palabras
+\\usepackage[normalem]{ulem}
+
+\\usepackage{hyperref}
+\\usepackage{parskip}
+\\usepackage{fourier}
+
+\\renewcommand*\\rmdefault{put}
+
+\\newcommand{\\fin}{\\plainbreak*{3}}
+
+\% command to add edit notes with tiny size
+\\newcommand{\\edit}[1] {\\todo[inline]{#1}}
+\\newcommand{\\adendo}[1] {\\todo[size=\\tiny]{#1}}
+
+
+
+
+               [NO-DEFAULT-PACKAGES]
+               [NO-PACKAGES]"
+               ("\\part{%s}" . "\\part*{%s}")
+               ("\\chapter{%s}" . "\\chapter*{%s}")
+               ("\\section*{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
+             )
+
+(setq org-export-with-smart-quotes t)
+
+(require 'ox-org)
+
+(require 'ox-beamer)
+(require 'ox-latex)
+(setq org-export-allow-bind-keywords t)
+(setq org-latex-listings 'minted)
+(add-to-list 'org-latex-packages-alist '("" "minted"))
+(org-babel-do-load-languages 'org-babel-load-languages '(
+   (shell . t)
+   (python . t)
+   (C . t)
+   (ruby . t)
+   (js . t)
+   (ditaa . t)
+   (gnuplot . t)
+   )
+)
+(setq org-latex-pdf-process
+      '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+
+(setq org-ditaa-jar-path "/usr/bin/ditaa")
+
+(setq org-capture-templates'(
+                             ("i" "Inbox" entry
+                              (file+headline "~/Nextcloud/agenda/tasks.org" "Inbox")
+                              "* TODO %i%? \nEntered on %U"
+                              :empty-lines-after 1)
+                             )
+      )
+
+;; (setq org-capture-templates'(
+;;                              ("t" "My TODO task format." entry
+;;                               (file+headline "~/Nextcloud/agenda/inbox.org" "Tasks")
+;;                               "** TODO %i%? %^g \n%U"
+;;                               :empty-lines-after 1)
+
+;;                              ("p" "New project." entry
+;;                               (file+headline "~/Nextcloud/agenda/tasks.org" "Projects")
+;;                               "** TODO %? %^g \n%U\n- Objetivo:"
+;;                               :empty-lines-after 1)
+
+;;                              ("c" "New calendar entry." entry
+;;                               (file+headline "~/Nextcloud/agenda/tasks.org" "Calendar")
+;;                               "** TODO %i%?\nSCHEDULED: %^t\n"
+;;                               :empty-lines-after 1)
+
+;;                              ;; Writing related things
+;;                              ("i" "Writing idea." entry
+;;                               (file+headline "~/Nextcloud/escritura/ideas/ideas.org" "otras")
+;;                               "** TODO %?\n*** Personajes\n- \n*** Ambientación\n*** Eventos\n"
+;;                               :empty-lines-after 1)
+
+;;                              ("P" "Personaje" entry
+;;                               (file "~/Nextcloud/escritura/ideas/personajes.org")
+;;                               "* "
+;;                               :empty-lines-after 1)
+
+;;                              ("h" "Compost heap" item
+;;                               (file+headline "~/Nextcloud/escritura/ideas/compost_heap.org" "Compost heap")
+;;                               "%i"
+;;                               :empty-lines-after 1)
+
+;;                              ("r" "Note and misc content." entry
+;;                               (file+headline "~/Nextcloud/agenda/inbox.org" "Notes")
+;;                               "** %i%?\n"
+;;                               :empty-lines-after 1)
+
+;;                              ;; books to read
+;;                              ("b" "Manual book entry" entry (file "~/Nextcloud/agenda/books.org")
+;;                               "* %^{TITLE}\n:PROPERTIES:\n:ADDED: %<[%Y-%02m-%02d]>\n:END:%^{AUTHOR}p\n%?" :empty-lines 1)
+
+;;                              ;; this one adds a book from an URL, *but you have to have the URL already in the kill ring* or it won't work
+;;                              ("B" "Book with URL" entry (file "~/Nextcloud/agenda/books.org")
+;;                               "%(let* ((url (substring-no-properties (current-kill 0)))
+;;                 (details (org-books-get-details url)))
+;;            (when details (apply #'org-books-format 1 details)))")
+
+;; ;;     ("b" "books to read." entry
+;; ;;       (file+headline "~/Nextcloud
+;;                             /agenda/books.org" "Books")
+;;       "* %^{Title}  %^g
+;;       %i
+;;       *Author(s):* %^{Author}
+;;       ")
+
+;; linea en tabla
+;;  ("w" "peso" table-line
+;;     (file+headline "~/Nextcloud/personal/peso.org" "peso")
+;;     "|%<%Y/%m/%d>|%i|")
+
+;;    )
+;; )
+
+(setq org-tag-alist '(
+                      ;; Contexts based on locations
+                      ("work" . ?W) ("home" . ?h)  ("outside" . ?o)
+                      ;; Contexts based on tools
+                      ("computer" . ?c) ("mobile" . ?m)  ("penpaper" . ?p)
+                      ;; Contexts based on activities
+                      ("emacs" . ?e)  ("writing" . ?w) ("reading" . ?r)
+  )
+)
+
+(setq org-hide-emphasis-markers t)
 
 (setq org-roam-v2-ack t)
 (setq org-roam-directory (file-truename "~/Nextcloud/personal/roam"))
@@ -239,3 +883,33 @@
 
 ;;   :hook (org-roam . org-roam-ui-mode)
 (add-hook! 'org-roam 'org-roam-ui-mode)
+
+(global-set-key (kbd "C-c 9") 'wc-mode)
+
+(global-set-key (kbd "C-c 3") 'org-tracktable-status)
+(global-set-key (kbd "C-c 4") 'org-tracktable-write)
+
+;;("C-c r ñ" . org-journal-new-entry)
+(setq org-journal-date-prefix "#+TITLE: ")
+(setq org-journal-file-format "%Y-%m-%d.org")
+(setq org-journal-dir "~/Nextcloud/personal/diario/")
+(setq org-journal-date-format "%A, %d %B %Y")
+(setq org-journal-encrypt-journal nil)
+
+(defun my/buscarae (palabra)
+   "Busca una palabra en la RAE."
+   (interactive "s¿Qué palabra quieres buscar? ")
+   (eww (concat "https://dle.rae.es/" palabra))
+)
+
+(defun my/sinonimo (palabra)
+   "Busca una palabra en un diccionario de sinónimos"
+   (interactive "s¿Qué palabra quieres buscar? ")
+   (eww (concat "https://www.wordreference.com/sinonimos/" palabra))
+)
+
+(defun my/translate (palabra)
+  "Traduccion de inglés a español"
+  (interactive "s¿Qué palabra quieres buscar? ")
+  (eww (concat "https://www.deepl.com/translator#en/es/" palabra))
+)

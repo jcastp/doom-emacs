@@ -60,3 +60,30 @@
 ;; Check what keys are free to assign
 (package! free-keys
   :recipe (:host github :repo "Fuco1/free-keys"))
+
+;; Iluminates the cursor when there are some moving
+(package! beacon
+  :recipe (:host github :repo "Malabarba/beacon"))
+
+;; guess-lenguage
+(package! guess-language
+  :recipe (:host github :repo "tmalsburg/guess-language.el"))
+
+;; imenu-list
+(package! imenu-list
+  :recipe (:host github :repo "bmag/imenu-list"))
+
+;; org-ql
+(package! org-ql)
+
+;; better word count
+(package! wc-mode
+  :recipe (:host github :repo "bnbeckwith/wc-mode"))
+
+;; word count per sections
+(package! org-wc
+  :recipe (:host github :repo "tesujimath/org-wc"))
+
+;; tracking table for writing
+(package! org-tracktable
+  :recipe (:host github :repo "tty-tourist/org-tracktable"))
