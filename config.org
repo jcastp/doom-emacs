@@ -1,4 +1,8 @@
 * General config
+Lexical binding tagging
+#+begin_src emacs-lisp
+;;; config.el -*- lexical-binding: t; -*-
+#+end_src
 ** Personal information
 #+begin_src emacs-lisp
 (setq user-full-name "Javier Castilla"
@@ -87,12 +91,12 @@ Undo binded to C-z
 ** Abbreviation mode
 Defines a set of abbreviations that permits complete words with just some characters.
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
   ;;where do we read the abbrevs from
   (setq abbrev-file-name "~/Nextcloud/config/.emacs.d/abbrev_defs")
   (setq-default abbrev-mode t)
   (setq save-abbrevs 'silent)        ;; save abbrevs when files are saved
-#+END_SRC
+#+end_src
 ** Flyspell mode
 Automatic spelling in the buffer
 This conflicts with orgmode archive C-c $
@@ -208,35 +212,35 @@ To automatically close parenthesis and and other punctuation signs.
 ** Font size increase/decrease
 Increase or decrease the font size
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
   (global-set-key (kbd "M-+") 'text-scale-increase)
   (global-set-key (kbd "M--") 'text-scale-decrease)
-#+END_SRC
+#+end_src
 ** full path in the title bar
 Put the complete path on the title bar, along the filename.
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
   (setq-default frame-title-format "%b - (%f)")
-#+END_SRC
+#+end_src
 ** Time and date
 Put time and date on the status line
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
   (setq display-time-day-and-date t
         display-time-24hr-format t)
   (display-time)
-#+END_SRC
+#+end_src
 ** Open indirect buffer
 Open a branch into a different frame, but the same buffer:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
   (defun my/org-tree-open-in-right-frame ()
       (interactive)
       (org-tree-to-indirect-buffer)
       (windmove-right)
   )
   (global-set-key (kbd "C-c 8" ) 'my/org-tree-open-in-right-frame)
-#+END_SRC
+#+end_src
 ** TODO tab-bar-mode
 tab-bar-mode seems to comply with all my requirements to store the configuration of the buffers and frames. This, coupled with desktop saving and restoring, can be the answer.
 
@@ -265,10 +269,10 @@ When several buffers visit identically-named files, Emacs must give the buffers 
 The forward naming method includes part of the file's directory name at the beginning of the buffer name
 https://www.gnu.org/software/emacs/manual/html_node/emacs/Uniquify.html
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
   (require 'uniquify)
   (setq uniquify-buffer-name-style 'forward)
-#+END_SRC
+#+end_src
 
 ** Key chords
 Shortcuts to commands using just quick key combinations.
@@ -344,7 +348,7 @@ Put a note or a timestamp when something changes. For example:
 - When the tasks is marked as DONE
 - When the schedule or deadline date is changed
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (after! org
   ;; Adds a timestamp to the state
   (setq org-log-done 'time)
@@ -357,11 +361,11 @@ Put a note or a timestamp when something changes. For example:
   (setq org-log-redeadline (quote time))
   (setq org-log-reschedule (quote time))
 )
-#+END_SRC
+#+end_src
 ** Custom states for the tasks
 These are the custom states for the tasks, and the character associated to it.
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (after! org
 (setq org-todo-keywords
       '(
@@ -372,7 +376,7 @@ These are the custom states for the tasks, and the character associated to it.
         )
       )
 )
-#+END_SRC
+#+end_src
 ** orgmode Agenda
 All the agenda configs
 
@@ -618,11 +622,11 @@ This allows headlines to be ignored in the exports. To do so, the ignore tag (C-
 *** Export to Markdown
 Export to markdown
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (after! org
   (require 'ox-md)
   )
-#+END_SRC
+#+end_src
 
 *** Export to Latex
 All the latex exports
@@ -630,7 +634,7 @@ All the latex exports
 **** TODO Memoir class for org2latex (complete these options)
 memoir is a class used to create beautiful documents.
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (after! org
   (add-to-list 'org-latex-classes
        '("memoir"
@@ -678,12 +682,12 @@ memoir is a class used to create beautiful documents.
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
                )
 )
-#+END_SRC
+#+end_src
 
 **** TODO Memoir_draft class for org2latex (complete these options)
 memoir is a class used to create beautiful documents.
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (after! org
   (add-to-list 'org-latex-classes
        '("memoir_draft"
@@ -733,12 +737,12 @@ memoir is a class used to create beautiful documents.
                  ("\\subparagraph*{%s}" . "\\subparagraph*{%s}"))
                )
 )
-#+END_SRC
+#+end_src
 
 **** TODO Memoir_chapter class for org2latex (complete these options)
 Same as memoir class, but it start just with chapters, no "part"
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (after! org
   (add-to-list 'org-latex-classes
        '("memoir"
@@ -786,12 +790,12 @@ Same as memoir class, but it start just with chapters, no "part"
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
                )
 )
-#+END_SRC
+#+end_src
 
 **** TODO Memoir_chapter_draft class for org2latex (complete these options)
 Same as memoir class, but it start just with chapters, no "part"
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (after! org
   (add-to-list 'org-latex-classes
        '("memoir_draft"
@@ -841,11 +845,11 @@ Same as memoir class, but it start just with chapters, no "part"
                  ("\\subparagraph*{%s}" . "\\subparagraph*{%s}"))
                )
 )
-#+END_SRC
+#+end_src
 
 **** TODO reporting class for org2latex (complete these options)
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (after! org
   (add-to-list 'org-latex-classes
        '("reporting"
@@ -888,7 +892,7 @@ Same as memoir class, but it start just with chapters, no "part"
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
                )
 )
-#+END_SRC
+#+end_src
 
 **** Smart quotes
 Add smart quotes for latex
@@ -932,7 +936,7 @@ We can export a document to org mode
           "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
           "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
   )
- #+end_src
+#+end_src
 
 *** ditaa location
 https://github.com/stathissideris/ditaa
@@ -1022,7 +1026,7 @@ Here I will add template captures for doing several things:
 ** TODO custom tags
 Create custom tags for different categories and contexts
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (after! org
   (setq org-tag-alist '(
                         ;; Contexts based on locations
@@ -1034,7 +1038,7 @@ Create custom tags for different categories and contexts
     )
   )
 )
-#+END_SRC
+#+end_src
 ** Remove the markup indicators
 No need to see the markup indicators when writing.
 
@@ -1045,6 +1049,7 @@ No need to see the markup indicators when writing.
 #+end_src
 
 ** org-appear
+/Hides/ the *emphasis* marks +of+ from orgmode, until you are
 #+begin_src emacs-lisp :tangle packages.el
 (package! org-appear
   :recipe (:host github
@@ -1057,10 +1062,6 @@ No need to see the markup indicators when writing.
     ;;:ensure t
     :hook (org-mode . org-appear-mode)
     )
-
-;; (after! org
-;; (add-hook! org-mode :append #'org-appear-mode)
-;; )
 #+end_src
 
 ** org word count
@@ -1127,13 +1128,13 @@ Org-roam related config.
 #+end_src
 
 *** Search by title and tags
- To search by title and tags, we will use the information contained here:
- https://github.com/org-roam/org-roam/pull/2054
- #+begin_src emacs-lisp
+To search by title and tags, we will use the information contained here:
+https://github.com/org-roam/org-roam/pull/2054
+#+begin_src emacs-lisp
    (setq org-roam-node-display-template
       (concat "${title:*} "
               (propertize "${tags:20}" 'face 'org-tag)))
- #+end_src
+#+end_src
 
 *** Dailies config
 
@@ -1303,7 +1304,7 @@ https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html
     ;;  (advice-add 'org-agenda :before #'vulpea-agenda-files-update)
     ;;  (advice-add 'org-todo-list :before #'vulpea-agenda-files-update)
     )
-      #+end_src
+#+end_src
 *** org-roam-ui
 Load org-roam UI and all its dependencies.
 
@@ -1350,6 +1351,21 @@ https://github.com/tty-tourist/org-tracktable
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-c 3") 'org-tracktable-status)
 (global-set-key (kbd "C-c 4") 'org-tracktable-write)
+#+end_src
+** zen writing adjustments
+Adjustments done to the zen mode for better visibility
+#+begin_src emacs-lisp
+(setq +zen-text-scale 2)
+(setq writeroom-width 0.1)
+#+end_src
+** selectric - typing sound like a typewriter
+#+begin_src emacs-lisp :tangle packages.el
+(package! selectric-mode
+  :recipe (:host github :repo "rbanffy/selectric-mode"))
+#+end_src
+
+#+begin_src emacs-lisp
+;; Here there will be the hook for the selectric activation on zen
 #+end_src
 ** TODO org-journal
 This is for journaling every day, if possible.
@@ -1401,6 +1417,7 @@ Translate a work
 
 * others
 ** elfeed
+RSS feeds in emacs
 #+begin_src emacs-lisp
 (setq elfeed-db-directory "~/Nextcloud/config/.emacs.d/elfeed")
 (global-set-key (kbd "C-c m w") 'elfeed)
@@ -1438,3 +1455,4 @@ Music from emacs
 
 (global-set-key (kbd "C-c m m") 'emms-browser)
 #+end_src
+
