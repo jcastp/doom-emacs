@@ -1,3 +1,5 @@
+;;; config.el -*- lexical-binding: t; -*-
+
 (setq user-full-name "Javier Castilla"
       user-mail-address "jcastp@pm.me")
 
@@ -29,6 +31,8 @@
 (setq browse-url-firefox-program "firefox-esr")
 (setq browse-url-browser-function 'browse-url-firefox)
 
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
 (global-set-key (kbd "C-z") #'undo)
 
 ;;where do we read the abbrevs from
@@ -48,19 +52,39 @@
 ; save the dictionary without asking
 (setq ispell-silently-savep t)
 
-(after! beacon
-  (beacon-mode 1)
-  (setq beacon-push-mark 35
-        beacon-blink-duration 0.5
-        beacon-blink-delay 0.5
-        beacon-blink-when-focused t
-        beacon-color "deep sky blue")
+(use-package! beacon
+    ;;:quelpa (beacon :fetcher github :repo "Malabarba/beacon")
+    ;;:ensure t
+    :config
+      (beacon-mode 1)
+      (setq beacon-push-mark 35
+          beacon-blink-duration 0.5
+          beacon-blink-delay 0.5
+          beacon-blink-when-focused t
+          beacon-color "deep sky blue")
   )
+;; (after! beacon
+;;   (beacon-mode 1)
+;;   (setq beacon-push-mark 35
+;;         beacon-blink-duration 0.5
+;;         beacon-blink-delay 0.5
+;;         beacon-blink-when-focused t
+;;         beacon-color "deep sky blue")
+;;   )
 
-(after! guess-language
-  (setq guess-language-languages '(es en))
-  (setq guess-language-min-paragraph-length 80)
-)
+(use-package guess-language
+    ;;:quelpa (guess-language :fetcher github :repo "tmalsburg/guess-language.el")
+    ;;:ensure t
+    :config
+      (setq guess-language-languages '(es en))
+      (setq guess-language-min-paragraph-length 80)
+      :hook (text-mode-hook . (lambda () (guess-language-mode 1)))
+  )
+;; (after! guess-language
+;;   (setq guess-language-languages '(es en))
+;;   (setq guess-language-min-paragraph-length 80)
+;;   (add-hook 'text-mode-hook (lambda () (guess-language-mode 1)))
+;; )
 
 (electric-pair-mode 1)
 ;; make electric-pair-mode work on more sets of punctuation signs.
@@ -125,14 +149,26 @@
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
 
-(after! key-chord
-  (key-chord-mode 1)
-  ;; Max time delay between two key presses to be considered a key chord
-  (setq key-chord-two-keys-delay 0.1)
-  ;; Max time delay between two presses of the same key to be considered a key chord.
-  ;; Should normally be a little longer than `key-chord-two-keys-delay'.
-  (setq key-chord-one-key-delay 0.2) ; default 0.2
-)
+(use-package key-chord
+    ;;:quelpa (key-chord :fetcher github :repo "emacsorphanage/key-chord")
+    ;;:ensure t
+    :init
+      (key-chord-mode 1)
+    :config
+      ;; Max time delay between two key presses to be considered a key chord
+      (setq key-chord-two-keys-delay 0.1)
+      ;; Max time delay between two presses of the same key to be considered a key chord.
+      ;; Should normally be a little longer than `key-chord-two-keys-delay'.
+      (setq key-chord-one-key-delay 0.2) ; default 0.2
+  )
+;; (after! key-chord
+;;   (key-chord-mode 1)
+;;   ;; Max time delay between two key presses to be considered a key chord
+;;   (setq key-chord-two-keys-delay 0.1)
+;;   ;; Max time delay between two presses of the same key to be considered a key chord.
+;;   ;; Should normally be a little longer than `key-chord-two-keys-delay'.
+;;   (setq key-chord-one-key-delay 0.2) ; default 0.2
+;; )
 
 (key-chord-define-global "ññ" 'eshell)
 ;;  (key-chord-define-global "kk" 'other-window)
@@ -143,17 +179,15 @@
   ;(key-chord-define-global "ww" 'hydra-move/body)
   ;(key-chord-define-global "yy" 'hydra-buffer-mgmt/body)
 
-(after! imenu-list
-  ;; put the imenu in the position we want to
-  (setq imenu-list-position 'right)
-  ;; Establish the depth of the entries shown
-  (setq org-imenu-depth 5)
-  ;; map the keys
-  (global-unset-key (kbd "M-i"))
-  (global-set-key (kbd "M-g I") #'imenu-list-smart-toggle)
-  ;; Once you open imenu, focus on it
-  (setq imenu-list-focus-after-activation t)
-  )
+;; put the imenu in the position we want to
+(setq imenu-list-position 'right)
+;; Establish the depth of the entries shown
+(setq org-imenu-depth 5)
+;; map the keys
+(global-unset-key (kbd "M-i"))
+(global-set-key (kbd "C-c s I") #'imenu-list-smart-toggle)
+;; Once you open imenu, focus on it
+(setq imenu-list-focus-after-activation t)
 
 (global-set-key (kbd "C-s") #'consult-line)
 
@@ -749,6 +783,12 @@
   (setq org-hide-emphasis-markers t)
 )
 
+(use-package org-appear
+  ;;:quelpa (org-appear :type git :host github :repo "awth13/org-appear")
+  ;;:ensure t
+  :hook (org-mode . org-appear-mode)
+  )
+
 (setq org-roam-v2-ack t)
 (setq org-roam-directory (file-truename "~/Nextcloud/personal/roam"))
 
@@ -961,9 +1001,15 @@
   )
 
 (global-set-key (kbd "C-c 9") 'wc-mode)
+(setq doom-modeline-enable-word-count t)
 
 (global-set-key (kbd "C-c 3") 'org-tracktable-status)
 (global-set-key (kbd "C-c 4") 'org-tracktable-write)
+
+(setq +zen-text-scale 2)
+(setq writeroom-width 0.1)
+
+;; Here there will be the hook for the selectric activation on zen
 
 ;;("C-c r ñ" . org-journal-new-entry)
 (setq org-journal-date-prefix "#+TITLE: ")
@@ -991,7 +1037,7 @@
 )
 
 (setq elfeed-db-directory "~/Nextcloud/config/.emacs.d/elfeed")
-(global-set-key (kbd "C-x w") 'elfeed)
+(global-set-key (kbd "C-c m w") 'elfeed)
 
 (setq elfeed-feeds
       '(
@@ -1005,3 +1051,20 @@
         "https://sachachua.com/blog/feed"
         )
       )
+
+(require 'emms-setup)
+(emms-all)
+(emms-default-players)
+(if my-desktopsystem-p
+  (setq emms-source-file-default-directory "/home/musica") ;; Change to your music folder
+  )
+
+;; fot the tagging of songs
+(setq emms-info-functions '(emms-info-tinytag))
+
+;; Keyboard shortcuts
+(global-set-key (kbd "<XF86AudioPrev>") 'emms-previous)
+(global-set-key (kbd "<XF86AudioNext>") 'emms-next)
+(global-set-key (kbd "<XF86AudioPlay>") 'emms-pause)
+
+(global-set-key (kbd "C-c m m") 'emms-browser)
