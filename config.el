@@ -76,6 +76,24 @@
           (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c)))
 )
 
+(setq
+  ;; Font used for source code
+  ;; doom-font (font-spec :family "JetBrains Mono" :size 14 :weight 'Medium)
+  ;; doom-font (font-spec :family "Fira Code" :size 14 :weight 'Medium)
+  ;; doom-font (font-spec :family "Hasklig" :size 14 :weight 'Medium)
+  ;; doom-font (font-spec :family "Iosevka Fixed" :size 16 :weight 'Medium)
+  ;; doom-font (font-spec :family "Hack" :size 14)
+
+  ;; Font used for normal writing
+  ;;doom-variable-pitch-font (font-spec :family "Gentium Basic" :size 18)
+  ;;doom-variable-pitch-font (font-spec :family "ETBookOT" :size 18)
+  doom-variable-pitch-font (font-spec :family "ETBembo" :size 18)
+  ;;doom-variable-pitch-font (font-spec :family "EB Garamond 12" :size 18 :weight 'Medium)
+  ; When you want to have a different fixed font for the variable one
+  ;; doom-variable-pitch-font (font-spec :family "JetBrains Mono" :size 16 :weight 'Extralight)
+  ;;doom-variable-pitch-font (font-spec :family "Iosevka" :size 16 :weight 'Regular)
+  )
+
 (global-set-key (kbd "M-+") 'text-scale-increase)
 (global-set-key (kbd "M--") 'text-scale-decrease)
 
