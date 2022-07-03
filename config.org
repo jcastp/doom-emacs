@@ -121,14 +121,25 @@ https://github.com/Malabarba/beacon
 #+end_src
 
 #+begin_src emacs-lisp
-(after! beacon
-  (beacon-mode 1)
-  (setq beacon-push-mark 35
-        beacon-blink-duration 0.5
-        beacon-blink-delay 0.5
-        beacon-blink-when-focused t
-        beacon-color "deep sky blue")
+(use-package! beacon
+    ;;:quelpa (beacon :fetcher github :repo "Malabarba/beacon")
+    ;;:ensure t
+    :config
+      (beacon-mode 1)
+      (setq beacon-push-mark 35
+          beacon-blink-duration 0.5
+          beacon-blink-delay 0.5
+          beacon-blink-when-focused t
+          beacon-color "deep sky blue")
   )
+;; (after! beacon
+;;   (beacon-mode 1)
+;;   (setq beacon-push-mark 35
+;;         beacon-blink-duration 0.5
+;;         beacon-blink-delay 0.5
+;;         beacon-blink-when-focused t
+;;         beacon-color "deep sky blue")
+;;   )
 #+end_src
 ** guess-language
 Guess the language based on the text of the file, and use the corresponding dictionary to do the spell correction.
@@ -140,11 +151,19 @@ https://github.com/tmalsburg/guess-language.el
 #+end_src
 
 #+begin_src emacs-lisp
-(after! guess-language
-  (setq guess-language-languages '(es en))
-  (setq guess-language-min-paragraph-length 80)
-  (add-hook 'text-mode-hook (lambda () (guess-language-mode 1)))
-)
+  (use-package guess-language
+    ;;:quelpa (guess-language :fetcher github :repo "tmalsburg/guess-language.el")
+    ;;:ensure t
+    :config
+      (setq guess-language-languages '(es en))
+      (setq guess-language-min-paragraph-length 80)
+      :hook (text-mode-hook . (lambda () (guess-language-mode 1)))
+  )
+;; (after! guess-language
+;;   (setq guess-language-languages '(es en))
+;;   (setq guess-language-min-paragraph-length 80)
+;;   (add-hook 'text-mode-hook (lambda () (guess-language-mode 1)))
+;; )
 #+end_src
 ** electric pair mode
 To automatically close parenthesis and and other punctuation signs.
@@ -260,14 +279,26 @@ Shortcuts to commands using just quick key combinations.
 #+end_src
 
 #+begin_src emacs-lisp
-(after! key-chord
-  (key-chord-mode 1)
-  ;; Max time delay between two key presses to be considered a key chord
-  (setq key-chord-two-keys-delay 0.1)
-  ;; Max time delay between two presses of the same key to be considered a key chord.
-  ;; Should normally be a little longer than `key-chord-two-keys-delay'.
-  (setq key-chord-one-key-delay 0.2) ; default 0.2
-)
+  (use-package key-chord
+    ;;:quelpa (key-chord :fetcher github :repo "emacsorphanage/key-chord")
+    ;;:ensure t
+    :init
+      (key-chord-mode 1)
+    :config
+      ;; Max time delay between two key presses to be considered a key chord
+      (setq key-chord-two-keys-delay 0.1)
+      ;; Max time delay between two presses of the same key to be considered a key chord.
+      ;; Should normally be a little longer than `key-chord-two-keys-delay'.
+      (setq key-chord-one-key-delay 0.2) ; default 0.2
+  )
+;; (after! key-chord
+;;   (key-chord-mode 1)
+;;   ;; Max time delay between two key presses to be considered a key chord
+;;   (setq key-chord-two-keys-delay 0.1)
+;;   ;; Max time delay between two presses of the same key to be considered a key chord.
+;;   ;; Should normally be a little longer than `key-chord-two-keys-delay'.
+;;   (setq key-chord-one-key-delay 0.2) ; default 0.2
+;; )
 #+end_src
 
 *** key chords for functions
@@ -1021,9 +1052,15 @@ No need to see the markup indicators when writing.
 #+end_src
 
 #+begin_src emacs-lisp
-(after! org
-(add-hook! org-mode :append #'org-appear-mode)
-)
+  (use-package org-appear
+    ;;:quelpa (org-appear :type git :host github :repo "awth13/org-appear")
+    ;;:ensure t
+    :hook (org-mode . org-appear-mode)
+    )
+
+;; (after! org
+;; (add-hook! org-mode :append #'org-appear-mode)
+;; )
 #+end_src
 
 ** org word count
