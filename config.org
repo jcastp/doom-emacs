@@ -1456,3 +1456,30 @@ Music from emacs
 (global-set-key (kbd "C-c m m") 'emms-browser)
 #+end_src
 
+** theme changer
+I will write a function to change themes from a list
+#+begin_src emacs-lisp
+;; This is the list of themes I want to apply and rotate
+(setq my/themes '(doom-one
+                  doom-one-light
+                  doom-plain))
+
+
+(defun my/theme-changer()
+  "Given a list of themes, it get the first one, applies it and adds it back to the list.
+
+        The result is that we can rotate from a custom list of themes."
+  (interactive)
+  ;; obtain the first item of the list, extract it, apply it, and put it back to the end of the list
+  (setq my/first-theme (car my/themes))
+  ;;(message "theme is %s" my/first-theme)
+  (setq my/themes
+        (nconc (last my/themes) (butlast my/themes)))
+                                        ;(disable-theme doom-theme)
+                                        ;(enable-theme my/first-theme)
+  (consult-theme my/first-theme)
+  (message "Applied the theme %s" my/first-theme)
+  )
+
+(global-set-key (kbd "C-c 0") 'my/theme-changer)
+#+end_src
