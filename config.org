@@ -32,6 +32,13 @@ Unmap the C-z key, so no way to minimize or suspend emacs accidentally.
 (global-unset-key (kbd "C-z"))
 #+end_src
 
+** free-keys
+To know which keys are still free
+#+begin_src emacs-lisp :tangle packages.el
+(package! free-keys
+  :recipe (:host github :repo "Fuco1/free-keys"))
+#+end_src
+
 ** Movement
 Some keys redefined to better adjust to the whole emacs key environment.
 
@@ -108,6 +115,11 @@ https://www.gnu.org/software/emacs/manual/html_node/emacs/Spelling.html
 When the windows moves, the cursor gets highlighted.
 https://github.com/Malabarba/beacon
 
+#+begin_src emacs-lisp :tangle packages.el
+(package! beacon
+  :recipe (:host github :repo "Malabarba/beacon"))
+#+end_src
+
 #+begin_src emacs-lisp
 (after! beacon
   (beacon-mode 1)
@@ -121,6 +133,11 @@ https://github.com/Malabarba/beacon
 ** guess-language
 Guess the language based on the text of the file, and use the corresponding dictionary to do the spell correction.
 https://github.com/tmalsburg/guess-language.el
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! guess-language
+  :recipe (:host github :repo "tmalsburg/guess-language.el"))
+#+end_src
 
 #+begin_src emacs-lisp
 (after! guess-language
@@ -237,6 +254,11 @@ https://www.gnu.org/software/emacs/manual/html_node/emacs/Uniquify.html
 ** Key chords
 Shortcuts to commands using just quick key combinations.
 
+#+begin_src emacs-lisp :tangle packages.el
+(package! key-chord
+  :recipe (:host github :repo "emacsorphanage/key-chord"))
+#+end_src
+
 #+begin_src emacs-lisp
 (after! key-chord
   (key-chord-mode 1)
@@ -263,19 +285,22 @@ Description of the configured key chords.
 #+end_src
 
 ** imenu-list
-Better menus
+Better menus list
+#+begin_src emacs-lisp :tangle packages.el
+(package! imenu-list
+  :recipe (:host github :repo "bmag/imenu-list"))
+#+end_src
+
 #+begin_src emacs-lisp
-(after! imenu-list
   ;; put the imenu in the position we want to
   (setq imenu-list-position 'right)
   ;; Establish the depth of the entries shown
   (setq org-imenu-depth 5)
   ;; map the keys
   (global-unset-key (kbd "M-i"))
-  (global-set-key (kbd "M-g I") #'imenu-list-smart-toggle)
+  (global-set-key (kbd "C-c s I") #'imenu-list-smart-toggle)
   ;; Once you open imenu, focus on it
   (setq imenu-list-focus-after-activation t)
-  )
 #+end_src
 ** consult
 Better search
@@ -988,6 +1013,31 @@ No need to see the markup indicators when writing.
 )
 #+end_src
 
+** org-appear
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-appear
+  :recipe (:host github
+           :repo "awth13/org-appear"))
+#+end_src
+
+#+begin_src emacs-lisp
+(after! org
+(add-hook! org-mode :append #'org-appear-mode)
+)
+#+end_src
+
+** org word count
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-wc
+  :recipe (:host github :repo "tesujimath/org-wc"))
+#+end_src
+
+** org-ql
+Better queries for org-ql.
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-ql
+  :recipe (:host github :repo "alphapapa/org-ql"))
+#+end_src
 ** org-roam
 Org-roam related config.
 
@@ -1220,6 +1270,12 @@ https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html
 *** org-roam-ui
 Load org-roam UI and all its dependencies.
 
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-roam-ui
+  :recipe (:host github :repo "org-roam/org-roam-ui")
+  )
+#+end_src
+
 #+begin_src emacs-lisp
 (use-package! org-roam-ui
   :after org-roam
@@ -1232,8 +1288,14 @@ Load org-roam UI and all its dependencies.
 Word counting with objective.
 I don't know if this is shown in the status line ...
 
+#+begin_src emacs-lisp :tangle packages.el
+(package! wc-mode
+  :recipe (:host github :repo "bnbeckwith/wc-mode"))
+#+end_src
+
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-c 9") 'wc-mode)
+(setq doom-modeline-enable-word-count t)
 #+end_src
 
 ** word count on subsections
@@ -1242,6 +1304,11 @@ https://lists.gnu.org/archive/html/emacs-orgmode/2011-04/msg00713.html
 ** word count track table
 A table to track the advance of your writing
 https://github.com/tty-tourist/org-tracktable
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-tracktable
+  :recipe (:host github :repo "tty-tourist/org-tracktable"))
+#+end_src
 
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-c 3") 'org-tracktable-status)
@@ -1299,7 +1366,7 @@ Translate a work
 ** elfeed
 #+begin_src emacs-lisp
 (setq elfeed-db-directory "~/Nextcloud/config/.emacs.d/elfeed")
-(global-set-key (kbd "C-x w") 'elfeed)
+(global-set-key (kbd "C-c m w") 'elfeed)
 
 (setq elfeed-feeds
       '(
@@ -1313,4 +1380,24 @@ Translate a work
         "https://sachachua.com/blog/feed"
         )
       )
+#+end_src
+** emms
+Music from emacs
+#+begin_src emacs-lisp
+(require 'emms-setup)
+(emms-all)
+(emms-default-players)
+(if my-desktopsystem-p
+  (setq emms-source-file-default-directory "/home/musica") ;; Change to your music folder
+  )
+
+;; fot the tagging of songs
+(setq emms-info-functions '(emms-info-tinytag))
+
+;; Keyboard shortcuts
+(global-set-key (kbd "<XF86AudioPrev>") 'emms-previous)
+(global-set-key (kbd "<XF86AudioNext>") 'emms-next)
+(global-set-key (kbd "<XF86AudioPlay>") 'emms-pause)
+
+(global-set-key (kbd "C-c m m") 'emms-browser)
 #+end_src
