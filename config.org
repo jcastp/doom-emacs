@@ -66,6 +66,11 @@ Using the firefox-esr, as I don't like snap package ...
   (setq browse-url-firefox-program "firefox-esr")
   (setq browse-url-browser-function 'browse-url-firefox)
 #+end_src
+** Start maximized
+#+begin_src emacs-lisp
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+#+end_src
+
 * Editing
 ** Undo
 Undo binded to C-z
