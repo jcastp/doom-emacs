@@ -191,6 +191,16 @@
 
 (global-set-key (kbd "C-s") #'consult-line)
 
+(setq org-priority-highest ?A
+      org-priority-lowest ?E
+      org-priority-faces
+      '((?A . 'all-the-icons-red)
+        (?B . 'all-the-icons-orange)
+        (?C . 'all-the-icons-yellow)
+        (?D . 'all-the-icons-green)
+        (?E . 'all-the-icons-blue))
+      )
+
 (after! org
   ;; Adds a timestamp to the state
   (setq org-log-done 'time)
@@ -1055,9 +1065,13 @@
 (require 'emms-setup)
 (emms-all)
 (emms-default-players)
+;; Depending on the system, the music is one place or another
 (if my-desktopsystem-p
-  (setq emms-source-file-default-directory "/home/musica") ;; Change to your music folder
+    (setq emms-source-file-default-directory "/home/musica") ;; Change to your music folder
   )
+(if my-worksystem-p
+    (setq emms-source-file-default-directory "/home/jcastp/Música") ;; Change to your music folder
+    )
 
 ;; fot the tagging of songs
 (setq emms-info-functions '(emms-info-tinytag))

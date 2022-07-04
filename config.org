@@ -343,6 +343,19 @@ Better search
 (global-set-key (kbd "C-s") #'consult-line)
 #+end_src
 * orgmode
+** New priorities
+Priorities from A to E, and with new colors
+#+begin_src emacs-lisp
+(setq org-priority-highest ?A
+      org-priority-lowest ?E
+      org-priority-faces
+      '((?A . 'all-the-icons-red)
+        (?B . 'all-the-icons-orange)
+        (?C . 'all-the-icons-yellow)
+        (?D . 'all-the-icons-green)
+        (?E . 'all-the-icons-blue))
+      )
+#+end_src
 ** Custom notes and timestamp
 Put a note or a timestamp when something changes. For example:
 - When the tasks is marked as DONE
@@ -1441,9 +1454,13 @@ Music from emacs
 (require 'emms-setup)
 (emms-all)
 (emms-default-players)
+;; Depending on the system, the music is one place or another
 (if my-desktopsystem-p
-  (setq emms-source-file-default-directory "/home/musica") ;; Change to your music folder
+    (setq emms-source-file-default-directory "/home/musica") ;; Change to your music folder
   )
+(if my-worksystem-p
+    (setq emms-source-file-default-directory "/home/jcastp/Música") ;; Change to your music folder
+    )
 
 ;; fot the tagging of songs
 (setq emms-info-functions '(emms-info-tinytag))
