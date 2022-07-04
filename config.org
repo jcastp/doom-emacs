@@ -201,8 +201,8 @@ To automatically close parenthesis and and other punctuation signs.
   ;; Font used for normal writing
   ;;doom-variable-pitch-font (font-spec :family "Gentium Basic" :size 18)
   ;;doom-variable-pitch-font (font-spec :family "ETBookOT" :size 18)
-  doom-variable-pitch-font (font-spec :family "ETBembo" :size 18)
-  ;;doom-variable-pitch-font (font-spec :family "EB Garamond 12" :size 18 :weight 'Medium)
+  ;;doom-variable-pitch-font (font-spec :family "ETBembo" :size 18)
+  doom-variable-pitch-font (font-spec :family "EB Garamond 12" :size 18 :weight 'Medium)
   ; When you want to have a different fixed font for the variable one
   ;; doom-variable-pitch-font (font-spec :family "JetBrains Mono" :size 16 :weight 'Extralight)
   ;;doom-variable-pitch-font (font-spec :family "Iosevka" :size 16 :weight 'Regular)

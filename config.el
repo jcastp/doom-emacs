@@ -111,8 +111,8 @@
   ;; Font used for normal writing
   ;;doom-variable-pitch-font (font-spec :family "Gentium Basic" :size 18)
   ;;doom-variable-pitch-font (font-spec :family "ETBookOT" :size 18)
-  doom-variable-pitch-font (font-spec :family "ETBembo" :size 18)
-  ;;doom-variable-pitch-font (font-spec :family "EB Garamond 12" :size 18 :weight 'Medium)
+  ;;doom-variable-pitch-font (font-spec :family "ETBembo" :size 18)
+  doom-variable-pitch-font (font-spec :family "EB Garamond 12" :size 18 :weight 'Medium)
   ; When you want to have a different fixed font for the variable one
   ;; doom-variable-pitch-font (font-spec :family "JetBrains Mono" :size 16 :weight 'Extralight)
   ;;doom-variable-pitch-font (font-spec :family "Iosevka" :size 16 :weight 'Regular)
@@ -1068,3 +1068,27 @@
 (global-set-key (kbd "<XF86AudioPlay>") 'emms-pause)
 
 (global-set-key (kbd "C-c m m") 'emms-browser)
+
+;; This is the list of themes I want to apply and rotate
+(setq my/themes '(doom-one
+                  doom-one-light
+                  doom-plain))
+
+
+(defun my/theme-changer()
+  "Given a list of themes, it get the first one, applies it and adds it back to the list.
+
+        The result is that we can rotate from a custom list of themes."
+  (interactive)
+  ;; obtain the first item of the list, extract it, apply it, and put it back to the end of the list
+  (setq my/first-theme (car my/themes))
+  ;;(message "theme is %s" my/first-theme)
+  (setq my/themes
+        (nconc (last my/themes) (butlast my/themes)))
+                                        ;(disable-theme doom-theme)
+                                        ;(enable-theme my/first-theme)
+  (consult-theme my/first-theme)
+  (message "Applied the theme %s" my/first-theme)
+  )
+
+(global-set-key (kbd "C-c 0") 'my/theme-changer)
