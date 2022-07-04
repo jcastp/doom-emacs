@@ -1070,9 +1070,14 @@
 (global-set-key (kbd "C-c m m") 'emms-browser)
 
 ;; This is the list of themes I want to apply and rotate
-(setq my/themes '(doom-one
-                  doom-one-light
-                  doom-plain))
+(defvar my/themes '(doom-one
+                    doom-one-light
+                    doom-plain)
+  "Stores the themes we want to change to.
+The theme enabled will be the first of the list,
+and then it will be pushed to the end of the list.
+This way, we rotate the themes."
+  )
 
 
 (defun my/theme-changer()
