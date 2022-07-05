@@ -1091,6 +1091,7 @@ No need to see the markup indicators when writing.
 #+end_src
 
 ** org word count
+https://lists.gnu.org/archive/html/emacs-orgmode/2011-04/msg00713.html
 #+begin_src emacs-lisp :tangle packages.el
 (package! org-wc
   :recipe (:host github :repo "tesujimath/org-wc"))
@@ -1362,9 +1363,6 @@ I don't know if this is shown in the status line ...
 (setq doom-modeline-enable-word-count t)
 #+end_src
 
-** word count on subsections
-https://lists.gnu.org/archive/html/emacs-orgmode/2011-04/msg00713.html
-
 ** word count track table
 A table to track the advance of your writing
 https://github.com/tty-tourist/org-tracktable
@@ -1518,7 +1516,6 @@ This way, we rotate the themes."
 
 (global-set-key (kbd "C-c 0") 'my/theme-changer)
 #+end_src
-
 
 * Work environment
 This will be my working environment config
