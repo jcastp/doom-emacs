@@ -187,6 +187,13 @@ To automatically close parenthesis and and other punctuation signs.
             (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c)))
   )
 #+end_src
+** yasnippet
+*** yasnippet load custom directories
+Modify yas-snippet-dirs to add my own snippets.
+#+begin_src emacs-lisp
+(add-to-list 'yas-snippet-dirs "/home/jcastp/Nextcloud/config/.emacs.d/snippets/" t)
+#+end_src
+
 * UI
 ** Define fonts
 #+begin_src emacs-lisp
@@ -968,7 +975,7 @@ Here I will add template captures for doing several things:
                                ("i" "Inbox" entry
                                 (file+headline "~/Nextcloud/agenda/tasks.org" "Inbox")
                                 "* TODO %i%? \nEntered on %U"
-                                :empty-lines-after 1)
+                                :empty-lines-after 2)
                                )
         )
 )

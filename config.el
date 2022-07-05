@@ -100,6 +100,8 @@
           (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c)))
 )
 
+(add-to-list 'yas-snippet-dirs "/home/jcastp/Nextcloud/config/.emacs.d/snippets/" t)
+
 (setq
   ;; Font used for source code
   ;; doom-font (font-spec :family "JetBrains Mono" :size 14 :weight 'Medium)
@@ -710,7 +712,7 @@
                                ("i" "Inbox" entry
                                 (file+headline "~/Nextcloud/agenda/tasks.org" "Inbox")
                                 "* TODO %i%? \nEntered on %U"
-                                :empty-lines-after 1)
+                                :empty-lines-after 2)
                                )
         )
 )
