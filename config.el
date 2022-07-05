@@ -1111,3 +1111,10 @@ This way, we rotate the themes."
   )
 
 (global-set-key (kbd "C-c 0") 'my/theme-changer)
+
+;; Load this config when using the work computer
+(if my-workenvironment-p
+       (progn
+         (org-babel-load-file "~/.doom.d/emacs-org-init-trabajo.org")
+    )
+  )

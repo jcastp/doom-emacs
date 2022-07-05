@@ -88,6 +88,7 @@ Undo binded to C-z
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-z") #'undo)
 #+end_src
+
 ** Abbreviation mode
 Defines a set of abbreviations that permits complete words with just some characters.
 
@@ -1504,4 +1505,16 @@ This way, we rotate the themes."
   )
 
 (global-set-key (kbd "C-c 0") 'my/theme-changer)
+#+end_src
+
+
+* Work environment
+This will be my working environment config
+#+begin_src emacs-lisp
+    ;; Load this config when using the work computer
+  (if my-workenvironment-p
+         (progn
+           (org-babel-load-file "~/.doom.d/emacs-org-init-trabajo.org")
+      )
+    )
 #+end_src
