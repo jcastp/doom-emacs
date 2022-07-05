@@ -3,11 +3,13 @@ Lexical binding tagging
 #+begin_src emacs-lisp
 ;;; config.el -*- lexical-binding: t; -*-
 #+end_src
+
 ** Personal information
 #+begin_src emacs-lisp
 (setq user-full-name "Javier Castilla"
       user-mail-address "jcastp@pm.me")
 #+end_src
+
 ** System information
 Variables to conditional load based on systems or locations.
 *** based on machine names
@@ -50,6 +52,7 @@ Some keys redefined to better adjust to the whole emacs key environment.
   (global-set-key (kbd "M-p") 'backward-paragraph)
   (global-set-key (kbd "M-n") 'forward-paragraph)
 #+end_src
+
 ** auto revert mode
 When a file is changed in disk, the buffer reloads to reflect that change.
 
@@ -63,6 +66,7 @@ Change dired buffers when the directory is changed:
   ;; auto refresh dired when file changes
   (add-hook! 'dired-mode-hook 'auto-revert-mode)
 #+end_src
+
 ** Bookmarks
 All the config related to the bookmarks.
 
@@ -70,6 +74,7 @@ All the config related to the bookmarks.
 (setq bookmark-default-file "~/Nextcloud/config/.emacs.d/bookmarks")  ;;define file to use.
 (setq bookmark-save-flag 1)  ;save bookmarks to .emacs.bmk after each entry
 #+end_src
+
 ** TODO set firefox as the default browser
 Setting firefox as the default browser.
 Using the firefox-esr, as I don't like snap package ...
