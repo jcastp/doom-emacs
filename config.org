@@ -1388,9 +1388,17 @@ Adjustments done to the zen mode for better visibility
   :recipe (:host github :repo "rbanffy/selectric-mode"))
 #+end_src
 
+This activates typewriter sounds when entering the writeroom mode, and
 #+begin_src emacs-lisp
-;; Here there will be the hook for the selectric activation on zen
+(defun my-writeroom-mode-hook ()
+  "Custom behaviours for `writeroom-mode'."
+  (if writeroom-mode
+      (selectric-mode 1)
+    (selectric-mode 0)))
+
+(add-hook 'writeroom-mode-hook #'my-writeroom-mode-hook)
 #+end_src
+
 ** TODO org-journal
 This is for journaling every day, if possible.
 Documentation can be found here:
@@ -1429,7 +1437,7 @@ Seach a synonim
 #+end_src
 
 ** Translate from english
-Translate a work
+Translate a word
 
 #+begin_src emacs-lisp
   (defun my/translate (palabra)

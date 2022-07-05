@@ -1021,7 +1021,13 @@
 (setq +zen-text-scale 2)
 (setq writeroom-width 0.1)
 
-;; Here there will be the hook for the selectric activation on zen
+(defun my-writeroom-mode-hook ()
+  "Custom behaviours for `writeroom-mode'."
+  (if writeroom-mode
+      (selectric-mode 1)
+    (selectric-mode 0)))
+
+(add-hook 'writeroom-mode-hook #'my-writeroom-mode-hook)
 
 ;;("C-c r ñ" . org-journal-new-entry)
 (setq org-journal-date-prefix "#+TITLE: ")
