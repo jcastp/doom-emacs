@@ -164,22 +164,22 @@
       )
 )
 
-  (setq org-capture-templates'(
+(setq org-capture-templates'(
 
-      ("t" "My TODO task format." entry
-         (file+headline "~/Nextcloud/trabajo/adidas/adidas.org" "Tasks")
-         "** TODO %?\n:PROPERTIES:\n:type: task\n:END:\n")
+                             ("i" "My TODO task format." entry
+                              (file+headline "~/Nextcloud/trabajo/adidas/adidas.org" "Tasks")
+                              "** TODO %?\n:PROPERTIES:\n:type: task\n:END:\n")
 
-      ("i" "New incident." entry
-         (file+headline "~/Nextcloud/trabajo/adidas/adidas.org" "Incidents")
-         "** TODO %?")
-      
+                             ("I" "New incident." entry
+                              (file+headline "~/Nextcloud/trabajo/adidas/adidas.org" "Incidents")
+                              "** TODO %?")
 
-      ("b" "Backlog entry." entry
-         (file+headline "~/Nextcloud/trabajo/adidas/adidas_backlog.org" "Backlog")
-         "** TODO %?\n")
-      
-        )
-)
+
+                             ("b" "Backlog entry." entry
+                              (file+headline "~/Nextcloud/trabajo/adidas/adidas_backlog.org" "Backlog")
+                              "** TODO %?\n")
+
+                             )
+      )
 
   (find-file "~/Nextcloud/trabajo/adidas/adidas.org")

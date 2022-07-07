@@ -249,14 +249,16 @@ Open a branch into a different frame, but the same buffer:
 #+begin_src emacs-lisp
 ;; this is done to open the indirect buffer in another window
 ;; instead on the main one
-(setq org-indirect-buffer-display 'other-window)
+(after! org
+  (setq org-indirect-buffer-display 'other-window)
 
   (defun my/org-tree-open-in-right-frame ()
-      (interactive)
-      (org-tree-to-indirect-buffer)
-      (windmove-right)
-  )
+    (interactive)
+    (org-tree-to-indirect-buffer)
+    (windmove-right)
+    )
   (global-set-key (kbd "C-c 8" ) 'my/org-tree-open-in-right-frame)
+  )
 #+end_src
 ** TODO tab-bar-mode
 tab-bar-mode seems to comply with all my requirements to store the configuration of the buffers and frames. This, coupled with desktop saving and restoring, can be the answer.

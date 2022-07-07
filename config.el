@@ -131,14 +131,16 @@
 
 ;; this is done to open the indirect buffer in another window
 ;; instead on the main one
-(setq org-indirect-buffer-display 'other-window)
+(after! org
+  (setq org-indirect-buffer-display 'other-window)
 
   (defun my/org-tree-open-in-right-frame ()
-      (interactive)
-      (org-tree-to-indirect-buffer)
-      (windmove-right)
-  )
+    (interactive)
+    (org-tree-to-indirect-buffer)
+    (windmove-right)
+    )
   (global-set-key (kbd "C-c 8" ) 'my/org-tree-open-in-right-frame)
+  )
 
 ;;(tab-bar-mode 1)
 ;; Map the not mapped but useful functions
