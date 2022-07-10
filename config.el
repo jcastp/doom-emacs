@@ -235,8 +235,11 @@
 
 (after! org
   (setq org-agenda-files '(
+                           ;; normal task files
                            "~/Nextcloud/agenda/tasks.org"
                            "~/Nextcloud/agenda/inbox.org"
+                           ;; doom config, for the
+                           "~/.doom.d/config.org"
                            )
   )
 )
