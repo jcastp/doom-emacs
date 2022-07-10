@@ -1476,7 +1476,7 @@ RSS feeds in emacs
         )
       )
 #+end_src
-** emms
+** TODO emms
 Music from emacs
 #+begin_src emacs-lisp
 (require 'emms-setup)
@@ -1533,6 +1533,15 @@ This way, we rotate the themes."
 
 (global-set-key (kbd "C-c 0") 'my/theme-changer)
 #+end_src
+
+* testing
+** TODO org-ref
+For bibliographical references
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-ref
+  :recipe (:host github :repo "jkitchin/org-ref"))
+#+end_src
+** TODO org-cv
 
 * Work environment
 This will be my working environment config
