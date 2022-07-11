@@ -1172,8 +1172,17 @@ https://github.com/org-roam/org-roam/pull/2054
               (propertize "${tags:20}" 'face 'org-tag)))
 #+end_src
 
+*** Search using content or roam using ripgrep
+This does full text search on my roam notes.
+#+begin_src emacs-lisp
+(defun my/org-roam-rg-search ()
+  "Search org-roam directory using consult-ripgrep. With live-preview."
+  (interactive)
+  (let ((consult-ripgrep-command "rg --null --ignore-case --type org --line-buffered --color=always --max-columns=500 --no-heading --line-number . -e ARG OPTS"))
+    (consult-ripgrep org-roam-directory)))
+(global-set-key (kbd "C-c rr") 'my/org-roam-rg-search)
+#+end_src
 *** Dailies config
-
 #+begin_src emacs-lisp
   ;; Daily notes for org-roam
   ;; Directory is relative to org-roam-directory

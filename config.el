@@ -857,6 +857,13 @@
    (concat "${title:*} "
            (propertize "${tags:20}" 'face 'org-tag)))
 
+(defun my/org-roam-rg-search ()
+  "Search org-roam directory using consult-ripgrep. With live-preview."
+  (interactive)
+  (let ((consult-ripgrep-command "rg --null --ignore-case --type org --line-buffered --color=always --max-columns=500 --no-heading --line-number . -e ARG OPTS"))
+    (consult-ripgrep org-roam-directory)))
+(global-set-key (kbd "C-c rr") 'my/org-roam-rg-search)
+
 ;; Daily notes for org-roam
 ;; Directory is relative to org-roam-directory
 (setq org-roam-dailies-directory "daily/")
