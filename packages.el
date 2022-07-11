@@ -38,3 +38,6 @@
 
 (package! org-ref
   :recipe (:host github :repo "jkitchin/org-ref"))
+
+(package! org-ref
+  :recipe (:host gitlab :repo "Titan-C/org-cv"))

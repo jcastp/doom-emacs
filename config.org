@@ -1551,6 +1551,12 @@ For bibliographical references
   :recipe (:host github :repo "jkitchin/org-ref"))
 #+end_src
 ** TODO org-cv
+To create a CV based on the orgmode cv
+https://gitlab.com/Titan-C/org-cv
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-ref
+  :recipe (:host gitlab :repo "Titan-C/org-cv"))
+#+end_src
 
 * Work environment
 This will be my working environment config
