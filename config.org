@@ -161,19 +161,16 @@ https://github.com/tmalsburg/guess-language.el
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package guess-language
-    ;;:quelpa (guess-language :fetcher github :repo "tmalsburg/guess-language.el")
-    ;;:ensure t
-    :config
-      (setq guess-language-languages '(es en))
-      (setq guess-language-min-paragraph-length 80)
-      :hook (text-mode-hook . (lambda () (guess-language-mode 1)))
+(use-package guess-language
+  ;;:quelpa (guess-language :fetcher github :repo "tmalsburg/guess-language.el")
+  ;;:ensure t
+  :config
+  ;; (setq guess-language-langcodes '((en . ("en_GB" "English"))
+  ;;                                  (es . ("es_ES" "Spanish"))))
+  (setq guess-language-languages '(en es))
+  (setq guess-language-min-paragraph-length 40)
+  :hook (text-mode-hook . (lambda () (guess-language-mode 1)))
   )
-;; (after! guess-language
-;;   (setq guess-language-languages '(es en))
-;;   (setq guess-language-min-paragraph-length 80)
-;;   (add-hook 'text-mode-hook (lambda () (guess-language-mode 1)))
-;; )
 #+end_src
 ** electric pair mode
 To automatically close parenthesis and and other punctuation signs.

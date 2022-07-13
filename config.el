@@ -73,18 +73,15 @@
 ;;   )
 
 (use-package guess-language
-    ;;:quelpa (guess-language :fetcher github :repo "tmalsburg/guess-language.el")
-    ;;:ensure t
-    :config
-      (setq guess-language-languages '(es en))
-      (setq guess-language-min-paragraph-length 80)
-      :hook (text-mode-hook . (lambda () (guess-language-mode 1)))
+  ;;:quelpa (guess-language :fetcher github :repo "tmalsburg/guess-language.el")
+  ;;:ensure t
+  :config
+  ;; (setq guess-language-langcodes '((en . ("en_GB" "English"))
+  ;;                                  (es . ("es_ES" "Spanish"))))
+  (setq guess-language-languages '(en es))
+  (setq guess-language-min-paragraph-length 40)
+  :hook (text-mode-hook . (lambda () (guess-language-mode 1)))
   )
-;; (after! guess-language
-;;   (setq guess-language-languages '(es en))
-;;   (setq guess-language-min-paragraph-length 80)
-;;   (add-hook 'text-mode-hook (lambda () (guess-language-mode 1)))
-;; )
 
 (electric-pair-mode 1)
 ;; make electric-pair-mode work on more sets of punctuation signs.
