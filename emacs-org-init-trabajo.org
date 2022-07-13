@@ -4,9 +4,9 @@ It is supposed to run over the generic emacs config, and overwrites that config 
 
 ** clear theme
 #+begin_src emacs-lisp :tangle yes
-  (disable-theme 'modus-vivendi)
-  (load-theme 'modus-operandi t)
-  (enable-theme 'modus-operandi)
+  (disable-theme doom-theme)
+  (load-theme 'doom-tomorrow-day t)
+  (enable-theme 'doom-tomorrow-day)
 #+end_src
 
 ** Put the correct agenda files for work
