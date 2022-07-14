@@ -610,6 +610,11 @@ I need a more clear view for things to come. We can see 15 days from now.
   (setq org-agenda-start-on-weekday nil)
   )
 #+end_src
+*** Show the agenda in another window
+I want to see the agenda side by side of the files I'm working with.
+#+begin_src emacs-lisp
+(setq org-agenda-window-setup 'reorganize-frame)
+#+end_src
 ** TODO Refile entries
 This lets you choose refiling targets in heading depth of 9, and lets you get also the files in the same directory hierarchy.
 

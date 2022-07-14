@@ -412,6 +412,8 @@
   (setq org-agenda-start-on-weekday nil)
   )
 
+(setq org-agenda-window-setup 'reorganize-frame)
+
 (after! org
   (setq org-refile-targets '(
                               (nil :maxlevel . 9)
