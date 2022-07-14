@@ -1,6 +1,6 @@
-  (disable-theme 'modus-vivendi)
-  (load-theme 'modus-operandi t)
-  (enable-theme 'modus-operandi)
+  (disable-theme doom-theme)
+  (load-theme 'doom-tomorrow-day t)
+  (enable-theme 'doom-tomorrow-day)
 
   ;; empty the org-agenda-files 
   (setq org-agenda-files '(""))
