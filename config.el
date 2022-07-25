@@ -105,16 +105,16 @@
   ;; doom-font (font-spec :family "Fira Code" :size 14 :weight 'Medium)
   ;; doom-font (font-spec :family "Hasklig" :size 14 :weight 'Medium)
   ;; doom-font (font-spec :family "Iosevka Fixed" :size 16 :weight 'Medium)
-  ;; doom-font (font-spec :family "Hack" :size 14)
+  doom-font (font-spec :family "Hack" :size 14)
 
   ;; Font used for normal writing
   ;;doom-variable-pitch-font (font-spec :family "Gentium Basic" :size 18)
   ;;doom-variable-pitch-font (font-spec :family "ETBookOT" :size 18)
   ;;doom-variable-pitch-font (font-spec :family "ETBembo" :size 18)
   doom-variable-pitch-font (font-spec :family "EB Garamond 12" :size 18 :weight 'Medium)
-  ; When you want to have a different fixed font for the variable one
+  ;; When you want to have a fixed font for the variable one
   ;; doom-variable-pitch-font (font-spec :family "JetBrains Mono" :size 16 :weight 'Extralight)
-  ;;doom-variable-pitch-font (font-spec :family "Iosevka" :size 16 :weight 'Regular)
+  ;; doom-variable-pitch-font (font-spec :family "Iosevka" :size 16 :weight 'Regular)
   )
 
 (global-set-key (kbd "M-+") 'text-scale-increase)
@@ -1134,6 +1134,13 @@ This way, we rotate the themes."
   )
 
 (global-set-key (kbd "C-c 0") 'my/theme-changer)
+
+(defun my/font-changer()
+  "Change the variable pitch font when needed and recover it."
+  (interactive)
+  ;; Here will be the code to change the font
+  (variable-pitch-mode)
+  )
 
 ;; Load this config when using the work computer
 (if my-workenvironment-p
