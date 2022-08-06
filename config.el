@@ -1107,7 +1107,11 @@
 (global-set-key (kbd "C-c m m") 'emms-browser)
 
 ;; This is the list of themes I want to apply and rotate
-(defvar my/themes '(doom-vibrant
+(defvar my/themes '(
+                    ; dark themes
+                    doom-vibrant
+                    ; light themes
+                    leuven
                     doom-acario-light)
   "Stores the themes we want to change to.
 The theme enabled will be the first of the list,
