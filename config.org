@@ -219,6 +219,11 @@ Modify yas-snippet-dirs to add my own snippets.
   )
 #+end_src
 
+** Initial theme
+We establish the initial theme.
+#+begin_src emacs-lisp
+(consult-theme 'doom-vibrant)
+#+end_src
 ** Font size increase/decrease
 Increase or decrease the font size
 
@@ -1513,7 +1518,7 @@ Music from emacs
 #+end_src
 
 ** theme changer
-I will write a function to change themes from a list
+I will write a function to change themes from a list.
 #+begin_src emacs-lisp
 ;; This is the list of themes I want to apply and rotate
 (defvar my/themes '(

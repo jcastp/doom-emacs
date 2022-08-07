@@ -117,6 +117,8 @@
   ;; doom-variable-pitch-font (font-spec :family "Iosevka" :size 16 :weight 'Regular)
   )
 
+(consult-theme 'doom-vibrant)
+
 (global-set-key (kbd "M-+") 'text-scale-increase)
 (global-set-key (kbd "M--") 'text-scale-decrease)
 
