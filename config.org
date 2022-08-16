@@ -1407,22 +1407,6 @@ Adjustments done to the zen mode for better visibility
 (setq +zen-text-scale 2)
 (setq writeroom-width 0.1)
 #+end_src
-** selectric - typing sound like a typewriter
-#+begin_src emacs-lisp :tangle packages.el
-(package! selectric-mode
-  :recipe (:host github :repo "rbanffy/selectric-mode"))
-#+end_src
-
-This activates typewriter sounds when entering the writeroom mode, and
-#+begin_src emacs-lisp
-(defun my-writeroom-mode-hook ()
-  "Custom behaviours for `writeroom-mode'."
-  (if writeroom-mode
-      (selectric-mode 1)
-    (selectric-mode 0)))
-
-(add-hook 'writeroom-mode-hook #'my-writeroom-mode-hook)
-#+end_src
 
 ** TODO org-journal
 This is for journaling every day, if possible.

@@ -33,9 +33,6 @@
 (package! org-tracktable
   :recipe (:host github :repo "tty-tourist/org-tracktable"))
 
-(package! selectric-mode
-  :recipe (:host github :repo "rbanffy/selectric-mode"))
-
 (package! org-ref
   :recipe (:host github :repo "jkitchin/org-ref"))
 
