@@ -2,6 +2,13 @@
 This configuration is just a patch to work with the work environment.
 It is supposed to run over the generic emacs config, and overwrites that config with the custom config for work environment.
 
+** Defining my own work directory
+#+begin_src emacs-lisp :tangle yes
+(defvar my-work-dir "/mnt/c/Users/castifrc/OneDrive - adidas/agenda/"
+  "My own working directory")
+#+end_src
+
+
 ** clear theme
 #+begin_src emacs-lisp :tangle yes
   (disable-theme doom-theme)
@@ -15,7 +22,7 @@ It is supposed to run over the generic emacs config, and overwrites that config 
   (setq org-agenda-files '(""))
   ;; And now, populate with the work environment
   ;; This needs to be changed when you change company!!!
-  (setq org-agenda-files '("~/Nextcloud/trabajo/adidas/adidas.org"
+  (setq org-agenda-files '("/mnt/c/Users/castifrc/OneDrive - adidas/agenda/adidas.org"
                            )
   )
 #+end_src
@@ -193,16 +200,16 @@ As work is different from home, I need specific templates.
 (setq org-capture-templates'(
 
                              ("i" "My TODO task format." entry
-                              (file+headline "~/Nextcloud/trabajo/adidas/adidas.org" "Tasks")
+                              (file+headline "/mnt/c/Users/castifrc/OneDrive - adidas/agenda/adidas.org" "Tasks")
                               "** TODO %?\n:PROPERTIES:\n:type: task\n:END:\n")
 
                              ("I" "New incident." entry
-                              (file+headline "~/Nextcloud/trabajo/adidas/adidas.org" "Incidents")
+                              (file+headline "/mnt/c/Users/castifrc/OneDrive - adidas/agenda/adidas.org" "Incidents")
                               "** TODO %?")
 
 
                              ("b" "Backlog entry." entry
-                              (file+headline "~/Nextcloud/trabajo/adidas/adidas_backlog.org" "Backlog")
+                              (file+headline "/mnt/c/Users/castifrc/OneDrive - adidas/agenda/adidas_backlog.org" "Backlog")
                               "** TODO %?\n")
 
                              )
@@ -211,5 +218,5 @@ As work is different from home, I need specific templates.
 
 ** Load the task list for work
 #+begin_src emacs-lisp :tangle yes
-  (find-file "~/Nextcloud/trabajo/adidas/adidas.org")
+  (find-file "/mnt/c/Users/castifrc/OneDrive - adidas/agenda/adidas.org")
 #+end_src

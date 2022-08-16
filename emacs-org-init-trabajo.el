@@ -1,3 +1,6 @@
+(defvar my-work-dir "/mnt/c/Users/castifrc/OneDrive - adidas/agenda/"
+  "My own working directory")
+
   (disable-theme doom-theme)
   (load-theme 'doom-tomorrow-day t)
   (enable-theme 'doom-tomorrow-day)
@@ -6,7 +9,7 @@
   (setq org-agenda-files '(""))
   ;; And now, populate with the work environment
   ;; This needs to be changed when you change company!!!
-  (setq org-agenda-files '("~/Nextcloud/trabajo/adidas/adidas.org"
+  (setq org-agenda-files '("/mnt/c/Users/castifrc/OneDrive - adidas/agenda/adidas.org"
                            )
   )
 
@@ -167,19 +170,19 @@
 (setq org-capture-templates'(
 
                              ("i" "My TODO task format." entry
-                              (file+headline "~/Nextcloud/trabajo/adidas/adidas.org" "Tasks")
+                              (file+headline "/mnt/c/Users/castifrc/OneDrive - adidas/agenda/adidas.org" "Tasks")
                               "** TODO %?\n:PROPERTIES:\n:type: task\n:END:\n")
 
                              ("I" "New incident." entry
-                              (file+headline "~/Nextcloud/trabajo/adidas/adidas.org" "Incidents")
+                              (file+headline "/mnt/c/Users/castifrc/OneDrive - adidas/agenda/adidas.org" "Incidents")
                               "** TODO %?")
 
 
                              ("b" "Backlog entry." entry
-                              (file+headline "~/Nextcloud/trabajo/adidas/adidas_backlog.org" "Backlog")
+                              (file+headline "/mnt/c/Users/castifrc/OneDrive - adidas/agenda/adidas_backlog.org" "Backlog")
                               "** TODO %?\n")
 
                              )
       )
 
-  (find-file "~/Nextcloud/trabajo/adidas/adidas.org")
+  (find-file "/mnt/c/Users/castifrc/OneDrive - adidas/agenda/adidas.org")
