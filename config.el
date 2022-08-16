@@ -117,7 +117,7 @@
   ;; doom-variable-pitch-font (font-spec :family "Iosevka" :size 16 :weight 'Regular)
   )
 
-(consult-theme 'doom-vibrant)
+(consult-theme 'doom-homage-black)
 
 (global-set-key (kbd "M-+") 'text-scale-increase)
 (global-set-key (kbd "M--") 'text-scale-decrease)
@@ -1111,6 +1111,7 @@
 ;; This is the list of themes I want to apply and rotate
 (defvar my/themes '(
                     ; dark themes
+                    doom-homage-black
                     doom-vibrant
                     ; light themes
                     leuven

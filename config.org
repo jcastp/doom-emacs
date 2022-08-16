@@ -1,3 +1,5 @@
+#+STARTUP: overview
+#+LANGUAGE: en
 * General config
 Lexical binding tagging
 #+begin_src emacs-lisp
@@ -222,7 +224,7 @@ Modify yas-snippet-dirs to add my own snippets.
 ** Initial theme
 We establish the initial theme.
 #+begin_src emacs-lisp
-(consult-theme 'doom-vibrant)
+(consult-theme 'doom-homage-black)
 #+end_src
 ** Font size increase/decrease
 Increase or decrease the font size
@@ -1523,6 +1525,7 @@ I will write a function to change themes from a list.
 ;; This is the list of themes I want to apply and rotate
 (defvar my/themes '(
                     ; dark themes
+                    doom-homage-black
                     doom-vibrant
                     ; light themes
                     leuven
