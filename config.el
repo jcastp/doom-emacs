@@ -876,158 +876,165 @@
        :if-new (file+head "%<%Y-%m-%d>.org"
                           "#+title: %<%Y-%m-%d>\n#+filetags: daily\n"))))
 
-;; we want to load these functions if org-roam is present
-(if (not(require 'org-roam nil t))
-        ;; if condition
-        (message "org-roam not found")
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; else condition
-
-  (setq my/roamtag "roamtag")
-
-  (defun vulpea-buffer-prop-set (name value)
-      "Set a file property called NAME to VALUE in buffer file.
-        If the property is already set, replace its value."
-      (setq name (downcase name))
-      (org-with-point-at 1
-        (let ((case-fold-search t))
-          (if (re-search-forward (concat "^#\\+" name ":\\(.*\\)")
-                                 (point-max) t)
-              (replace-match (concat "#+" name ": " value) 'fixedcase)
-            (while (and (not (eobp))
-                        (looking-at "^[#:]"))
-              (if (save-excursion (end-of-line) (eobp))
-                  (progn
-                    (end-of-line)
-                    (insert "\n"))
-                (forward-line)
-                (beginning-of-line)))
-            (insert "#+" name ": " value "\n")))))
-
-  (defun vulpea-buffer-prop-set-list (name values &optional separators)
-    "Set a file property called NAME to VALUES in current buffer.
-        VALUES are quoted and combined into single string using
-        `combine-and-quote-strings'.
-        If SEPARATORS is non-nil, it should be a regular expression
-        matching text that separates, but is not part of, the substrings.
-        If nil it defaults to `split-string-default-separators', normally
-        \"[ \f\t\n\r\v]+\", and OMIT-NULLS is forced to t.
-        If the property is already set, replace its value."
-    (vulpea-buffer-prop-set
-     name (combine-and-quote-strings values separators)))
-
-  (defun vulpea-buffer-tags-set (&rest tags)
-    "Set TAGS in current buffer.
-          If filetags value is already set, replace it."
-    (vulpea-buffer-prop-set "filetags" (string-join tags " ")))
-
-  (defun vulpea-buffer-prop-get (name)
-    "Get a buffer property called NAME as a string."
-    (org-with-point-at 1
-      (when (re-search-forward (concat "^#\\+" name ": \\(.*\\)")
-                               (point-max) t)
-        (buffer-substring-no-properties
-         (match-beginning 1)
-         (match-end 1)))))
-
-
-  (defun vulpea-buffer-prop-get-list (name &optional separators)
-    "Get a buffer property NAME as a list using SEPARATORS.
-            If SEPARATORS is non-nil, it should be a regular expression
-            matching text that separates, but is not part of, the substrings.
-            If nil it defaults to `split-string-default-separators', normally
-            \"[ \f\t\n\r\v]+\", and OMIT-NULLS is forced to t."
-    (let ((value (vulpea-buffer-prop-get name)))
-      (when (and value (not (string-empty-p value)))
-        (split-string-and-unquote value separators))))
-
-  (defun vulpea-buffer-tags-get ()
-    "Return filetags value in current buffer."
-    (vulpea-buffer-prop-get-list "filetags" " "))
-
-  (defun vulpea-buffer-tags-add (tag)
-    "Add a TAG to filetags in current buffer."
-    (let* ((tags (vulpea-buffer-tags-get))
-           (tags (append tags (list tag))))
-      (apply #'vulpea-buffer-tags-set tags)))
-
-
-
-  (defun vulpea-project-p ()
-    "Return non-nil if current buffer has any todo entry.
-
-                TODO entries marked as done are ignored, meaning the this
-                function returns nil if current buffer contains only completed
-                tasks."
-    (seq-find                                 ; (3)
-     (lambda (type)
-       (eq type 'todo))
-     (org-element-map                         ; (2)
-         (org-element-parse-buffer 'headline) ; (1)
-         'headline
-       (lambda (h)
-         (org-element-property :todo-type h)))))
-
-  (defun vulpea-project-update-tag ()
-    "Update PROJECT tag in the current buffer."
-    (when (and (not (active-minibuffer-window))
-               (vulpea-buffer-p))
-      (save-excursion
-        (goto-char (point-min))
-        (let* ((tags (vulpea-buffer-tags-get))
-               (original-tags tags))
-          (if (vulpea-project-p)
-              (setq tags (cons "roamtag" tags))
-            (setq tags (remove "roamtag" tags)))
-
-          ;; cleanup duplicates
-          (setq tags (seq-uniq tags))
-
-          ;; update tags if changed
-          (when (or (seq-difference tags original-tags)
-                    (seq-difference original-tags tags))
-            (apply #'vulpea-buffer-tags-set tags))))))
-
-  (defun vulpea-buffer-p ()
-    "Return non-nil if the currently visited buffer is a note."
-    (and buffer-file-name
-         (string-prefix-p
-          (expand-file-name (file-name-as-directory org-roam-directory))
-          (file-name-directory buffer-file-name))))
-
-  (defun vulpea-project-files ()
-    "Return a list of note files containing 'roamtag' tag." ;
-    (seq-uniq
-     (seq-map
-      #'car
-      (org-roam-db-query
-       [:select [nodes:file]
-                :from tags
-                :left-join nodes
-                :on (= tags:node-id nodes:id)
-                :where (like tag (quote "%\"roamtag\"%"))]))))
-
-  ;; This will overwrite the current agenda files, and we don't want that
-  (defun vulpea-agenda-files-update (&rest _)
-    "Update the value of `org-agenda-files'."
-    (setq org-agenda-files (vulpea-project-files)))
-
-  (defun inject-vulpea-project-files (org-agenda-files)
-    (append org-agenda-files (vulpea-project-files)))
-  (advice-add 'org-agenda-files :filter-return #'inject-vulpea-project-files)
-
-  (add-hook 'find-file-hook #'vulpea-project-update-tag)
-  (add-hook 'before-save-hook #'vulpea-project-update-tag)
-
-  ;; original code that overwrites the agenda files
-  ;;  (advice-add 'org-agenda :before #'vulpea-agenda-files-update)
-  ;;  (advice-add 'org-todo-list :before #'vulpea-agenda-files-update)
-  )
-
 (use-package! org-roam-ui
   :after org-roam
   :hook (org-roam . org-roam-ui-mode)
   )
+
+;; Load this only on my personal profile, and not in my work one
+  (if my-homeenvironment-p
+         (progn
+
+
+
+  ;; we want to load these functions if org-roam is present
+  (if (not(require 'org-roam nil t))
+          ;; if condition
+          (message "org-roam not found")
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;; else condition
+
+    (setq my/roamtag "roamtag")
+
+    (defun vulpea-buffer-prop-set (name value)
+        "Set a file property called NAME to VALUE in buffer file.
+          If the property is already set, replace its value."
+        (setq name (downcase name))
+        (org-with-point-at 1
+          (let ((case-fold-search t))
+            (if (re-search-forward (concat "^#\\+" name ":\\(.*\\)")
+                                   (point-max) t)
+                (replace-match (concat "#+" name ": " value) 'fixedcase)
+              (while (and (not (eobp))
+                          (looking-at "^[#:]"))
+                (if (save-excursion (end-of-line) (eobp))
+                    (progn
+                      (end-of-line)
+                      (insert "\n"))
+                  (forward-line)
+                  (beginning-of-line)))
+              (insert "#+" name ": " value "\n")))))
+
+    (defun vulpea-buffer-prop-set-list (name values &optional separators)
+      "Set a file property called NAME to VALUES in current buffer.
+          VALUES are quoted and combined into single string using
+          `combine-and-quote-strings'.
+          If SEPARATORS is non-nil, it should be a regular expression
+          matching text that separates, but is not part of, the substrings.
+          If nil it defaults to `split-string-default-separators', normally
+          \"[ \f\t\n\r\v]+\", and OMIT-NULLS is forced to t.
+          If the property is already set, replace its value."
+      (vulpea-buffer-prop-set
+       name (combine-and-quote-strings values separators)))
+
+    (defun vulpea-buffer-tags-set (&rest tags)
+      "Set TAGS in current buffer.
+            If filetags value is already set, replace it."
+      (vulpea-buffer-prop-set "filetags" (string-join tags " ")))
+
+    (defun vulpea-buffer-prop-get (name)
+      "Get a buffer property called NAME as a string."
+      (org-with-point-at 1
+        (when (re-search-forward (concat "^#\\+" name ": \\(.*\\)")
+                                 (point-max) t)
+          (buffer-substring-no-properties
+           (match-beginning 1)
+           (match-end 1)))))
+
+
+    (defun vulpea-buffer-prop-get-list (name &optional separators)
+      "Get a buffer property NAME as a list using SEPARATORS.
+              If SEPARATORS is non-nil, it should be a regular expression
+              matching text that separates, but is not part of, the substrings.
+              If nil it defaults to `split-string-default-separators', normally
+              \"[ \f\t\n\r\v]+\", and OMIT-NULLS is forced to t."
+      (let ((value (vulpea-buffer-prop-get name)))
+        (when (and value (not (string-empty-p value)))
+          (split-string-and-unquote value separators))))
+
+    (defun vulpea-buffer-tags-get ()
+      "Return filetags value in current buffer."
+      (vulpea-buffer-prop-get-list "filetags" " "))
+
+    (defun vulpea-buffer-tags-add (tag)
+      "Add a TAG to filetags in current buffer."
+      (let* ((tags (vulpea-buffer-tags-get))
+             (tags (append tags (list tag))))
+        (apply #'vulpea-buffer-tags-set tags)))
+
+
+
+    (defun vulpea-project-p ()
+      "Return non-nil if current buffer has any todo entry.
+
+                  TODO entries marked as done are ignored, meaning the this
+                  function returns nil if current buffer contains only completed
+                  tasks."
+      (seq-find                                 ; (3)
+       (lambda (type)
+         (eq type 'todo))
+       (org-element-map                         ; (2)
+           (org-element-parse-buffer 'headline) ; (1)
+           'headline
+         (lambda (h)
+           (org-element-property :todo-type h)))))
+
+    (defun vulpea-project-update-tag ()
+      "Update PROJECT tag in the current buffer."
+      (when (and (not (active-minibuffer-window))
+                 (vulpea-buffer-p))
+        (save-excursion
+          (goto-char (point-min))
+          (let* ((tags (vulpea-buffer-tags-get))
+                 (original-tags tags))
+            (if (vulpea-project-p)
+                (setq tags (cons "roamtag" tags))
+              (setq tags (remove "roamtag" tags)))
+
+            ;; cleanup duplicates
+            (setq tags (seq-uniq tags))
+
+            ;; update tags if changed
+            (when (or (seq-difference tags original-tags)
+                      (seq-difference original-tags tags))
+              (apply #'vulpea-buffer-tags-set tags))))))
+
+    (defun vulpea-buffer-p ()
+      "Return non-nil if the currently visited buffer is a note."
+      (and buffer-file-name
+           (string-prefix-p
+            (expand-file-name (file-name-as-directory org-roam-directory))
+            (file-name-directory buffer-file-name))))
+
+    (defun vulpea-project-files ()
+      "Return a list of note files containing 'roamtag' tag." ;
+      (seq-uniq
+       (seq-map
+        #'car
+        (org-roam-db-query
+         [:select [nodes:file]
+                  :from tags
+                  :left-join nodes
+                  :on (= tags:node-id nodes:id)
+                  :where (like tag (quote "%\"roamtag\"%"))]))))
+
+    ;; This will overwrite the current agenda files, and we don't want that
+    (defun vulpea-agenda-files-update (&rest _)
+      "Update the value of `org-agenda-files'."
+      (setq org-agenda-files (vulpea-project-files)))
+
+    (defun inject-vulpea-project-files (org-agenda-files)
+      (append org-agenda-files (vulpea-project-files)))
+    (advice-add 'org-agenda-files :filter-return #'inject-vulpea-project-files)
+
+    (add-hook 'find-file-hook #'vulpea-project-update-tag)
+    (add-hook 'before-save-hook #'vulpea-project-update-tag)
+
+    ;; original code that overwrites the agenda files
+    ;;  (advice-add 'org-agenda :before #'vulpea-agenda-files-update)
+    ;;  (advice-add 'org-todo-list :before #'vulpea-agenda-files-update)
+    )
+  ))
 
 (global-set-key (kbd "C-c 9") 'wc-mode)
 (setq doom-modeline-enable-word-count t)

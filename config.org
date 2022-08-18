@@ -1205,12 +1205,37 @@ This does full text search on my roam notes.
                             "#+title: %<%Y-%m-%d>\n#+filetags: daily\n"))))
 #+end_src
 
+*** org-roam-ui
+Load org-roam UI and all its dependencies.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-roam-ui
+  :recipe (:host github :repo "org-roam/org-roam-ui")
+  )
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! org-roam-ui
+  :after org-roam
+  :hook (org-roam . org-roam-ui-mode)
+  )
+#+end_src
+
 *** org-roam TODOs to the agenda
 I want to get all my org-roam TODOs in the agenda view, but I need to do it only with the files that contain the TODO keywords, and not the whole org-roam directory.
+
+TODO: I need to activate this only for my personal profile, and not my work profile
 
 https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html
 
 #+begin_src emacs-lisp
+
+;; Load this only on my personal profile, and not in my work one
+  (if my-homeenvironment-p
+         (progn
+
+
+
   ;; we want to load these functions if org-roam is present
   (if (not(require 'org-roam nil t))
           ;; if condition
@@ -1358,23 +1383,8 @@ https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html
     ;;  (advice-add 'org-agenda :before #'vulpea-agenda-files-update)
     ;;  (advice-add 'org-todo-list :before #'vulpea-agenda-files-update)
     )
+  ))
 #+end_src
-*** org-roam-ui
-Load org-roam UI and all its dependencies.
-
-#+begin_src emacs-lisp :tangle packages.el
-(package! org-roam-ui
-  :recipe (:host github :repo "org-roam/org-roam-ui")
-  )
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package! org-roam-ui
-  :after org-roam
-  :hook (org-roam . org-roam-ui-mode)
-  )
-#+end_src
-
 * Writing
 ** TODO Word count
 Word counting with objective.
