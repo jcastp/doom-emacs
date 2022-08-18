@@ -9,7 +9,7 @@
   (setq org-agenda-files '(""))
   ;; And now, populate with the work environment
   ;; This needs to be changed when you change company!!!
-  (setq org-agenda-files '("/mnt/c/Users/castifrc/OneDrive - adidas/agenda/adidas.org"
+  (setq org-agenda-files '("~/Nextcloud/agenda/trabajo/adidas.org"
                            )
   )
 
@@ -170,19 +170,19 @@
 (setq org-capture-templates'(
 
                              ("i" "My TODO task format." entry
-                              (file+headline "/mnt/c/Users/castifrc/OneDrive - adidas/agenda/adidas.org" "Tasks")
+                              (file+headline "~/Nextcloud/agenda/trabajo/adidas.org" "Tasks")
                               "** TODO %?\n:PROPERTIES:\n:type: task\n:END:\n")
 
                              ("I" "New incident." entry
-                              (file+headline "/mnt/c/Users/castifrc/OneDrive - adidas/agenda/adidas.org" "Incidents")
+                              (file+headline "~/Nextcloud/agenda/trabajo/adidas.org" "Incidents")
                               "** TODO %?")
 
 
                              ("b" "Backlog entry." entry
-                              (file+headline "/mnt/c/Users/castifrc/OneDrive - adidas/agenda/adidas_backlog.org" "Backlog")
+                              (file+headline "~/Nextcloud/agenda/trabajo/adidas_backlog.org" "Backlog")
                               "** TODO %?\n")
 
                              )
       )
 
-  (find-file "/mnt/c/Users/castifrc/OneDrive - adidas/agenda/adidas.org")
+  (find-file "~/Nextcloud/agenda/trabajo/adidas.org")
