@@ -38,3 +38,6 @@
 
 (package! org-ref
   :recipe (:host gitlab :repo "Titan-C/org-cv"))
+
+(package! ef-themes
+  :recipe (:host gitlab :repo "protesilaos/ef-themes"))

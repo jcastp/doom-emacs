@@ -1575,6 +1575,13 @@ https://gitlab.com/Titan-C/org-cv
 (package! org-ref
   :recipe (:host gitlab :repo "Titan-C/org-cv"))
 #+end_src
+** TODO ef-themes
+Colorful themes
+https://github.com/protesilaos/ef-themes
+#+begin_src emacs-lisp :tangle packages.el
+(package! ef-themes
+  :recipe (:host gitlab :repo "protesilaos/ef-themes"))
+#+end_src
 
 * Work environment
 This will be my working environment config
