@@ -14,6 +14,7 @@ Lexical binding tagging
 
 ** System information
 Variables to conditional load based on systems or locations.
+
 *** based on machine names
 Defining variables for conditional execution, based on machines:
 #+begin_src emacs-lisp
@@ -182,13 +183,13 @@ Modify yas-snippet-dirs to add my own snippets.
   ;; doom-font (font-spec :family "Fira Code" :size 14 :weight 'Medium)
   ;; doom-font (font-spec :family "Hasklig" :size 14 :weight 'Medium)
   ;; doom-font (font-spec :family "Iosevka Fixed" :size 16 :weight 'Medium)
-  doom-font (font-spec :family "Hack" :size 14)
+  ;;doom-font (font-spec :family "Hack" :size 14)
 
   ;; Font used for normal writing
   ;;doom-variable-pitch-font (font-spec :family "Gentium Basic" :size 18)
   ;;doom-variable-pitch-font (font-spec :family "ETBookOT" :size 18)
   ;;doom-variable-pitch-font (font-spec :family "ETBembo" :size 18)
-  doom-variable-pitch-font (font-spec :family "EB Garamond 12" :size 18 :weight 'Medium)
+  ;;doom-variable-pitch-font (font-spec :family "EB Garamond 12" :size 18 :weight 'Medium)
   ;; When you want to have a fixed font for the variable one
   ;; doom-variable-pitch-font (font-spec :family "JetBrains Mono" :size 16 :weight 'Extralight)
   ;; doom-variable-pitch-font (font-spec :family "Iosevka" :size 16 :weight 'Regular)
@@ -1563,3 +1564,7 @@ This will be my working environment config
       )
     )
 #+end_src
+
+# Local Variables:
+# ispell-local-dictionary: "american"
+# End:
