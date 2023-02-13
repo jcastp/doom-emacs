@@ -1554,6 +1554,19 @@ https://github.com/protesilaos/ef-themes
   :recipe (:host gitlab :repo "protesilaos/ef-themes"))
 #+end_src
 
+** TODO fontaine
+I can change the fonts with just a single command.
+#+begin_src emacs-lisp :tangle packages.el
+(package! fontaine
+  :recipe (:host github :repo "protesilaos/fontaine"))
+#+end_src
+
+#+begin_src emacs-lisp
+
+#+end_src
+
+
+
 * Work environment
 This will be my working environment config
 #+begin_src emacs-lisp
