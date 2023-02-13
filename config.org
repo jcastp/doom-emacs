@@ -17,22 +17,23 @@ Variables to conditional load based on systems or locations.
 *** based on machine names
 Defining variables for conditional execution, based on machines:
 #+begin_src emacs-lisp
-  ;; working laptop vm
-  (defvar my-worksystem-p (equal (system-name) "lubuntuwork"))
-  ;; My desktop machine, able to run anything
-  (defvar my-desktopsystem-p (equal (system-name) "olimpo"))
-  ;; Writing machines, probably we can strip some features
-  (defvar my-writinglaptop-p
-    (or (equal (system-name) "argos") (equal (system-name) "caliope"))
-    )
+;; working laptop vm
+(defvar my-worksystem-p (equal (system-name) "lubuntuwork"))
+;; My desktop machine, able to run anything
+(defvar my-desktopsystem-p (equal (system-name) "olimpo"))
+;; Writing machines, probably we can strip some features
+(defvar my-writinglaptop-p
+  (or (equal (system-name) "argos") (equal (system-name) "caliope"))
+  )
 #+end_src
 
 *** bases on environment variables
 Work environment
 #+begin_src emacs-lisp
-  (defvar my-homeenvironment-p (string= (getenv "WORKING") "HOME"))
-  (defvar my-workenvironment-p (string= (getenv "WORKING") "WORK"))
+(defvar my-homeenvironment-p (string= (getenv "WORKING") "HOME"))
+(defvar my-workenvironment-p (string= (getenv "WORKING") "WORK"))
 #+end_src
+
 ** Unmap the C-z key
 Unmap the C-z key, so no way to minimize or suspend emacs accidentally.
 
@@ -51,22 +52,22 @@ To know which keys are still free
 Some keys redefined to better adjust to the whole emacs key environment.
 
 #+begin_src emacs-lisp
-  (global-set-key (kbd "M-p") 'backward-paragraph)
-  (global-set-key (kbd "M-n") 'forward-paragraph)
+(global-set-key (kbd "M-p") 'backward-paragraph)
+(global-set-key (kbd "M-n") 'forward-paragraph)
 #+end_src
 
 ** auto revert mode
 When a file is changed in disk, the buffer reloads to reflect that change.
 
 #+begin_src emacs-lisp
-  (global-auto-revert-mode 1)
+(global-auto-revert-mode 1)
 #+end_src
 
 Change dired buffers when the directory is changed:
 
 #+begin_src emacs-lisp
-  ;; auto refresh dired when file changes
-  (add-hook! 'dired-mode-hook 'auto-revert-mode)
+;; auto refresh dired when file changes
+(add-hook! 'dired-mode-hook 'auto-revert-mode)
 #+end_src
 
 ** Bookmarks
@@ -81,9 +82,10 @@ All the config related to the bookmarks.
 Setting firefox as the default browser.
 Using the firefox-esr, as I don't like snap package ...
 #+begin_src emacs-lisp
-  (setq browse-url-firefox-program "firefox-esr")
-  (setq browse-url-browser-function 'browse-url-firefox)
+(setq browse-url-firefox-program "firefox")
+(setq browse-url-browser-function 'browse-url-firefox)
 #+end_src
+
 ** Start maximized
 #+begin_src emacs-lisp
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
@@ -93,66 +95,36 @@ Using the firefox-esr, as I don't like snap package ...
 ** Undo
 Undo binded to C-z
 #+begin_src emacs-lisp
-  (global-set-key (kbd "C-z") #'undo)
+(global-set-key (kbd "C-z") #'undo)
 #+end_src
 
 ** Abbreviation mode
 Defines a set of abbreviations that permits complete words with just some characters.
 
 #+begin_src emacs-lisp
-  ;;where do we read the abbrevs from
-  (setq abbrev-file-name "~/Nextcloud/config/.emacs.d/abbrev_defs")
-  (setq-default abbrev-mode t)
-  (setq save-abbrevs 'silent)        ;; save abbrevs when files are saved
+;;where do we read the abbrevs from
+(setq abbrev-file-name "~/Nextcloud/config/.emacs.d/abbrev_defs")
+(setq-default abbrev-mode t)
+(setq save-abbrevs 'silent)        ;; save abbrevs when files are saved
 #+end_src
+
 ** Flyspell mode
 Automatic spelling in the buffer
 This conflicts with orgmode archive C-c $
 https://www.gnu.org/software/emacs/manual/html_node/emacs/Spelling.html
 
 #+begin_src emacs-lisp
-  (add-hook! 'text-mode-hook 'flyspell-mode)
+(add-hook! 'text-mode-hook 'flyspell-mode)
+(global-font-lock-mode t)
+; inverse video for mispellings
+;;  (custom-set-faces '(flyspell-incorrect ((t (:inverse-video t)))))
 
-  ; inverse video for mispellings
-  (global-font-lock-mode t)
-  ;;  (custom-set-faces '(flyspell-incorrect ((t (:inverse-video t)))))
-
-  ; custom location of the dictionary
-  (setq ispell-personal-dictionary "~/Nextcloud/config/.emacs.d/dict")
-
-  ; save the dictionary without asking
-  (setq ispell-silently-savep t)
-#+end_src
-** beacon
-When the windows moves, the cursor gets highlighted.
-https://github.com/Malabarba/beacon
-
-#+begin_src emacs-lisp :tangle packages.el
-(package! beacon
-  :recipe (:host github :repo "Malabarba/beacon"))
+; custom location of the dictionary
+(setq ispell-personal-dictionary "~/Nextcloud/config/.emacs.d/dict")
+; save the dictionary without asking
+(setq ispell-silently-savep t)
 #+end_src
 
-#+begin_src emacs-lisp
-(use-package! beacon
-    ;;:quelpa (beacon :fetcher github :repo "Malabarba/beacon")
-    ;;:ensure t
-    :config
-      (beacon-mode 1)
-      (setq beacon-push-mark 35
-          beacon-blink-duration 0.5
-          beacon-blink-delay 0.5
-          beacon-blink-when-focused t
-          beacon-color "deep sky blue")
-  )
-;; (after! beacon
-;;   (beacon-mode 1)
-;;   (setq beacon-push-mark 35
-;;         beacon-blink-duration 0.5
-;;         beacon-blink-delay 0.5
-;;         beacon-blink-when-focused t
-;;         beacon-color "deep sky blue")
-;;   )
-#+end_src
 ** guess-language
 Guess the language based on the text of the file, and use the corresponding dictionary to do the spell correction.
 https://github.com/tmalsburg/guess-language.el
@@ -174,24 +146,26 @@ https://github.com/tmalsburg/guess-language.el
   :hook (text-mode-hook . (lambda () (guess-language-mode 1)))
   )
 #+end_src
+
 ** electric pair mode
 To automatically close parenthesis and and other punctuation signs.
 
 #+begin_src emacs-lisp
-  (electric-pair-mode 1)
-  ;; make electric-pair-mode work on more sets of punctuation signs.
-  (setq electric-pair-pairs
-         '(
-           (?\¡ . ?\!)
-           (?\¿ . ?\?)
-           )
-   )
+(electric-pair-mode 1)
+;; make electric-pair-mode work on more sets of punctuation signs.
+(setq electric-pair-pairs
+      '(
+        (?\¡ . ?\!)
+        (?\¿ . ?\?)
+        )
+      )
 
-  (setq electric-pair-inhibit-predicate
-         `(lambda (c)
-            (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c)))
-  )
+(setq electric-pair-inhibit-predicate
+      `(lambda (c)
+         (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c)))
+      )
 #+end_src
+
 ** yasnippet
 *** yasnippet load custom directories
 Modify yas-snippet-dirs to add my own snippets.
@@ -224,8 +198,9 @@ Modify yas-snippet-dirs to add my own snippets.
 ** Initial theme
 We establish the initial theme.
 #+begin_src emacs-lisp
-(consult-theme 'doom-homage-black)
+(consult-theme 'ef-dark)
 #+end_src
+
 ** Font size increase/decrease
 Increase or decrease the font size
 
@@ -233,12 +208,14 @@ Increase or decrease the font size
   (global-set-key (kbd "M-+") 'text-scale-increase)
   (global-set-key (kbd "M--") 'text-scale-decrease)
 #+end_src
+
 ** full path in the title bar
 Put the complete path on the title bar, along the filename.
 
 #+begin_src emacs-lisp
-  (setq-default frame-title-format "%b - (%f)")
+(setq-default frame-title-format "%b - (%f)")
 #+end_src
+
 ** Time and date
 Put time and date on the status line
 
@@ -247,6 +224,7 @@ Put time and date on the status line
         display-time-24hr-format t)
   (display-time)
 #+end_src
+
 ** Open indirect buffer
 Open a branch into a different frame, but the same buffer:
 
@@ -264,21 +242,23 @@ Open a branch into a different frame, but the same buffer:
   (global-set-key (kbd "C-c 8" ) 'my/org-tree-open-in-right-frame)
   )
 #+end_src
+
 ** TODO tab-bar-mode
 tab-bar-mode seems to comply with all my requirements to store the configuration of the buffers and frames. This, coupled with desktop saving and restoring, can be the answer.
 
 #+begin_src emacs-lisp
-  ;;(tab-bar-mode 1)
-  ;; Map the not mapped but useful functions
-  (global-set-key (kbd "C-x t s") 'tab-list)
-  (global-set-key (kbd "C-x t a") 'tab-recent)
-  ;; Check if it is worth to enable the tab-bar-history-mode
-  ;; and configure the commands to browse the history
+;;(tab-bar-mode 1)
+;; Map the not mapped but useful functions
+(global-set-key (kbd "C-x t s") 'tab-list)
+(global-set-key (kbd "C-x t a") 'tab-recent)
+;; Check if it is worth to enable the tab-bar-history-mode
+;; and configure the commands to browse the history
 #+end_src
 
 ** ace-window
-Better selection character
-#+begin_src emacs
+Better selection character displayed
+
+#+begin_src emacs-lisp
 (custom-set-faces!
   '(aw-leading-char-face
     :foreground "white" :background "red"
@@ -293,8 +273,8 @@ The forward naming method includes part of the file's directory name at the begi
 https://www.gnu.org/software/emacs/manual/html_node/emacs/Uniquify.html
 
 #+begin_src emacs-lisp
-  (require 'uniquify)
-  (setq uniquify-buffer-name-style 'forward)
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'forward)
 #+end_src
 
 ** Key chords
@@ -332,39 +312,42 @@ Shortcuts to commands using just quick key combinations.
 Description of the configured key chords.
 
 #+begin_src emacs-lisp
-  (key-chord-define-global "ññ" 'eshell)
-;;  (key-chord-define-global "kk" 'other-window)
-  (key-chord-define-global "hh" 'ace-window)
-  (key-chord-define-global "jj" 'avy-goto-char-2)
-  (key-chord-define-global "jl" 'avy-goto-line)
-;;  (key-chord-define-global "zz" 'undo-tree-visualize)
-  ;(key-chord-define-global "ww" 'hydra-move/body)
-  ;(key-chord-define-global "yy" 'hydra-buffer-mgmt/body)
+;; (key-chord-define-global "kk" 'other-window)
+(key-chord-define-global "ññ" 'eshell)
+(key-chord-define-global "hh" 'ace-window)
+(key-chord-define-global "jj" 'avy-goto-char-2)
+(key-chord-define-global "jl" 'avy-goto-line)
+;;(key-chord-define-global "zz" 'undo-tree-visualize)
+;;(key-chord-define-global "ww" 'hydra-move/body)
+;;(key-chord-define-global "yy" 'hydra-buffer-mgmt/body)
 #+end_src
 
 ** imenu-list
 Better menus list
+
 #+begin_src emacs-lisp :tangle packages.el
 (package! imenu-list
   :recipe (:host github :repo "bmag/imenu-list"))
 #+end_src
 
 #+begin_src emacs-lisp
-  ;; put the imenu in the position we want to
-  (setq imenu-list-position 'right)
-  ;; Establish the depth of the entries shown
-  (setq org-imenu-depth 5)
-  ;; map the keys
-  (global-unset-key (kbd "M-i"))
-  (global-set-key (kbd "C-c s I") #'imenu-list-smart-toggle)
-  ;; Once you open imenu, focus on it
-  (setq imenu-list-focus-after-activation t)
+;; put the imenu in the position we want to
+(setq imenu-list-position 'right)
+;; Establish the depth of the entries shown
+(setq org-imenu-depth 5)
+;; map the keys
+(global-unset-key (kbd "M-i"))
+(global-set-key (kbd "C-c s I") #'imenu-list-smart-toggle)
+;; Once you open imenu, focus on it
+(setq imenu-list-focus-after-activation t)
 #+end_src
+
 ** consult
 Better search
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-s") #'consult-line)
 #+end_src
+
 * orgmode
 ** New priorities
 Priorities from A to E, and with new colors
@@ -379,6 +362,7 @@ Priorities from A to E, and with new colors
         (?E . 'all-the-icons-blue))
       )
 #+end_src
+
 ** Custom notes and timestamp
 Put a note or a timestamp when something changes. For example:
 - When the tasks is marked as DONE
@@ -398,6 +382,7 @@ Put a note or a timestamp when something changes. For example:
   (setq org-log-reschedule (quote time))
 )
 #+end_src
+
 ** Custom states for the tasks
 These are the custom states for the tasks, and the character associated to it.
 
@@ -413,6 +398,7 @@ These are the custom states for the tasks, and the character associated to it.
       )
 )
 #+end_src
+
 ** orgmode Agenda
 All the agenda configs
 
@@ -428,8 +414,8 @@ We define the agenda files in this variable
                            ;; doom config, for the
                            "~/.doom.d/config.org"
                            )
+        )
   )
-)
 #+end_src
 
 *** Get rid of the DONE tasks in the agenda view
@@ -617,30 +603,33 @@ I need a more clear view for things to come. We can see 15 days from now.
   (setq org-agenda-start-on-weekday nil)
   )
 #+end_src
+
 *** Show the agenda in another window
 I want to see the agenda side by side of the files I'm working with.
 #+begin_src emacs-lisp
 (setq org-agenda-window-setup 'reorganize-frame)
 #+end_src
+
 ** TODO Refile entries
 This lets you choose refiling targets in heading depth of 9, and lets you get also the files in the same directory hierarchy.
 
 #+begin_src emacs-lisp
 (after! org
   (setq org-refile-targets '(
-                              (nil :maxlevel . 9)
-                              (org-agenda-files :maxlevel . 9)
-                              ("referencias.org" :maxlevel . 9)
-                              ("maybe.org" :maxlevel . 9)
-                              ("books.org" :maxlevel . 9)
-                              ("~/Nextcloud/escritura/ideas/ideas.org" :maxlevel . 9)
+                             (nil :maxlevel . 9)
+                             (org-agenda-files :maxlevel . 9)
+                             ("referencias.org" :maxlevel . 9)
+                             ("maybe.org" :maxlevel . 9)
+                             ("books.org" :maxlevel . 9)
+                             ("~/Nextcloud/escritura/ideas/ideas.org" :maxlevel . 9)
 
-                              )
-  )
+                             )
+        )
   (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
   (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
   )
 #+end_src
+
 ** Exporting org mode
 All the functions defined for the org mode export
 
@@ -1083,6 +1072,7 @@ Create custom tags for different categories and contexts
   )
 )
 #+end_src
+
 ** Remove the markup indicators
 No need to see the markup indicators when writing.
 
@@ -1093,7 +1083,7 @@ No need to see the markup indicators when writing.
 #+end_src
 
 ** org-appear
-/Hides/ the *emphasis* marks +of+ from orgmode, until you are
+/Hides/ the *emphasis* marks +of+ from orgmode, until you are on them.
 #+begin_src emacs-lisp :tangle packages.el
 (package! org-appear
   :recipe (:host github
@@ -1102,8 +1092,6 @@ No need to see the markup indicators when writing.
 
 #+begin_src emacs-lisp
   (use-package org-appear
-    ;;:quelpa (org-appear :type git :host github :repo "awth13/org-appear")
-    ;;:ensure t
     :hook (org-mode . org-appear-mode)
     )
 #+end_src
@@ -1121,6 +1109,7 @@ Better queries for org-ql.
 (package! org-ql
   :recipe (:host github :repo "alphapapa/org-ql"))
 #+end_src
+
 ** org-roam
 Org-roam related config.
 
@@ -1152,31 +1141,31 @@ Org-roam related config.
 
 *** org-roam templates
 #+begin_src emacs-lisp
-  (setq org-roam-capture-templates
-        '(
-          ;; default template
-          ("d" "default" plain
-           "* TODO ${title}\n%?"
-           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
-           :unnarrowed t)
-          ("b" "book notes" plain (file "~/.doom.d/roamtemplates/BookNoteTemplate.org")
-           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: book")
-           :unnarrowed t)
-          ("w" "writing idea" plain (file "~/.doom.d/roamtemplates/WritingIdea.org")
-           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: writing")
-           :unnarrowed t)
-          ("c" "writing character" plain (file "~/.doom.d/roamtemplates/CharacterIdea.org")
-           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: writing character")
-           :unnarrowed t)
-          )
+(setq org-roam-capture-templates
+      '(
+        ;; default template
+        ("d" "default" plain
+         "* TODO ${title}\n%?"
+         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+         :unnarrowed t)
+        ("b" "book notes" plain (file "~/.doom.d/roamtemplates/BookNoteTemplate.org")
+         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: book")
+         :unnarrowed t)
+        ("w" "writing idea" plain (file "~/.doom.d/roamtemplates/WritingIdea.org")
+         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: writing")
+         :unnarrowed t)
+        ("c" "writing character" plain (file "~/.doom.d/roamtemplates/CharacterIdea.org")
+         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: writing character")
+         :unnarrowed t)
         )
+      )
 #+end_src
 
 *** Search by title and tags
 To search by title and tags, we will use the information contained here:
 https://github.com/org-roam/org-roam/pull/2054
 #+begin_src emacs-lisp
-   (setq org-roam-node-display-template
+(setq org-roam-node-display-template
       (concat "${title:*} "
               (propertize "${tags:20}" 'face 'org-tag)))
 #+end_src
@@ -1191,14 +1180,15 @@ This does full text search on my roam notes.
     (consult-ripgrep org-roam-directory)))
 (global-set-key (kbd "C-c rr") 'my/org-roam-rg-search)
 #+end_src
+
 *** Dailies config
 #+begin_src emacs-lisp
-  ;; Daily notes for org-roam
-  ;; Directory is relative to org-roam-directory
-  (setq org-roam-dailies-directory "daily/")
+;; Daily notes for org-roam
+;; Directory is relative to org-roam-directory
+(setq org-roam-dailies-directory "daily/")
 
-  ;; Capture template for the dailies
-  (setq org-roam-dailies-capture-templates
+;; Capture template for the dailies
+(setq org-roam-dailies-capture-templates
       '(("d" "default" entry
          "* %?"
          :if-new (file+head "%<%Y-%m-%d>.org"
@@ -1385,6 +1375,7 @@ https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html
     )
   ))
 #+end_src
+
 * Writing
 ** TODO Word count
 Word counting with objective.
@@ -1413,6 +1404,7 @@ https://github.com/tty-tourist/org-tracktable
 (global-set-key (kbd "C-c 3") 'org-tracktable-status)
 (global-set-key (kbd "C-c 4") 'org-tracktable-write)
 #+end_src
+
 ** zen writing adjustments
 Adjustments done to the zen mode for better visibility
 #+begin_src emacs-lisp
@@ -1427,22 +1419,22 @@ Documentation can be found here:
 https://github.com/bastibe/org-journal
 
 #+begin_src emacs-lisp
-      ;;("C-c r ñ" . org-journal-new-entry)
-      (setq org-journal-date-prefix "#+TITLE: ")
-      (setq org-journal-file-format "%Y-%m-%d.org")
-      (setq org-journal-dir "~/Nextcloud/personal/diario/")
-      (setq org-journal-date-format "%A, %d %B %Y")
-      (setq org-journal-encrypt-journal nil)
+;;("C-c r ñ" . org-journal-new-entry)
+(setq org-journal-date-prefix "#+TITLE: ")
+(setq org-journal-file-format "%Y-%m-%d.org")
+(setq org-journal-dir "~/Nextcloud/personal/diario/")
+(setq org-journal-date-format "%A, %d %B %Y")
+(setq org-journal-encrypt-journal nil)
 #+end_src
 
 ** Buscar en la RAE
 Seach a word in the spanish dictionary.
 
 #+begin_src emacs-lisp
-  (defun my/buscarae (palabra)
-     "Busca una palabra en la RAE."
-     (interactive "s¿Qué palabra quieres buscar? ")
-     (eww (concat "https://dle.rae.es/" palabra))
+(defun my/buscarae (palabra)
+  "Busca una palabra en la RAE."
+  (interactive "s¿Qué palabra quieres buscar? ")
+  (eww (concat "https://dle.rae.es/" palabra))
   )
 #+end_src
 
@@ -1450,10 +1442,10 @@ Seach a word in the spanish dictionary.
 Seach a synonim
 
 #+begin_src emacs-lisp
-  (defun my/sinonimo (palabra)
-     "Busca una palabra en un diccionario de sinónimos"
-     (interactive "s¿Qué palabra quieres buscar? ")
-     (eww (concat "https://www.wordreference.com/sinonimos/" palabra))
+(defun my/sinonimo (palabra)
+  "Busca una palabra en un diccionario de sinónimos"
+  (interactive "s¿Qué palabra quieres buscar? ")
+  (eww (concat "https://www.wordreference.com/sinonimos/" palabra))
   )
 #+end_src
 
@@ -1461,10 +1453,10 @@ Seach a synonim
 Translate a word
 
 #+begin_src emacs-lisp
-  (defun my/translate (palabra)
-    "Traduccion de inglés a español"
-    (interactive "s¿Qué palabra quieres buscar? ")
-    (eww (concat "https://www.deepl.com/translator#en/es/" palabra))
+(defun my/translate (palabra)
+  "Traduccion de inglés a español"
+  (interactive "s¿Qué palabra quieres buscar? ")
+  (eww (concat "https://www.deepl.com/translator#en/es/" palabra))
   )
 #+end_src
 
@@ -1488,42 +1480,18 @@ RSS feeds in emacs
         )
       )
 #+end_src
-** TODO emms
-Music from emacs
-#+begin_src emacs-lisp
-(require 'emms-setup)
-(emms-all)
-(emms-default-players)
-;; Depending on the system, the music is one place or another
-(if my-desktopsystem-p
-    (setq emms-source-file-default-directory "/home/musica") ;; Change to your music folder
-  )
-(if my-worksystem-p
-    (setq emms-source-file-default-directory "/home/jcastp/Música") ;; Change to your music folder
-    )
-
-;; fot the tagging of songs
-(setq emms-info-functions '(emms-info-tinytag))
-
-;; Keyboard shortcuts
-(global-set-key (kbd "<XF86AudioPrev>") 'emms-previous)
-(global-set-key (kbd "<XF86AudioNext>") 'emms-next)
-(global-set-key (kbd "<XF86AudioPlay>") 'emms-pause)
-
-(global-set-key (kbd "C-c m m") 'emms-browser)
-#+end_src
 
 ** theme changer
 I will write a function to change themes from a list.
 #+begin_src emacs-lisp
 ;; This is the list of themes I want to apply and rotate
 (defvar my/themes '(
-                    ; dark themes
-                    doom-homage-black
-                    doom-vibrant
-                    ; light themes
+                    ;; dark themes
+                    ef-dark
+                    ;; light themes
                     leuven
-                    doom-acario-light)
+                    ef-light
+                    )
   "Stores the themes we want to change to.
 The theme enabled will be the first of the list,
 and then it will be pushed to the end of the list.
@@ -1568,6 +1536,7 @@ For bibliographical references
 (package! org-ref
   :recipe (:host github :repo "jkitchin/org-ref"))
 #+end_src
+
 ** TODO org-cv
 To create a CV based on the orgmode cv
 https://gitlab.com/Titan-C/org-cv
@@ -1575,6 +1544,7 @@ https://gitlab.com/Titan-C/org-cv
 (package! org-ref
   :recipe (:host gitlab :repo "Titan-C/org-cv"))
 #+end_src
+
 ** TODO ef-themes
 Colorful themes
 https://github.com/protesilaos/ef-themes
