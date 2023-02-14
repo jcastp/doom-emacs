@@ -1549,6 +1549,14 @@ https://github.com/protesilaos/ef-themes
   :recipe (:host gitlab :repo "protesilaos/ef-themes"))
 #+end_src
 
+** TODO poet theme
+https://github.com/kunalb/poet
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! poet
+  :recipe (:host github :repo "kunalb/poet"))
+#+end_src
+
 ** TODO fontaine
 I can change the fonts with just a single command.
 
