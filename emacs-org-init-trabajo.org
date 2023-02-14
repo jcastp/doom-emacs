@@ -36,7 +36,6 @@ Since this is a different environment, I also have to change this to refile thin
                             (org-agenda-files :maxlevel . 9)
                             )
   )
-
   (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
   (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
 #+end_src
@@ -199,7 +198,7 @@ As work is different from home, I need specific templates.
 (setq org-capture-templates'(
 
                              ("i" "My TODO task format." entry
-                              (file+headline "~/Nextcloud/agenda/trabajo/adidas.org" "Tasks")
+                              (file+headline "~/Nextcloud/agenda/trabajo/adidas.org" "Inbox")
                               "** TODO %?\n:PROPERTIES:\n:type: task\n:END:\n")
 
                              ("I" "New incident." entry
