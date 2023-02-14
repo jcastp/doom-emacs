@@ -8,23 +8,22 @@ It is supposed to run over the generic emacs config, and overwrites that config 
   "My own working directory")
 #+end_src
 
-
 ** clear theme
 #+begin_src emacs-lisp :tangle yes
-  (disable-theme doom-theme)
-  (load-theme 'doom-tomorrow-day t)
-  (enable-theme 'doom-tomorrow-day)
+(disable-theme doom-theme)
+(load-theme 'doom-tomorrow-day t)
+(enable-theme 'doom-tomorrow-day)
 #+end_src
 
 ** Put the correct agenda files for work
 #+begin_src emacs-lisp :tangle yes
-  ;; empty the org-agenda-files 
-  (setq org-agenda-files '(""))
-  ;; And now, populate with the work environment
-  ;; This needs to be changed when you change company!!!
-  (setq org-agenda-files '("~/Nextcloud/agenda/trabajo/adidas.org"
-                           )
-  )
+;; empty the org-agenda-files
+(setq org-agenda-files '(""))
+;; And now, populate with the work environment
+;; This needs to be changed when you change company!!!
+(setq org-agenda-files '("~/Nextcloud/agenda/trabajo/adidas.org"
+                         )
+      )
 #+end_src
 
 ** Refile environment
@@ -169,30 +168,30 @@ I need a different custom agenda commands to see the tasks better.
 
 ** Work tags definition
 #+begin_src emacs-lisp :tangle yes
-  (setq org-tag-alist '(
+(setq org-tag-alist '(
                       ;; group or team
-                        (:startgroup . nil)
-                          ("cyberdef" . ?c) ("DataProt" . ?d) ("other" . ?o) ("deloitte" . ?l)
-                        (:endgroup . nil)
+                      (:startgroup . nil)
+                      ("cyberdef" . ?c) ("DataProt" . ?d) ("other" . ?o) ("deloitte" . ?l)
+                      (:endgroup . nil)
                       ;; tool or way to get the info
-                        (:startgroup . nil)
-                          ("Confluence" . ?C) ("Mail" . ?M) ("meeting" . ?m) ("other" . ?o)
-                        (:endgroup . nil)
+                      (:startgroup . nil)
+                      ("Confluence" . ?C) ("Mail" . ?M) ("meeting" . ?m) ("other" . ?o)
+                      (:endgroup . nil)
                       ;; other tags
-                        ("documentation" . ?D) ("procedures" . ?P)
-                        ("knowledge" . ?K) ("training" . ?T)
-                        ("incident" . ?I) ("task" . ?t)
-    )
-  )
+                      ("documentation" . ?D) ("procedures" . ?P)
+                      ("knowledge" . ?K) ("training" . ?T)
+                      ("incident" . ?I) ("task" . ?t)
+                      )
+      )
 #+end_src
 ** Custom status for work related environment
 #+begin_src emacs-lisp :tangle yes
-  (setq org-todo-keywords
-     '(
-     ; Status for tasks
-          (sequence "TODO(t)" "WAITING(w@/!)" "ONGOING(o@/!)" "|" "DONE(d@/!)" "CANCELED(c@/!)")
+(setq org-todo-keywords
+      '(
+        ;; Status for tasks
+        (sequence "TODO(t)" "WAITING(w@/!)" "ONGOING(o@/!)" "|" "DONE(d@/!)" "CANCELED(c@/!)")
+        )
       )
-)
 #+end_src
 ** Custom work capture templates
 As work is different from home, I need specific templates.
@@ -218,5 +217,5 @@ As work is different from home, I need specific templates.
 
 ** Load the task list for work
 #+begin_src emacs-lisp :tangle yes
-  (find-file "~/Nextcloud/agenda/trabajo/adidas.org")
+(find-file "~/Nextcloud/agenda/trabajo/adidas.org")
 #+end_src

@@ -6,12 +6,6 @@ Lexical binding tagging
 ;;; config.el -*- lexical-binding: t; -*-
 #+end_src
 
-** Personal information
-#+begin_src emacs-lisp
-(setq user-full-name "Javier Castilla"
-      user-mail-address "jcastp@pm.me")
-#+end_src
-
 ** System information
 Variables to conditional load based on systems or locations.
 
@@ -34,6 +28,24 @@ Work environment
 (defvar my-homeenvironment-p (string= (getenv "WORKING") "HOME"))
 (defvar my-workenvironment-p (string= (getenv "WORKING") "WORK"))
 #+end_src
+
+
+** Personal information
+#+begin_src emacs-lisp
+(if (not my-workenvironment-p)
+    ;; then part - personal use
+    (progn
+      (setq user-full-name "Javier Castilla"
+            user-mail-address "jcastp@pm.me")
+      )
+  ;; else part - work use
+  (progn
+    (setq user-full-name "Francisco Javier Castilla"
+          user-mail-address "franciscojavier.castilla@adidas.com")
+    )
+  )
+#+end_src
+
 
 ** Unmap the C-z key
 Unmap the C-z key, so no way to minimize or suspend emacs accidentally.
@@ -1561,21 +1573,21 @@ I can change the fonts with just a single command.
   :recipe (:host github :repo "protesilaos/fontaine"))
 #+end_src
 
+Here will come the code for the fontaine package.
 #+begin_src emacs-lisp
 
 #+end_src
 
 
-
 * Work environment
 This will be my working environment config
 #+begin_src emacs-lisp
-    ;; Load this config when using the work computer
-  (if my-workenvironment-p
-         (progn
-           (org-babel-load-file "~/.doom.d/emacs-org-init-trabajo.org")
+;; Load this config when using the work computer
+(if my-workenvironment-p
+    (progn
+      (org-babel-load-file "~/.doom.d/emacs-org-init-trabajo.org")
       )
-    )
+  )
 #+end_src
 
 # Local Variables:
