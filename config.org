@@ -1,7 +1,7 @@
 #+STARTUP: overview
 #+LANGUAGE: en
 * General config
-Lexical binding tagging
+** Lexical binding tagging
 #+begin_src emacs-lisp
 ;;; config.el -*- lexical-binding: t; -*-
 #+end_src
@@ -11,6 +11,7 @@ Variables to conditional load based on systems or locations.
 
 *** based on machine names
 Defining variables for conditional execution, based on machines:
+
 #+begin_src emacs-lisp
 ;; working laptop vm
 (defvar my-worksystem-p (equal (system-name) "lubuntuwork"))
@@ -22,15 +23,17 @@ Defining variables for conditional execution, based on machines:
   )
 #+end_src
 
-*** bases on environment variables
-Work environment
+*** based on environment variables
+Home and Work environment.
+
 #+begin_src emacs-lisp
 (defvar my-homeenvironment-p (string= (getenv "WORKING") "HOME"))
 (defvar my-workenvironment-p (string= (getenv "WORKING") "WORK"))
 #+end_src
 
-
 ** Personal information
+Based on the environment variables.
+
 #+begin_src emacs-lisp
 (if (not my-workenvironment-p)
     ;; then part - personal use
@@ -46,7 +49,6 @@ Work environment
   )
 #+end_src
 
-
 ** Unmap the C-z key
 Unmap the C-z key, so no way to minimize or suspend emacs accidentally.
 
@@ -55,7 +57,8 @@ Unmap the C-z key, so no way to minimize or suspend emacs accidentally.
 #+end_src
 
 ** free-keys
-To know which keys are still free
+To know which keys are still free.
+
 #+begin_src emacs-lisp :tangle packages.el
 (package! free-keys
   :recipe (:host github :repo "Fuco1/free-keys"))
@@ -91,9 +94,9 @@ All the config related to the bookmarks.
 (setq bookmark-save-flag 1)  ;save bookmarks to .emacs.bmk after each entry
 #+end_src
 
-** TODO set firefox as the default browser
+** Set firefox as the default browser
 Setting firefox as the default browser.
-Using the firefox-esr, as I don't like snap package ...
+
 #+begin_src emacs-lisp
 (setq browse-url-firefox-program "firefox")
 (setq browse-url-browser-function 'browse-url-firefox)
@@ -106,7 +109,8 @@ Using the firefox-esr, as I don't like snap package ...
 
 * Editing
 ** Undo
-Undo binded to C-z
+Undo binded to C-z.
+
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-z") #'undo)
 #+end_src
@@ -136,28 +140,6 @@ https://www.gnu.org/software/emacs/manual/html_node/emacs/Spelling.html
 (setq ispell-personal-dictionary "~/Nextcloud/config/.emacs.d/dict")
 ; save the dictionary without asking
 (setq ispell-silently-savep t)
-#+end_src
-
-** guess-language
-Guess the language based on the text of the file, and use the corresponding dictionary to do the spell correction.
-https://github.com/tmalsburg/guess-language.el
-
-#+begin_src emacs-lisp :tangle packages.el
-(package! guess-language
-  :recipe (:host github :repo "tmalsburg/guess-language.el"))
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package guess-language
-  ;;:quelpa (guess-language :fetcher github :repo "tmalsburg/guess-language.el")
-  ;;:ensure t
-  :config
-  ;; (setq guess-language-langcodes '((en . ("en_GB" "English"))
-  ;;                                  (es . ("es_ES" "Spanish"))))
-  (setq guess-language-languages '(en es))
-  (setq guess-language-min-paragraph-length 40)
-  :hook (text-mode-hook . (lambda () (guess-language-mode 1)))
-  )
 #+end_src
 
 ** electric pair mode
@@ -210,16 +192,19 @@ Modify yas-snippet-dirs to add my own snippets.
 
 ** Initial theme
 We establish the initial theme.
+
 #+begin_src emacs-lisp
-(consult-theme 'ef-dark)
+(after! consult
+  (consult-theme 'ef-dark)
+  )
 #+end_src
 
 ** Font size increase/decrease
 Increase or decrease the font size
 
 #+begin_src emacs-lisp
-  (global-set-key (kbd "M-+") 'text-scale-increase)
-  (global-set-key (kbd "M--") 'text-scale-decrease)
+(global-set-key (kbd "M-+") 'text-scale-increase)
+(global-set-key (kbd "M--") 'text-scale-decrease)
 #+end_src
 
 ** full path in the title bar
@@ -233,9 +218,9 @@ Put the complete path on the title bar, along the filename.
 Put time and date on the status line
 
 #+begin_src emacs-lisp
-  (setq display-time-day-and-date t
-        display-time-24hr-format t)
-  (display-time)
+(setq display-time-day-and-date t
+      display-time-24hr-format t)
+(display-time)
 #+end_src
 
 ** Open indirect buffer
@@ -260,7 +245,7 @@ Open a branch into a different frame, but the same buffer:
 tab-bar-mode seems to comply with all my requirements to store the configuration of the buffers and frames. This, coupled with desktop saving and restoring, can be the answer.
 
 #+begin_src emacs-lisp
-;;(tab-bar-mode 1)
+(tab-bar-mode 1)
 ;; Map the not mapped but useful functions
 (global-set-key (kbd "C-x t s") 'tab-list)
 (global-set-key (kbd "C-x t a") 'tab-recent)
@@ -299,26 +284,18 @@ Shortcuts to commands using just quick key combinations.
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package key-chord
-    ;;:quelpa (key-chord :fetcher github :repo "emacsorphanage/key-chord")
-    ;;:ensure t
-    :init
-      (key-chord-mode 1)
-    :config
-      ;; Max time delay between two key presses to be considered a key chord
-      (setq key-chord-two-keys-delay 0.1)
-      ;; Max time delay between two presses of the same key to be considered a key chord.
-      ;; Should normally be a little longer than `key-chord-two-keys-delay'.
-      (setq key-chord-one-key-delay 0.2) ; default 0.2
+(use-package key-chord
+  ;;:quelpa (key-chord :fetcher github :repo "emacsorphanage/key-chord")
+  ;;:ensure t
+  :init
+  (key-chord-mode 1)
+  :config
+  ;; Max time delay between two key presses to be considered a key chord
+  (setq key-chord-two-keys-delay 0.1)
+  ;; Max time delay between two presses of the same key to be considered a key chord.
+  ;; Should normally be a little longer than `key-chord-two-keys-delay'.
+  (setq key-chord-one-key-delay 0.2) ; default 0.2
   )
-;; (after! key-chord
-;;   (key-chord-mode 1)
-;;   ;; Max time delay between two key presses to be considered a key chord
-;;   (setq key-chord-two-keys-delay 0.1)
-;;   ;; Max time delay between two presses of the same key to be considered a key chord.
-;;   ;; Should normally be a little longer than `key-chord-two-keys-delay'.
-;;   (setq key-chord-one-key-delay 0.2) ; default 0.2
-;; )
 #+end_src
 
 *** key chords for functions
@@ -365,15 +342,17 @@ Better search
 ** New priorities
 Priorities from A to E, and with new colors
 #+begin_src emacs-lisp
-(setq org-priority-highest ?A
-      org-priority-lowest ?E
-      org-priority-faces
-      '((?A . 'all-the-icons-red)
-        (?B . 'all-the-icons-orange)
-        (?C . 'all-the-icons-yellow)
-        (?D . 'all-the-icons-green)
-        (?E . 'all-the-icons-blue))
-      )
+(after! org
+  (setq org-priority-highest ?A
+        org-priority-lowest ?E
+        org-priority-faces
+        '((?A . 'all-the-icons-red)
+          (?B . 'all-the-icons-orange)
+          (?C . 'all-the-icons-yellow)
+          (?D . 'all-the-icons-green)
+          (?E . 'all-the-icons-blue))
+        )
+  )
 #+end_src
 
 ** Custom notes and timestamp
@@ -401,15 +380,15 @@ These are the custom states for the tasks, and the character associated to it.
 
 #+begin_src emacs-lisp
 (after! org
-(setq org-todo-keywords
-      '(
-        ;; Status for tasks
-        (sequence "TODO(t)" "ONGOING(r!)" "WAITING(w@/!)" "|" "DONE(d!)" "CANCELED(c@/!)")
-        ;; Status for writing
-        (sequence "TOWRITE(y)" "TOREVIEW(u@/!)" "REDO(i@/!)" "|" "FINISHED(o!)" "PURGE(p@/!)")
+  (setq org-todo-keywords
+        '(
+          ;; Status for tasks
+          (sequence "TODO(t)" "ONGOING(r!)" "WAITING(w@/!)" "|" "DONE(d!)" "CANCELED(c@/!)")
+          ;; Status for writing
+          (sequence "TOWRITE(y)" "TOREVIEW(u@/!)" "REDO(i@/!)" "|" "FINISHED(o!)" "PURGE(p@/!)")
+          )
         )
-      )
-)
+  )
 #+end_src
 
 ** orgmode Agenda
@@ -638,8 +617,10 @@ This lets you choose refiling targets in heading depth of 9, and lets you get al
 
                              )
         )
-  (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
-  (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
+  ;; Refile in a single go
+  (setq org-outline-path-complete-in-steps nil)
+  ;; Show full paths for refiling
+  (setq org-refile-use-outline-path t)
   )
 #+end_src
 
@@ -989,7 +970,7 @@ https://github.com/stathissideris/ditaa
 emacs can't find ditaa, so we have to specify the right location ourselves.
 
 #+begin_src emacs-lisp
-  (setq org-ditaa-jar-path "/usr/bin/ditaa")
+(setq org-ditaa-jar-path "/usr/bin/ditaa")
 #+end_src
 
 ** TODO Capture templates
@@ -1553,14 +1534,16 @@ For bibliographical references
 ** TODO org-cv
 To create a CV based on the orgmode cv
 https://gitlab.com/Titan-C/org-cv
+
 #+begin_src emacs-lisp :tangle packages.el
 (package! org-ref
   :recipe (:host gitlab :repo "Titan-C/org-cv"))
 #+end_src
 
 ** TODO ef-themes
-Colorful themes
+Colorful themes.
 https://github.com/protesilaos/ef-themes
+
 #+begin_src emacs-lisp :tangle packages.el
 (package! ef-themes
   :recipe (:host gitlab :repo "protesilaos/ef-themes"))
@@ -1568,6 +1551,7 @@ https://github.com/protesilaos/ef-themes
 
 ** TODO fontaine
 I can change the fonts with just a single command.
+
 #+begin_src emacs-lisp :tangle packages.el
 (package! fontaine
   :recipe (:host github :repo "protesilaos/fontaine"))
@@ -1581,6 +1565,7 @@ Here will come the code for the fontaine package.
 
 * Work environment
 This will be my working environment config
+
 #+begin_src emacs-lisp
 ;; Load this config when using the work computer
 (if my-workenvironment-p
