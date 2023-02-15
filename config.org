@@ -194,9 +194,7 @@ Modify yas-snippet-dirs to add my own snippets.
 We establish the initial theme.
 
 #+begin_src emacs-lisp
-(after! consult
-  (consult-theme 'ef-dark)
-  )
+(consult-theme 'ef-dark)
 #+end_src
 
 ** Font size increase/decrease
