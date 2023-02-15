@@ -1,5 +1,8 @@
-#+STARTUP: overview
-#+LANGUAGE: en
+#+TITLE: doom personal config
+#+AUTHOR: Javier Castilla
+#+EMAIL: jcastp@pm.me
+#+startup: overview
+#+language: en
 * General config
 ** Lexical binding tagging
 #+begin_src emacs-lisp
@@ -168,8 +171,8 @@ There are fixed and variable pitch fonts to define.
 (setq
   ;; Font used for source code
   ;; doom-font (font-spec :family "JetBrains Mono" :size 14 :weight 'Medium)
-  ;; doom-font (font-spec :family "Fira Code" :size 14 :weight 'Medium)
-  ;; doom-font (font-spec :family "Hasklig" :size 14 :weight 'Medium)
+   doom-font (font-spec :family "Fira Code" :size 14 :weight 'Medium)
+  ;; doom-font (font-spec :family "Hasklig" :size 16 :weight 'Medium)
   ;; doom-font (font-spec :family "Iosevka Fixed" :size 16 :weight 'Medium)
   ;; doom-font (font-spec :family "Hack" :size 14)
 
@@ -183,6 +186,20 @@ There are fixed and variable pitch fonts to define.
   ;;doom-variable-pitch-font (font-spec :family "Iosevka" :size 16 :weight 'Regular)
   )
 #+end_src
+
+For when I want mixed pitch mode in org mode.
+
+#+begin_src emacs-lisp
+;;(add-hook! 'org-mode-hook #'mixed-pitch-mode)
+#+end_src
+** Font size increase/decrease
+Increase or decrease the font size.
+
+#+begin_src emacs-lisp
+(global-set-key (kbd "M-+") 'text-scale-increase)
+(global-set-key (kbd "M--") 'text-scale-decrease)
+#+end_src
+
 ** ef-themes
 Colorful themes.
 https://github.com/protesilaos/ef-themes
@@ -206,12 +223,9 @@ We establish the initial theme.
 (consult-theme 'ef-dark)
 #+end_src
 
-** Font size increase/decrease
-Increase or decrease the font size.
-
+** Pixel precision scroll
 #+begin_src emacs-lisp
-(global-set-key (kbd "M-+") 'text-scale-increase)
-(global-set-key (kbd "M--") 'text-scale-decrease)
+(pixel-scroll-precision-mode 1)
 #+end_src
 
 ** full path in the title bar
@@ -1411,7 +1425,7 @@ https://github.com/tty-tourist/org-tracktable
 ** zen writing adjustments
 Adjustments done to the zen mode for better visibility
 #+begin_src emacs-lisp
-(setq +zen-text-scale 1.2)
+(setq +zen-text-scale 2)
 (setq writeroom-width 0.1)
 #+end_src
 
@@ -1542,8 +1556,8 @@ Here will come the code for the fontaine package.
 
 #+end_src
 
-
-* Work environment
+*
+Work environment
 This will be my working environment config
 
 #+begin_src emacs-lisp
@@ -1554,6 +1568,59 @@ This will be my working environment config
       )
   )
 #+end_src
+
+* Export config :ignore:
+# ############################
+# General options
+# ############################
+#+LANGUAGE:
+#+OPTIONS: ':t *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline author:t
+#+OPTIONS: broken-links:nil c:nil creator:nil d:(not "LOGBOOK")
+#+OPTIONS: date:t e:t email:nil f:t inline:t num:t p:nil pri:nil
+#+OPTIONS: prop:nil stat:t tags:t tasks:t tex:t timestamp:t title:t
+#+OPTIONS: toc:2 todo:t |:t\n
+#+EXCLUDE_TAGS: noexport
+#+EXPORT_FILE_NAME:
+
+# ######################
+# latex related options
+# ######################
+#+LATEX_CLASS: memoir_draft
+#+LATEX_HEADER:
+#+LATEX_HEADER_EXTRA:
+#+DESCRIPTION:
+#+KEYWORDS:
+#+SUBTITLE:
+
+# ######################
+# odt related options
+# ######################
+#+OPTIONS: tex:t
+#+ODT_STYLES_FILE: "~/Nextcloud/escritura/recursos/orgtemplate2odt.ott"
+#+DESCRIPTION:
+#+KEYWORDS:
+#+SUBTITLE:
+#+LATEX_HEADER:
+
+# ######################
+# HTML related options
+# ######################
+#+DESCRIPTION:
+#+HTML_DOCTYPE: html5
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="file:///home/jcastp/Nextcloud/config/org.css"/>
+#+HTML_HEAD_EXTRA:
+
+# ######################
+# epub related options
+# ######################
+#+UID:
+#+Subject:
+#+Description:
+#+Publisher:
+#+License:
+#+EPUBSTYLE:
+#+EPUBCOVER:
+#+HTML_DOCTYPE: xhtml
 
 # Local Variables:
 # ispell-local-dictionary: "american"
