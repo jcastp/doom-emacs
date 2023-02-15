@@ -49,13 +49,6 @@ Based on the environment variables.
   )
 #+end_src
 
-** Unmap the C-z key
-Unmap the C-z key, so no way to minimize or suspend emacs accidentally.
-
-#+begin_src emacs-lisp
-(global-unset-key (kbd "C-z"))
-#+end_src
-
 ** free-keys
 To know which keys are still free.
 
@@ -109,9 +102,10 @@ Setting firefox as the default browser.
 
 * Editing
 ** Undo
-Undo binded to C-z.
+Unbind C-z and use it for the "undo".
 
 #+begin_src emacs-lisp
+(global-unset-key (kbd "C-z"))
 (global-set-key (kbd "C-z") #'undo)
 #+end_src
 
@@ -133,9 +127,6 @@ https://www.gnu.org/software/emacs/manual/html_node/emacs/Spelling.html
 #+begin_src emacs-lisp
 (add-hook! 'text-mode-hook 'flyspell-mode)
 (global-font-lock-mode t)
-; inverse video for mispellings
-;;  (custom-set-faces '(flyspell-incorrect ((t (:inverse-video t)))))
-
 ; custom location of the dictionary
 (setq ispell-personal-dictionary "~/Nextcloud/config/.emacs.d/dict")
 ; save the dictionary without asking
@@ -170,6 +161,9 @@ Modify yas-snippet-dirs to add my own snippets.
 
 * UI
 ** Define fonts
+Define the fonts for Doom emacs.
+There are fixed and variable pitch fonts to define.
+
 #+begin_src emacs-lisp
 (setq
   ;; Font used for source code
@@ -177,17 +171,32 @@ Modify yas-snippet-dirs to add my own snippets.
   ;; doom-font (font-spec :family "Fira Code" :size 14 :weight 'Medium)
   ;; doom-font (font-spec :family "Hasklig" :size 14 :weight 'Medium)
   ;; doom-font (font-spec :family "Iosevka Fixed" :size 16 :weight 'Medium)
-  ;;doom-font (font-spec :family "Hack" :size 14)
+  ;; doom-font (font-spec :family "Hack" :size 14)
 
   ;; Font used for normal writing
   ;;doom-variable-pitch-font (font-spec :family "Gentium Basic" :size 18)
   ;;doom-variable-pitch-font (font-spec :family "ETBookOT" :size 18)
-  ;;doom-variable-pitch-font (font-spec :family "ETBembo" :size 18)
+  doom-variable-pitch-font (font-spec :family "ETBembo" :size 18)
   ;;doom-variable-pitch-font (font-spec :family "EB Garamond 12" :size 18 :weight 'Medium)
-  ;; When you want to have a fixed font for the variable one
-  ;; doom-variable-pitch-font (font-spec :family "JetBrains Mono" :size 16 :weight 'Extralight)
-  ;; doom-variable-pitch-font (font-spec :family "Iosevka" :size 16 :weight 'Regular)
+  ;;;; When you want to have a fixed font for the variable one
+  ;;doom-variable-pitch-font (font-spec :family "JetBrains Mono" :size 16 :weight 'Extralight)
+  ;;doom-variable-pitch-font (font-spec :family "Iosevka" :size 16 :weight 'Regular)
   )
+#+end_src
+** ef-themes
+Colorful themes.
+https://github.com/protesilaos/ef-themes
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! ef-themes
+  :recipe (:host gitlab :repo "protesilaos/ef-themes"))
+#+end_src
+** poet theme
+https://github.com/kunalb/poet
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! poet
+  :recipe (:host github :repo "kunalb/poet"))
 #+end_src
 
 ** Initial theme
@@ -198,7 +207,7 @@ We establish the initial theme.
 #+end_src
 
 ** Font size increase/decrease
-Increase or decrease the font size
+Increase or decrease the font size.
 
 #+begin_src emacs-lisp
 (global-set-key (kbd "M-+") 'text-scale-increase)
@@ -239,7 +248,7 @@ Open a branch into a different frame, but the same buffer:
   )
 #+end_src
 
-** TODO tab-bar-mode
+** tab-bar-mode
 tab-bar-mode seems to comply with all my requirements to store the configuration of the buffers and frames. This, coupled with desktop saving and restoring, can be the answer.
 
 #+begin_src emacs-lisp
@@ -247,12 +256,10 @@ tab-bar-mode seems to comply with all my requirements to store the configuration
 ;; Map the not mapped but useful functions
 (global-set-key (kbd "C-x t s") 'tab-list)
 (global-set-key (kbd "C-x t a") 'tab-recent)
-;; Check if it is worth to enable the tab-bar-history-mode
-;; and configure the commands to browse the history
 #+end_src
 
 ** ace-window
-Better selection character displayed
+Better selection character displayed.
 
 #+begin_src emacs-lisp
 (custom-set-faces!
@@ -260,6 +267,7 @@ Better selection character displayed
     :foreground "white" :background "red"
     :weight bold :height 2.5 :box (:line-width 10 :color "red")))
 #+end_src
+
 
 * Navigation
 ** Uniquify
@@ -338,19 +346,20 @@ Better search
 
 * orgmode
 ** New priorities
-Priorities from A to E, and with new colors
+Priorities from A to E, and with new colors:
+
 #+begin_src emacs-lisp
-(after! org
-  (setq org-priority-highest ?A
-        org-priority-lowest ?E
-        org-priority-faces
-        '((?A . 'all-the-icons-red)
-          (?B . 'all-the-icons-orange)
-          (?C . 'all-the-icons-yellow)
-          (?D . 'all-the-icons-green)
-          (?E . 'all-the-icons-blue))
-        )
-  )
+;; (after! org
+;;   (setq org-priority-highest ?A
+;;         org-priority-lowest ?E
+;;         org-priority-faces
+;;         '((?A . 'all-the-icons-red)
+;;           (?B . 'all-the-icons-orange)
+;;           (?C . 'all-the-icons-yellow)
+;;           (?D . 'all-the-icons-green)
+;;           (?E . 'all-the-icons-blue))
+;;         )
+;;   )
 #+end_src
 
 ** Custom notes and timestamp
@@ -401,7 +410,7 @@ We define the agenda files in this variable
                            ;; normal task files
                            "~/Nextcloud/agenda/tasks.org"
                            "~/Nextcloud/agenda/inbox.org"
-                           ;; doom config, for the
+                           ;; doom config, for the pending tasks in it.
                            "~/.doom.d/config.org"
                            )
         )
@@ -1095,8 +1104,9 @@ https://lists.gnu.org/archive/html/emacs-orgmode/2011-04/msg00713.html
   :recipe (:host github :repo "tesujimath/org-wc"))
 #+end_src
 
-** org-ql
+** TODO org-ql
 Better queries for org-ql.
+
 #+begin_src emacs-lisp :tangle packages.el
 (package! org-ql
   :recipe (:host github :repo "alphapapa/org-ql"))
@@ -1155,6 +1165,7 @@ Org-roam related config.
 
 *** Search by title and tags
 To search by title and tags, we will use the information contained here:
+
 https://github.com/org-roam/org-roam/pull/2054
 #+begin_src emacs-lisp
 (setq org-roam-node-display-template
@@ -1164,6 +1175,7 @@ https://github.com/org-roam/org-roam/pull/2054
 
 *** Search using content or roam using ripgrep
 This does full text search on my roam notes.
+
 #+begin_src emacs-lisp
 (defun my/org-roam-rg-search ()
   "Search org-roam directory using consult-ripgrep. With live-preview."
@@ -1371,7 +1383,7 @@ https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html
 * Writing
 ** TODO Word count
 Word counting with objective.
-I don't know if this is shown in the status line ...
+I don't know if this is shown in the doom modeline.
 
 #+begin_src emacs-lisp :tangle packages.el
 (package! wc-mode
@@ -1400,7 +1412,7 @@ https://github.com/tty-tourist/org-tracktable
 ** zen writing adjustments
 Adjustments done to the zen mode for better visibility
 #+begin_src emacs-lisp
-(setq +zen-text-scale 2)
+(setq +zen-text-scale 1.2)
 (setq writeroom-width 0.1)
 #+end_src
 
@@ -1431,7 +1443,7 @@ Seach a word in the spanish dictionary.
 #+end_src
 
 ** Buscar sinónimos
-Seach a synonim
+Seach a synonim.
 
 #+begin_src emacs-lisp
 (defun my/sinonimo (palabra)
@@ -1453,26 +1465,6 @@ Translate a word
 #+end_src
 
 * others
-** elfeed
-RSS feeds in emacs
-#+begin_src emacs-lisp
-(setq elfeed-db-directory "~/Nextcloud/config/.emacs.d/elfeed")
-(global-set-key (kbd "C-c m w") 'elfeed)
-
-(setq elfeed-feeds
-      '(
-        ;; security
-        ("https://krebsonsecurity.com/feed/" security)
-        ("https://www.schneier.com/feed/atom" security)
-        ;; writing
-        "https://www.helpingwritersbecomeauthors.com/feed/"
-        "http://thewritepractice.com/feed/"
-        ;; emacs
-        "https://sachachua.com/blog/feed"
-        )
-      )
-#+end_src
-
 ** theme changer
 I will write a function to change themes from a list.
 #+begin_src emacs-lisp
@@ -1536,23 +1528,6 @@ https://gitlab.com/Titan-C/org-cv
 #+begin_src emacs-lisp :tangle packages.el
 (package! org-ref
   :recipe (:host gitlab :repo "Titan-C/org-cv"))
-#+end_src
-
-** TODO ef-themes
-Colorful themes.
-https://github.com/protesilaos/ef-themes
-
-#+begin_src emacs-lisp :tangle packages.el
-(package! ef-themes
-  :recipe (:host gitlab :repo "protesilaos/ef-themes"))
-#+end_src
-
-** TODO poet theme
-https://github.com/kunalb/poet
-
-#+begin_src emacs-lisp :tangle packages.el
-(package! poet
-  :recipe (:host github :repo "kunalb/poet"))
 #+end_src
 
 ** TODO fontaine
