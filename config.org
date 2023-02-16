@@ -1129,29 +1129,31 @@ Better queries for org-ql.
 Org-roam related config.
 
 #+begin_src emacs-lisp
-(setq org-roam-v2-ack t)
-(setq org-roam-directory (file-truename "~/Nextcloud/personal/roam"))
+(after! org-roam
+  (setq org-roam-v2-ack t)
+  (setq org-roam-directory (file-truename "~/Nextcloud/personal/roam"))
 
-;; ("C-c n l" . org-roam-buffer-toggle)
-;; ("C-c n f" . org-roam-node-find)
-;; ("C-c n i" . org-roam-node-insert)
-;; ("C-c n c" . org-roam-capture)
-;; :map org-roam-dailies-map
-;; ("Y" . org-roam-dailies-capture-yesterday)
-;; ("T" . org-roam-dailies-capture-tomorrow)
-;; :bind-keymap
-;; ("C-c n d" . org-roam-dailies-map)
+  ;; ("C-c n l" . org-roam-buffer-toggle)
+  ;; ("C-c n f" . org-roam-node-find)
+  ;; ("C-c n i" . org-roam-node-insert)
+  ;; ("C-c n c" . org-roam-capture)
+  ;; :map org-roam-dailies-map
+  ;; ("Y" . org-roam-dailies-capture-yesterday)
+  ;; ("T" . org-roam-dailies-capture-tomorrow)
+  ;; :bind-keymap
+  ;; ("C-c n d" . org-roam-dailies-map)
 
-;; provide org-roam completion links outside org files.
-(setq org-roam-completion-everywhere t)
-;; Location of the roam database
-(setq org-roam-db-location (file-truename "~/Nextcloud/personal/roam/org-roam.db"))
-;; Ensure the keymap is available
-;;(require 'org-roam-dailies)
-;; org-roam export: https://www.orgroam.com/manual.html#org_002droam_002dexport
-;;      (require 'org-roam-export)
-;; autosync
-(org-roam-db-autosync-mode 1)
+  ;; provide org-roam completion links outside org files.
+  (setq org-roam-completion-everywhere t)
+  ;; Location of the roam database
+  (setq org-roam-db-location (file-truename "~/Nextcloud/personal/roam/org-roam.db"))
+  ;; Ensure the keymap is available
+  ;;(require 'org-roam-dailies)
+  ;; org-roam export: https://www.orgroam.com/manual.html#org_002droam_002dexport
+  ;;      (require 'org-roam-export)
+  ;; autosync
+  (org-roam-db-autosync-mode 1)
+  )
 #+end_src
 
 *** org-roam templates
@@ -1181,25 +1183,30 @@ To search by title and tags, we will use the information contained here:
 
 https://github.com/org-roam/org-roam/pull/2054
 #+begin_src emacs-lisp
+(after! org-roam
 (setq org-roam-node-display-template
       (concat "${title:*} "
               (propertize "${tags:20}" 'face 'org-tag)))
+)
 #+end_src
 
 *** Search using content or roam using ripgrep
 This does full text search on my roam notes.
 
 #+begin_src emacs-lisp
+(after! org-roam
 (defun my/org-roam-rg-search ()
   "Search org-roam directory using consult-ripgrep. With live-preview."
   (interactive)
   (let ((consult-ripgrep-command "rg --null --ignore-case --type org --line-buffered --color=always --max-columns=500 --no-heading --line-number . -e ARG OPTS"))
     (consult-ripgrep org-roam-directory)))
 (global-set-key (kbd "C-c rr") 'my/org-roam-rg-search)
+)
 #+end_src
 
 *** Dailies config
 #+begin_src emacs-lisp
+(after! org-roam
 ;; Daily notes for org-roam
 ;; Directory is relative to org-roam-directory
 (setq org-roam-dailies-directory "daily/")
@@ -1210,6 +1217,7 @@ This does full text search on my roam notes.
          "* %?"
          :if-new (file+head "%<%Y-%m-%d>.org"
                             "#+title: %<%Y-%m-%d>\n#+filetags: daily\n"))))
+)
 #+end_src
 
 *** org-roam-ui
@@ -1222,10 +1230,12 @@ Load org-roam UI and all its dependencies.
 #+end_src
 
 #+begin_src emacs-lisp
+(after! org-roam
 (use-package! org-roam-ui
-  :after org-roam
+  ;;:after org-roam
   :hook (org-roam . org-roam-ui-mode)
   )
+)
 #+end_src
 
 *** org-roam TODOs to the agenda
@@ -1236,6 +1246,7 @@ TODO: I need to activate this only for my personal profile, and not my work prof
 https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html
 
 #+begin_src emacs-lisp
+(after! org-roam
 
 ;; Load this only on my personal profile, and not in my work one
   (if my-homeenvironment-p
@@ -1391,6 +1402,7 @@ https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html
     ;;  (advice-add 'org-todo-list :before #'vulpea-agenda-files-update)
     )
   ))
+  )
 #+end_src
 
 * Writing
