@@ -366,6 +366,31 @@ To see the cursor when moving.
         beacon-color "deep sky blue")
   )
 #+end_src
+** Long lines get wrapped
+Long lines get wrapped when they reach the edge. We activate it for all the buffers.
+
+#+begin_src emacs-lisp
+;; 1 for on, 0 for off.
+(global-visual-line-mode 1)
+#+end_src
+
+** Fill column mode
+We want to use the visual fill column mode to limit the width of the lines, even if they don't reach the right edge.
+
+When reaching the established width defined, the line will wrap, even before getting into the right border of the application.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! visual-fill-column
+  :recipe (:host github :repo "joostkremers/visual-fill-column"))
+#+end_src
+
+#+begin_src emacs-lisp
+;; This sets the value to all the buffers, as initially it is a per-buffer variable
+(setq-default visual-fill-column-width 100)
+;; enable it only for text buffers: org, text, ...
+(add-hook 'text-mode-hook 'visual-fill-column-mode)
+#+end_src
+
 * Navigation
 ** Uniquify
 When several buffers visit identically-named files, Emacs must give the buffers distinct names. The usual method for making buffer names unique adds ‘<2>’, ‘<3>’, etc. to the end of the buffer names (all but one of them).
