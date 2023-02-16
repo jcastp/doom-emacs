@@ -1663,7 +1663,7 @@ To create a CV based on the orgmode cv
 https://gitlab.com/Titan-C/org-cv
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! org-ref
+(package! org-cv
   :recipe (:host gitlab :repo "Titan-C/org-cv"))
 #+end_src
 
