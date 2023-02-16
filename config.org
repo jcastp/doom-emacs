@@ -52,6 +52,19 @@ Based on the environment variables.
   )
 #+end_src
 
+** Configure the config and data directories
+- Config directory contains the files that will be commited. All the files that will get emacs up and running will be here.
+- Data directory contains the files that should no be commited, but contains my own information, that is useful.
+We will be using this either with concat or expand-file-name:
+- expand-file-name for when we have just a filename
+- concat for when we have a composite directory and filename, or as a secondary way to do it.
+#+begin_src emacs-lisp
+;; this is the same as the doom-user-dir
+(defvar my-config-dir "~/.doom.d/")
+;; where the files I can sync live
+(defvar my-data-dir "~/Nextcloud/config/.emacs.d/")
+#+end_src
+
 ** free-keys
 To know which keys are still free.
 
@@ -86,7 +99,8 @@ Change dired buffers when the directory is changed:
 All the config related to the bookmarks.
 
 #+begin_src emacs-lisp
-(setq bookmark-default-file "~/Nextcloud/config/.emacs.d/bookmarks")  ;;define file to use.
+;;(setq bookmark-default-file "~/Nextcloud/config/.emacs.d/bookmarks")  ;;define file to use.
+(setq bookmark-default-file (expand-file-name "bookmarks" my-data-dir))
 (setq bookmark-save-flag 1)  ;save bookmarks to .emacs.bmk after each entry
 #+end_src
 
@@ -97,6 +111,47 @@ Setting firefox as the default browser.
 (setq browse-url-firefox-program "firefox")
 (setq browse-url-browser-function 'browse-url-firefox)
 #+end_src
+
+** openwith
+Open particular files with external applications.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! openwith
+  :recipe (:host github :repo "garberw/openwith"))
+#+end_src
+
+#+begin_src emacs-lisp
+(when (require 'openwith nil 'noerror)
+  (setq openwith-associations
+        (list
+         ;; videos
+         (list (openwith-make-extension-regexp
+                '("mpg" "mpeg" "mp3" "mp4"
+                  "avi" "wmv" "wav" "mov" "flv"
+                  "ogm" "ogg" "mkv"))
+               "vlc"
+               '(file))
+         ;; office documents
+         (list (openwith-make-extension-regexp
+                '("doc" "docx" "xls" "xlsx" "ppt" "pptx"
+                  "odt" "ods" "odg" "odp" "fodg"
+                  "fods" "fodt"))
+               "libreoffice"
+               '(file))
+         ;; help documents
+         '("\\.lyx" "lyx" (file))
+         '("\\.chm" "kchmviewer" (file))
+         ;; pdf files
+         (list (openwith-make-extension-regexp
+                '("pdf" "ps" "ps.gz" "dvi"))
+               "okular"
+               '(file))
+         ))
+  (openwith-mode 1)
+  )
+
+#+end_src
+
 
 ** Start maximized
 #+begin_src emacs-lisp
@@ -117,7 +172,8 @@ Defines a set of abbreviations that permits complete words with just some charac
 
 #+begin_src emacs-lisp
 ;;where do we read the abbrevs from
-(setq abbrev-file-name "~/Nextcloud/config/.emacs.d/abbrev_defs")
+;;(setq abbrev-file-name "~/Nextcloud/config/.emacs.d/abbrev_defs")
+(setq abbrev-file-name (expand-file-name "abbrev_defs" my-data-dir))
 (setq-default abbrev-mode t)
 (setq save-abbrevs 'silent)        ;; save abbrevs when files are saved
 #+end_src
@@ -130,9 +186,10 @@ https://www.gnu.org/software/emacs/manual/html_node/emacs/Spelling.html
 #+begin_src emacs-lisp
 (add-hook! 'text-mode-hook 'flyspell-mode)
 (global-font-lock-mode t)
-; custom location of the dictionary
-(setq ispell-personal-dictionary "~/Nextcloud/config/.emacs.d/dict")
-; save the dictionary without asking
+;; custom location of the dictionary
+(setq ispell-personal-dictionary (expand-file-name "dict" my-data-dir))
+;;(setq ispell-personal-dictionary "~/Nextcloud/config/.emacs.d/dict")
+;; save the dictionary without asking
 (setq ispell-silently-savep t)
 #+end_src
 
@@ -282,6 +339,33 @@ Better selection character displayed.
     :weight bold :height 2.5 :box (:line-width 10 :color "red")))
 #+end_src
 
+** Battery management
+On laptops it's nice to know how much power you have.
+
+#+begin_src emacs-lisp
+(unless (string-match-p "^Power N/A" (battery))
+  (display-battery-mode 1)
+  )
+#+end_src
+
+** beacon
+To see the cursor when moving.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! beacon
+  :recipe (:host github :repo "Malabarba/beacon"))
+#+end_src
+
+#+begin_src emacs-lisp
+(after! beacon
+  (beacon-mode t)
+  (setq beacon-push-mark 35
+        beacon-blink-duration 0.5
+        beacon-blink-delay 0.5
+        beacon-blink-when-focused t
+        beacon-color "deep sky blue")
+  )
+#+end_src
 * Navigation
 ** Uniquify
 When several buffers visit identically-named files, Emacs must give the buffers distinct names. The usual method for making buffer names unique adds ‘<2>’, ‘<3>’, etc. to the end of the buffer names (all but one of them).
@@ -298,7 +382,8 @@ https://www.gnu.org/software/emacs/manual/html_node/emacs/Uniquify.html
 Shortcuts to commands using just quick key combinations.
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! key-chord
+(
+ package! key-chord
   :recipe (:host github :repo "emacsorphanage/key-chord"))
 #+end_src
 
@@ -1529,6 +1614,8 @@ This way, we rotate the themes."
 
 ** TODO font changer
 I use this to change dinamically the variable-pitch font, useful for writing and editing.
+This is superseded by the fontaine package.
+
 #+begin_src emacs-lisp
 (defun my/font-changer()
   "Change the variable pitch font when needed and recover it."
@@ -1568,8 +1655,7 @@ Here will come the code for the fontaine package.
 
 #+end_src
 
-*
-Work environment
+* Work environment
 This will be my working environment config
 
 #+begin_src emacs-lisp
@@ -1585,7 +1671,6 @@ This will be my working environment config
 # ############################
 # General options
 # ############################
-#+LANGUAGE:
 #+OPTIONS: ':t *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline author:t
 #+OPTIONS: broken-links:nil c:nil creator:nil d:(not "LOGBOOK")
 #+OPTIONS: date:t e:t email:nil f:t inline:t num:t p:nil pri:nil
