@@ -466,7 +466,7 @@ Better search
 (global-set-key (kbd "C-s") #'consult-line)
 #+end_src
 
-* orgmode
+* Orgmode
 ** New priorities
 Priorities from A to E, and with new colors:
 
@@ -1598,7 +1598,7 @@ Translate a word
   )
 #+end_src
 
-* others
+* Others
 ** theme changer
 I will write a function to change themes from a list.
 #+begin_src emacs-lisp
@@ -1649,14 +1649,31 @@ This is superseded by the fontaine package.
   )
 #+end_src
 
-* testing
+* Testing
 ** TODO org-ref
 For bibliographical references
 #+begin_src emacs-lisp :tangle packages.el
 (package! org-ref
   :recipe (:host github :repo "jkitchin/org-ref"))
 #+end_src
+** Bibtex
+Bibliography code for citations.
 
+Changing the dialect to biblatex.
+#+begin_src emacs-lisp
+;; BibLaTeX settings
+;; bibtex-mode
+(setq bibtex-dialect 'biblatex)
+#+end_src
+
+Defining the variables for bib files location.
+#+begin_src emacs-lisp
+(setq bib-files-directory (directory-files
+                           "/home/jcastp/Nextcloud/escritura/bibliography/" t
+                           "^[A-Z|a-z].+.bib$")
+      pdf-files-directory "/home/jcastp/Nextcloud/escritura/bibliography/"
+      )
+#+end_src
 ** TODO org-cv
 To create a CV based on the orgmode cv
 https://gitlab.com/Titan-C/org-cv
