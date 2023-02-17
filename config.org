@@ -143,13 +143,12 @@ Open particular files with external applications.
          '("\\.chm" "kchmviewer" (file))
          ;; pdf files
          (list (openwith-make-extension-regexp
-                '("pdf" "ps" "ps.gz" "dvi"))
+                '("pdf" "ps" "ps.gz" "dvi" "epub"))
                "okular"
                '(file))
          ))
   (openwith-mode 1)
   )
-
 #+end_src
 
 
