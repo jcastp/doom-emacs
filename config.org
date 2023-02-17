@@ -1779,6 +1779,17 @@ https://github.com/nobiot/org-remark
 ** TODO zoom
 https://github.com/cyrus-and/zoom
 
+** TODO random org-roam node to complete
+I will write a function to
+#+begin_src emacs-lisp
+(after! org-roam
+(defun my/random-roam ()
+  "Selects and opens a random org-roam node with the TODO keyword."
+  (interactive)
+  ()
+    )
+  )
+#+end_src
 * Work environment
 This will be my working environment config
 
