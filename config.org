@@ -1656,6 +1656,7 @@ For bibliographical references
 (package! org-ref
   :recipe (:host github :repo "jkitchin/org-ref"))
 #+end_src
+
 ** Bibtex
 Bibliography code for citations.
 
@@ -1674,6 +1675,7 @@ Defining the variables for bib files location.
       pdf-files-directory "/home/jcastp/Nextcloud/escritura/bibliography/"
       )
 #+end_src
+
 ** TODO org-cv
 To create a CV based on the orgmode cv
 https://gitlab.com/Titan-C/org-cv
