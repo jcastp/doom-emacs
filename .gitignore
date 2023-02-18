@@ -1,5 +1,5 @@
-./config.el
-./packages.el
+config.el
+packages.el
 .DS_Store
 .idea
 *.log
