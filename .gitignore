@@ -1,6 +1,6 @@
+./config.el
+./packages.el
 .DS_Store
 .idea
 *.log
 tmp/
-config.el
-packages.el
