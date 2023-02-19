@@ -380,7 +380,7 @@ When reaching the established width defined, the line will wrap, even before get
 
 #+begin_src emacs-lisp :tangle packages.el
 (package! visual-fill-column
-  :recipe (:host github :repo "joostkremers/visual-fill-column"))
+  :recipe (:host codeberg :repo "joostkremers/visual-fill-column"))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1606,6 +1606,7 @@ I will write a function to change themes from a list.
 (defvar my/themes '(
                     ;; dark themes
                     ef-dark
+                    leuven-dark
                     ;; light themes
                     leuven
                     ef-light
