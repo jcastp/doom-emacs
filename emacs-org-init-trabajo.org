@@ -168,14 +168,17 @@ I need a different custom agenda commands to see the tasks better.
 ** Work tags definition
 #+begin_src emacs-lisp :tangle yes
 (setq org-tag-alist '(
+                      ;; define the groups I want to use
                       ;; group or team
-                      (:startgroup . nil)
-                      ("cyberdef" . ?c) ("DataProt" . ?d) ("other" . ?o) ("deloitte" . ?l)
-                      (:endgroup . nil)
+                      ;; (:startgroup . nil)
+                      ;; ("IR" . ?i) ("SecEng" . ?s) ("other" . ?o) ("deloitte" . ?l)
+                      ;; (:endgroup . nil)
                       ;; tool or way to get the info
-                      (:startgroup . nil)
-                      ("Confluence" . ?C) ("Mail" . ?M) ("meeting" . ?m) ("other" . ?o)
-                      (:endgroup . nil)
+                      ;; (:startgroup . nil)
+                      ;; ("Confluence" . ?C) ("Mail" . ?M) ("meeting" . ?m) ("other" . ?o)
+                      ;; (:endgroup . nil)
+                      ;; environment, project or effort
+                      ("detection" . ?d) ("automation" . ?a)
                       ;; other tags
                       ("documentation" . ?D) ("procedures" . ?P)
                       ("knowledge" . ?K) ("training" . ?T)
