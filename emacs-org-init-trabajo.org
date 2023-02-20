@@ -197,7 +197,7 @@ As work is different from home, I need specific templates.
 #+begin_src emacs-lisp :tangle yes
 (setq org-capture-templates'(
 
-                             ("i" "My TODO task format." entry
+                             ("i" "Inbox (work)" entry
                               (file+headline "~/Nextcloud/agenda/trabajo/adidas.org" "Inbox")
                               "** TODO %?\n:PROPERTIES:\n:type: task\n:END:\n")
 
