@@ -30,8 +30,8 @@ Defining variables for conditional execution, based on machines:
 Home and Work environment.
 
 #+begin_src emacs-lisp
-(defvar my-homeenvironment-p (string= (getenv "WORKING") "HOME"))
 (defvar my-workenvironment-p (string= (getenv "WORKING") "WORK"))
+(defvar my-homeenvironment-p (string= (getenv "WORKING") "HOME"))
 #+end_src
 
 ** Personal information
