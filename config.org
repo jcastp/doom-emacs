@@ -1108,7 +1108,7 @@ Here I will add template captures for doing several things:
 #+begin_src emacs-lisp
 (after! org
   (setq org-capture-templates'(
-                               ("i" "Inbox" entry
+                               ("i" "Inbox (tasks)" entry
                                 (file+headline "~/Nextcloud/agenda/tasks.org" "Inbox")
                                 "* TODO %i%? \nEntered on %U"
                                 :empty-lines-after 2)
