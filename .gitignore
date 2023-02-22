@@ -1,6 +1,7 @@
 config.el
 packages.el
 emacs-org-init-trabajo.el
+*~undo-tree~
 .DS_Store
 .idea
 *.log
