@@ -142,16 +142,21 @@ Open particular files with external applications.
          '("\\.lyx" "lyx" (file))
          '("\\.chm" "kchmviewer" (file))
          ;; pdf files
-         (list (openwith-make-extension-regexp
-                '("pdf" "ps" "ps.gz" "dvi" "epub"))
-               "okular"
-               '(file))
+         ;; (list (openwith-make-extension-regexp
+         ;;        '("pdf" "ps" "ps.gz" "dvi" "epub"))
+         ;;       "okular"
+         ;;       '(file))
          ))
   (openwith-mode 1)
   )
 #+end_src
 
+** pdf tools install
+To open pdfs in emacs, we need to compile the pdf-tools.
 
+#+begin_src emacs-lisp
+(pdf-tools-install)
+#+end_src
 ** Start maximized
 #+begin_src emacs-lisp
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
