@@ -1663,6 +1663,7 @@ This is superseded by the fontaine package.
 ** TODO org-remark
 Annotate any file
 https://github.com/nobiot/org-remark
+https://nobiot.github.io/org-remark/
 
 #+begin_src emacs-lisp :tangle packages.el
 (package! org-remark
