@@ -1681,11 +1681,57 @@ This is superseded by the fontaine package.
 
 * Testing
 ** TODO treemacs config
+
+To change to the treemacs window, check this: https://github.com/doomemacs/doomemacs/issues/1177
+
 #+begin_src emacs-lisp
+;; where to store the persistant information
 (setq treemacs-persist-file (expand-file-name "treemacs-persist" my-data-dir))
+;; indenting the treemacs tree structure
+(setq treemacs-indent-guide-mode t)
+
+;; this function allows for jumping back and forth from the treemacs window
+(defun my/treemacs-back-and-forth ()
+  "Allows jumping back and forth the treemacs window if it exists,
+or open the treemacs, if it doesn't"
+  (interactive)
+  (if (treemacs-is-treemacs-window-selected?)
+      ;; then part
+      (progn
+        (other-window 1)
+        ;;(aw-flip-window)
+        ;;(treemacs-select-window)
+        )
+    ;; else part
+    (   progn
+      (treemacs-select-window)
+      )
+    )
+  )
+
+;; map a keybinding to this function
+(global-set-key (kbd "C-c o t") 'my/treemacs-back-and-forth)
+
+
+;; testing
+(defun +my/test_treemacs ()
+  "testing function"
+  (interactive)
+  (if (treemacs-is-treemacs-window? (selected-window))
+      ;; then part
+      (progn
+         (message "treemacs is visible")
+        )
+    ;; else part
+    (progn
+      (message "NO")
+      )
+    )
+  )
 #+end_src
+
 ** TODO org-remark
-Annotate any file
+Annotate any file in an accesory file.
 https://github.com/nobiot/org-remark
 https://nobiot.github.io/org-remark/
 
@@ -1703,20 +1749,11 @@ https://nobiot.github.io/org-remark/
   ;; Key-bind `org-remark-mark' to global-map so that you can call it
   ;; globally before the library is loaded.
   (define-key global-map (kbd "C-c m m") #'org-remark-mark)
-  ;; The rest of keybidings are done only on loading `org-remark'
-  ;;with-eval-after-load 'org-remark
   (define-key global-map (kbd "C-c m o") #'org-remark-open)
   (define-key global-map (kbd "C-c m n") #'org-remark-view-next)
   (define-key global-map (kbd "C-c m p") #'org-remark-view-prev)
   (define-key global-map (kbd "C-c m r") #'org-remark-remove)
   (define-key global-map (kbd "C-c m j") #'org-remark-change)
-
-  ;;(define-key org-remark-mode-map (kbd "C-c m o") #'org-remark-open)
-  ;;(define-key org-remark-mode-map (kbd "C-c m n") #'org-remark-view-next)
-  ;;(define-key org-remark-mode-map (kbd "C-c m p") #'org-remark-view-prev)
-  ;;(define-key org-remark-mode-map (kbd "C-c m r") #'org-remark-remove)
-  ;;(define-key org-remark-mode-map (kbd "C-c m j") #'org-remark-change)
-
 
   ;; Create highlighter pens for different parts
   ;; Since I use alternate dark and clear themes, these must be useful for both
