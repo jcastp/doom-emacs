@@ -1148,6 +1148,7 @@ Here I will add template captures for doing several things:
 
                                )
         )
+  )
 
   ;; (setq org-capture-templates'(
   ;;                              ("t" "My TODO task format." entry
@@ -1711,23 +1712,6 @@ or open the treemacs, if it doesn't"
 
 ;; map a keybinding to this function
 (global-set-key (kbd "C-c o t") 'my/treemacs-back-and-forth)
-
-
-;; testing
-(defun +my/test_treemacs ()
-  "testing function"
-  (interactive)
-  (if (treemacs-is-treemacs-window? (selected-window))
-      ;; then part
-      (progn
-         (message "treemacs is visible")
-        )
-    ;; else part
-    (progn
-      (message "NO")
-      )
-    )
-  )
 #+end_src
 
 ** TODO org-remark
