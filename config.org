@@ -162,6 +162,12 @@ To open pdfs in emacs, we need to compile the pdf-tools.
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+end_src
 
+** persp mode config
+My personal config for persp mode.
+
+#+begin_src emacs-lisp
+(setq persp-save-dir (expand-file-name "persp-confs/" my-data-dir))
+#+end_src
 * Editing
 ** Undo
 Unbind C-z and use it for the "undo".
@@ -179,7 +185,8 @@ Defines a set of abbreviations that permits complete words with just some charac
 ;;(setq abbrev-file-name "~/Nextcloud/config/.emacs.d/abbrev_defs")
 (setq abbrev-file-name (expand-file-name "abbrev_defs" my-data-dir))
 (setq-default abbrev-mode t)
-(setq save-abbrevs 'silent)        ;; save abbrevs when files are saved
+;; save abbrevs when files are saved
+(setq save-abbrevs 'silent)
 #+end_src
 
 ** Flyspell mode
