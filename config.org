@@ -1692,6 +1692,33 @@ This is superseded by the fontaine package.
 #+end_src
 
 * Testing
+** nov.el
+To read epub inside emacs.
+
+#+begin_src emacs-lisp :tangle packages.el
+;; required for the nov.el package
+(package! esxml)
+(package! nov.el)
+#+end_src
+
+
+#+begin_src emacs-lisp
+;; Add the epub files to the nov-mode
+(add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+
+;; Nov.el font configuration
+(defun my-nov-font-setup ()
+  (face-remap-add-relative 'variable-pitch
+;;                           :family "Liberation Serif"
+                           :family "ETBembo"
+                           :height 1.0))
+(add-hook 'nov-mode-hook 'my-nov-font-setup)
+
+;; keep the text width to a readable number
+(setq nov-text-width 80)
+
+#+end_src
+
 ** TODO treemacs config
 
 To change to the treemacs window, check this: https://github.com/doomemacs/doomemacs/issues/1177
