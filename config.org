@@ -1703,6 +1703,7 @@ To change to the treemacs window, check this: https://github.com/doomemacs/doome
 (setq treemacs-indent-guide-mode t)
 
 ;; this function allows for jumping back and forth from the treemacs window
+(require 'treemacs)
 (defun my/treemacs-back-and-forth ()
   "Allows jumping back and forth the treemacs window if it exists,
 or open the treemacs, if it doesn't"
