@@ -1155,11 +1155,6 @@ Here I will add template captures for doing several things:
   ;;                               "** TODO %i%? %^g \n%U"
   ;;                               :empty-lines-after 1)
 
-  ;;                              ("p" "New project." entry
-  ;;                               (file+headline "~/Nextcloud/agenda/tasks.org" "Projects")
-  ;;                               "** TODO %? %^g \n%U\n- Objetivo:"
-  ;;                               :empty-lines-after 1)
-
   ;;                              ("c" "New calendar entry." entry
   ;;                               (file+headline "~/Nextcloud/agenda/tasks.org" "Calendar")
   ;;                               "** TODO %i%?\nSCHEDULED: %^t\n"
