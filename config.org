@@ -1113,13 +1113,36 @@ Here I will add template captures for doing several things:
 #+begin_src emacs-lisp
 (after! org
   (setq org-capture-templates'(
+
+                               ;; task related captures
                                ("i" "Inbox (tasks)" entry
                                 (file+headline "~/Nextcloud/agenda/tasks.org" "Inbox")
                                 "* TODO %i%? \nEntered on %U"
                                 :empty-lines-after 2)
+
+                               ;; Writing related things
+
+                               ;; ;; writing ideas
+                               ("I" "Writing idea." entry
+                                (file+headline "~/Nextcloud/escritura/retazos/ideas.org" "otras")
+                                "** %i%? \nEntered on %U"
+                                :empty-lines-after 2)
+
+                               ;; ;; Character idea
+                               ("p" "Personaje" entry
+                                (file "~/Nextcloud/escritura/retazos/personajes.org")
+                                "* %i%? \nEntered on %U"
+                                :empty-lines-after 1)
+
+                               ;; ;; all other writing snippets I want to keep
+                               ("h" "Compost heap" item
+                                (file+headline "~/Nextcloud/escritura/retazos/compost_heap.org" "Compost heap")
+                                "- %i%?"
+                                :empty-lines-after 1)
+
                                )
         )
-)
+
   ;; (setq org-capture-templates'(
   ;;                              ("t" "My TODO task format." entry
   ;;                               (file+headline "~/Nextcloud/agenda/inbox.org" "Tasks")
