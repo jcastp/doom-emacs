@@ -166,7 +166,11 @@ To open pdfs in emacs, we need to compile the pdf-tools.
 My personal config for persp mode.
 
 #+begin_src emacs-lisp
-(setq persp-save-dir (expand-file-name "persp-confs/" my-data-dir))
+;;(setq persp-save-dir (expand-file-name "persp-confs/" my-data-dir))
+(after! persp-mode
+  ;;(setq persp-save-dir "~/Nextcloud/config/.emacs.d/persp-confs/")
+  (setq persp-save-dir "/home/jcastp/Nextcloud/config/.emacs.d/persp-confs/")
+)
 #+end_src
 * Editing
 ** Undo
