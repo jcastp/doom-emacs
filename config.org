@@ -17,7 +17,7 @@ Defining variables for conditional execution, based on machines:
 
 #+begin_src emacs-lisp
 ;; working laptop vm
-(defvar my-worksystem-p (equal (system-name) "lubuntuwork"))
+(defvar my-worksystem-p (equal (system-name) "ESZAR1N1640"))
 ;; My desktop machine, able to run anything
 (defvar my-desktopsystem-p (equal (system-name) "olimpo"))
 ;; Writing machines, probably we can strip some features
@@ -1725,7 +1725,12 @@ To change to the treemacs window, check this: https://github.com/doomemacs/doome
 
 #+begin_src emacs-lisp
 ;; where to store the persistant information
-(setq treemacs-persist-file (expand-file-name "treemacs-persist" my-data-dir))
+;; only for home computer
+(if (not my-worksystem-p)
+    (progn
+      (setq treemacs-persist-file (expand-file-name "treemacs-persist" my-data-dir))
+      )
+  )
 ;; indenting the treemacs tree structure
 (setq treemacs-indent-guide-mode t)
 
