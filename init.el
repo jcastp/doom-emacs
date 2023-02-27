@@ -30,7 +30,8 @@
        ;;ivy               ; a search engine for love and life
        (vertico           ; the search engine of the future
         +icons
-        +childframe)
+        +childframe
+        )
 
        :ui
        ;;deft              ; notational velocity for Emacs
