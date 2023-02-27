@@ -1931,6 +1931,20 @@ Here will come the code for the fontaine package.
 ** TODO org-remark
 https://github.com/nobiot/org-remark
 
+** TODO dimmer
+Dim the inactive buffers.
+https://github.com/gonewest818/dimmer.el
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! dimmer)
+#+end_src
+
+#+begin_src emacs-lisp
+(dimmer-mode t)
+(setq dimmer-adjustment-mode :both)
+(setq dimmer-fraction 0.2)
+#+end_src
+
 ** TODO zoom
 https://github.com/cyrus-and/zoom
 
