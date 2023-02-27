@@ -372,14 +372,13 @@ To see the cursor when moving.
 #+end_src
 
 #+begin_src emacs-lisp
-(after! beacon
-  (beacon-mode t)
-  (setq beacon-push-mark 35
-        beacon-blink-duration 0.5
-        beacon-blink-delay 0.5
-        beacon-blink-when-focused t
-        beacon-color "deep sky blue")
-  )
+(beacon-mode t)
+(setq beacon-push-mark 35
+      beacon-blink-duration 0.5
+      beacon-blink-delay 0.5
+      beacon-blink-when-focused t
+      beacon-color "deep sky blue")
+
 #+end_src
 ** Long lines get wrapped
 Long lines get wrapped when they reach the edge. We activate it for all the buffers.
