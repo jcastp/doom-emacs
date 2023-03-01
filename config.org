@@ -172,6 +172,13 @@ My personal config for persp mode.
   (setq persp-save-dir "/home/jcastp/Nextcloud/config/.emacs.d/persp-confs/")
 )
 #+end_src
+** recentf config
+Where I want to store the recent files I visited.
+
+#+begin_src emacs-lisp
+(recentf-mode t)
+(setq recentf-save-file (expand-file-name "recentf" my-data-dir))
+#+end_src
 * Editing
 ** Undo
 Unbind C-z and use it for the "undo".
