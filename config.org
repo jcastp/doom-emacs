@@ -928,19 +928,13 @@ Same as memoir class, but it start just with chapters, no "part"
 #+begin_src emacs-lisp
 (after! org
   (add-to-list 'org-latex-classes
-       '("memoir"
+       '("memoir_chapter"
                  "\\documentclass[a4paper,17pt,openright,twoside]{memoir}
   \\usepackage{ucs}
   \\usepackage[utf8]{inputenc}
   \\usepackage[spanish]{babel}
   \\usepackage{fontenc}
   \\usepackage{graphicx}
-
-  \% Para poner notas en los márgenes
-  \\usepackage{todonotes}
-
-  \% Para tachar palabras
-  \\usepackage[normalem]{ulem}
 
   \\usepackage{hyperref}
   \\usepackage{parskip}
@@ -949,10 +943,6 @@ Same as memoir class, but it start just with chapters, no "part"
   \\renewcommand*\\rmdefault{put}
 
   \\newcommand{\\fin}{\\plainbreak*{3}}
-
-  % command to add edit notes with tiny size
-  \\newcommand{\\edit}[1] {\\todo[inline]{#1}}
-  \\newcommand{\\adendo}[1] {\\todo[size=\\tiny]{#1}}
 
   % Chapter style
    \\chapterstyle{dash}
@@ -981,7 +971,7 @@ Same as memoir class, but it start just with chapters, no "part"
 #+begin_src emacs-lisp
 (after! org
   (add-to-list 'org-latex-classes
-       '("memoir_draft"
+       '("memoir_chapter_draft"
                  "\\documentclass[a4paper,17pt,draft,openright,twoside]{memoir}
   \\usepackage{ucs}
   \\usepackage[utf8]{inputenc}
