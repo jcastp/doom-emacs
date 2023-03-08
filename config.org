@@ -510,6 +510,14 @@ Priorities from A to E, and with new colors:
 ;;         )
 ;;   )
 #+end_src
+** tag alignment
+I want to have my tags justified to the right.
+
+#+begin_src emacs-lisp
+(after! org
+  (setq org-tags-column -80)
+)
+#+end_src
 
 ** Custom notes and timestamp
 Put a note or a timestamp when something changes. For example:
