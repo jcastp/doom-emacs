@@ -1030,6 +1030,7 @@ Same as memoir class, but it start just with chapters, no "part"
 
 **** TODO reporting class for org2latex (complete these options)
 
+
 #+begin_src emacs-lisp
 (after! org
   (add-to-list 'org-latex-classes
@@ -1570,7 +1571,7 @@ I don't know if this is shown in the doom modeline.
 
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-c 9") 'wc-mode)
-(setq doom-modeline-enable-word-count t)
+(setq doom-modeline-enable-word-count nil)
 #+end_src
 
 ** word count track table
