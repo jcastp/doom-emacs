@@ -777,8 +777,7 @@ This lets you choose refiling targets in heading depth of 9, and lets you get al
                              ("referencias.org" :maxlevel . 9)
                              ("maybe.org" :maxlevel . 9)
                              ("books.org" :maxlevel . 9)
-                             ("~/Nextcloud/escritura/ideas/ideas.org" :maxlevel . 9)
-
+                             ("~/Nextcloud/escritura/retazos/ideas.org" :maxlevel . 9)
                              )
         )
   ;; Refile in a single go
