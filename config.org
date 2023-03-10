@@ -1695,6 +1695,15 @@ This is superseded by the fontaine package.
 #+end_src
 
 * Testing
+** projectile file
+Store my personal projects in the sync directory.
+
+#+begin_src emacs-lisp
+;; Load this only when it is my home environment
+(if (not my-workenvironment-p)
+    (setq projectile-known-projects-file "~/Nextcloud/config/.emacs.d/projectile.projects")
+    )
+#+end_src
 ** nov.el
 To read epub inside emacs.
 
