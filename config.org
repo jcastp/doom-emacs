@@ -242,6 +242,13 @@ Modify yas-snippet-dirs to add my own snippets.
 #+end_src
 
 * UI
+
+** No line highlighting
+I find the line highlight distracting
+
+#+begin_src emacs-lisp
+(global-hl-line-mode -1)
+#+end_src
 ** Define fonts
 Define the fonts for Doom emacs.
 There are fixed and variable pitch fonts to define.
@@ -417,6 +424,7 @@ To show matching parens in all the buffers and modes.
 #+begin_src emacs-lisp
 (show-smartparens-global-mode 1)
 #+end_src
+
 * Navigation
 ** Uniquify
 When several buffers visit identically-named files, Emacs must give the buffers distinct names. The usual method for making buffer names unique adds ‘<2>’, ‘<3>’, etc. to the end of the buffer names (all but one of them).
