@@ -243,12 +243,7 @@ Modify yas-snippet-dirs to add my own snippets.
 
 * UI
 
-** No line highlighting
-I find the line highlight distracting
 
-#+begin_src emacs-lisp
-(global-hl-line-mode -1)
-#+end_src
 ** Define fonts
 Define the fonts for Doom emacs.
 There are fixed and variable pitch fonts to define.
@@ -1980,6 +1975,15 @@ I will write a function to
   )
 #+end_src
 **
+** No line highlighting
+I find the line highlight distracting
+
+#+begin_src emacs-lisp
+;; to avoid hl-line-mode to be activaded no matter how
+(remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
+(setq global-hl-line-modes nil)
+(global-hl-line-mode -1)
+#+end_src
 * Work environment
 This will be my working environment config
 
