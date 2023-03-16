@@ -260,7 +260,8 @@ There are fixed and variable pitch fonts to define.
   ;; Font used for normal writing
   ;;doom-variable-pitch-font (font-spec :family "Gentium Basic" :size 18)
   ;;doom-variable-pitch-font (font-spec :family "ETBookOT" :size 18)
-  doom-variable-pitch-font (font-spec :family "ETBembo" :size 18)
+  doom-variable-pitch-font (font-spec :family "Fira Code" :size 14 :weight 'Medium)
+  ;;doom-variable-pitch-font (font-spec :family "ETBembo" :size 18)
   ;;doom-variable-pitch-font (font-spec :family "EB Garamond 12" :size 18 :weight 'Medium)
   ;;;; When you want to have a fixed font for the variable one
   ;;doom-variable-pitch-font (font-spec :family "JetBrains Mono" :size 16 :weight 'Extralight)
@@ -1877,9 +1878,9 @@ Here will come the code for the fontaine package.
          :fixed-pitch-family "Fira Code"
          :fixed-pitch-weight Medium ; falls back to :default-weight
          :fixed-pitch-height 110
-         :variable-pitch-family "ETBembo"
-         :variable-pitch-weight Medium
-         :variable-pitch-height 140
+         :variable-pitch-family "Fira Code"
+         :variable-pitch-weight normal
+         :variable-pitch-height 110
          :bold-family nil ; use whatever the underlying face has
          :bold-weight bold
          :italic-family "Iosevka"
@@ -1912,6 +1913,23 @@ Here will come the code for the fontaine package.
          :fixed-pitch-weight nil ; falls back to :default-weight
          :fixed-pitch-height 110
          :variable-pitch-family "Gentium"
+         :variable-pitch-weight normal
+         :variable-pitch-height 180
+         :bold-family nil ; use whatever the underlying face has
+         :bold-weight bold
+         :italic-family "Iosevka"
+         :italic-slant italic
+         :line-spacing 1
+         )
+        ;; change the variable width face to have a different view when editing
+        (variable-width
+         :default-family "Fira Code"
+         :default-weight normal
+         :default-height 130
+         :fixed-pitch-family "Iosevka"
+         :fixed-pitch-weight nil ; falls back to :default-weight
+         :fixed-pitch-height 110
+         :variable-pitch-family "ETBembo"
          :variable-pitch-weight normal
          :variable-pitch-height 180
          :bold-family nil ; use whatever the underlying face has
