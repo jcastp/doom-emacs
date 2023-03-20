@@ -571,8 +571,6 @@ We define the agenda files in this variable
                            ;; normal task files
                            "~/Nextcloud/agenda/tasks.org"
                            "~/Nextcloud/agenda/inbox.org"
-                           ;; doom config, for the pending tasks in it.
-                           "~/.doom.d/config.org"
                            )
         )
   )
@@ -770,7 +768,7 @@ I want to see the agenda side by side of the files I'm working with.
 (setq org-agenda-window-setup 'reorganize-frame)
 #+end_src
 
-** TODO Refile entries
+** Refile entries
 This lets you choose refiling targets in heading depth of 9, and lets you get also the files in the same directory hierarchy.
 
 #+begin_src emacs-lisp
@@ -1274,7 +1272,7 @@ https://lists.gnu.org/archive/html/emacs-orgmode/2011-04/msg00713.html
   :recipe (:host github :repo "tesujimath/org-wc"))
 #+end_src
 
-** TODO org-ql
+** org-ql
 Better queries for org-ql.
 
 #+begin_src emacs-lisp :tangle packages.el
@@ -1563,18 +1561,18 @@ https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html
 #+end_src
 
 * Writing
-** TODO Word count
+** Word count
 Word counting with objective.
-I don't know if this is shown in the doom modeline.
+I don't know if this is shown in the doom modeline. Also, it makes it really slow with big files.
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! wc-mode
-  :recipe (:host github :repo "bnbeckwith/wc-mode"))
+;; (package! wc-mode
+;;   :recipe (:host github :repo "bnbeckwith/wc-mode"))
 #+end_src
 
 #+begin_src emacs-lisp
-(global-set-key (kbd "C-c 9") 'wc-mode)
-(setq doom-modeline-enable-word-count nil)
+;; (global-set-key (kbd "C-c 9") 'wc-mode)
+;; (setq doom-modeline-enable-word-count nil)
 #+end_src
 
 ** word count track table
@@ -1598,7 +1596,7 @@ Adjustments done to the zen mode for better visibility
 (setq writeroom-width 0.1)
 #+end_src
 
-** TODO org-journal
+** org-journal
 This is for journaling every day, if possible.
 Documentation can be found here:
 
@@ -1685,19 +1683,6 @@ This way, we rotate the themes."
 (global-set-key (kbd "C-c 0") 'my/theme-changer)
 #+end_src
 
-** TODO font changer
-I use this to change dinamically the variable-pitch font, useful for writing and editing.
-This is superseded by the fontaine package.
-
-#+begin_src emacs-lisp
-(defun my/font-changer()
-  "Change the variable pitch font when needed and recover it."
-  (interactive)
-  ;; Here will be the code to change the font
-  (variable-pitch-mode)
-  )
-#+end_src
-
 * Testing
 ** projectile file
 Store my personal projects in the sync directory.
@@ -1774,7 +1759,7 @@ or open the treemacs, if it doesn't"
 (global-set-key (kbd "C-c o t") 'my/treemacs-back-and-forth)
 #+end_src
 
-** TODO org-remark
+** org-remark
 Annotate any file in an accesory file.
 https://github.com/nobiot/org-remark
 https://nobiot.github.io/org-remark/
@@ -1856,7 +1841,7 @@ https://gitlab.com/Titan-C/org-cv
   :recipe (:host gitlab :repo "Titan-C/org-cv"))
 #+end_src
 
-** TODO fontaine
+** fontaine
 I can change the fonts with just a single command.
 https://protesilaos.com/emacs/fontaine
 
@@ -1961,10 +1946,7 @@ Here will come the code for the fontaine package.
 )
 #+end_src
 
-** TODO org-remark
-https://github.com/nobiot/org-remark
-
-** TODO dimmer
+** dimmer
 Dim the inactive buffers.
 https://github.com/gonewest818/dimmer.el
 
@@ -1978,9 +1960,6 @@ https://github.com/gonewest818/dimmer.el
 (setq dimmer-fraction 0.2)
 #+end_src
 
-** TODO zoom
-https://github.com/cyrus-and/zoom
-
 ** TODO random org-roam node to complete
 I will write a function to
 #+begin_src emacs-lisp
@@ -1993,7 +1972,7 @@ I will write a function to
   )
 #+end_src
 **
-** No line highlighting
+**  No line highlighting
 I find the line highlight distracting
 
 #+begin_src emacs-lisp
