@@ -1644,6 +1644,30 @@ Translate a word
   )
 #+end_src
 
+** Create a story file on the fly
+Sometimes I want to create
+
+#+begin_src emacs-lisp
+(defvar my/stories-directory "~/Nextcloud/escritura/historias/ejercicios"
+  "Directory where org files created by `my/create-org-file' will be stored.")
+
+(defun my/create-writing-exercise (text)
+  "Create a new file with the current date and the specified TEXT.
+The file is saved in the directory specified by `my/stories-directory'.
+The file name format is \"%Y%m%d-<text>.org\", with spaces in TEXT replaced by \"_\".
+The function runs a Python script that generates a writing prompt
+and stores the output in the file."
+  (interactive "sEnter file name: ")
+  (let* ((date (format-time-string "%Y%m%d"))
+         (file-name (concat date "-" (replace-regexp-in-string " " "_" text) ".org"))
+         (file-path (concat my/stories-directory "/" file-name))
+         (python-output (shell-command-to-string "python  ~/Nextcloud/escritura/software/writing_companion/writing_companion.py -s all prompt")))
+    (with-temp-file file-path
+      (insert "#+TITLE: " text "\n\n" python-output))
+    (find-file file-path)
+    ))
+#+end_src
+
 * Others
 ** theme changer
 I will write a function to change themes from a list.
@@ -1982,29 +2006,6 @@ I find the line highlight distracting
 (global-hl-line-mode -1)
 #+end_src
 
-** Create a story file on the fly
-Sometimes I want to create
-
-#+begin_src emacs-lisp
-(defvar my/stories-directory "~/Nextcloud/escritura/historias/ejercicios"
-  "Directory where org files created by `my/create-org-file' will be stored.")
-
-(defun my/create-writing-exercise (text)
-  "Create a new file with the current date and the specified TEXT.
-The file is saved in the directory specified by `my/stories-directory'.
-The file name format is \"%Y%m%d-<text>.org\", with spaces in TEXT replaced by \"_\".
-The function runs a Python script that generates a writing prompt
-and stores the output in the file."
-  (interactive "sEnter file name: ")
-  (let* ((date (format-time-string "%Y%m%d"))
-         (file-name (concat date "-" (replace-regexp-in-string " " "_" text) ".org"))
-         (file-path (concat my/stories-directory "/" file-name))
-         (python-output (shell-command-to-string "python  ~/Nextcloud/escritura/software/writing_companion/writing_companion.py -s all prompt")))
-    (with-temp-file file-path
-      (insert "#+TITLE: " text "\n\n" python-output))
-    (find-file file-path)
-    ))
-#+end_src
 
 * Work environment
 This will be my working environment config
