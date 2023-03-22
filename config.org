@@ -1971,8 +1971,8 @@ I will write a function to
     )
   )
 #+end_src
-**
-**  No line highlighting
+
+** No line highlighting
 I find the line highlight distracting
 
 #+begin_src emacs-lisp
@@ -1981,6 +1981,13 @@ I find the line highlight distracting
 (setq global-hl-line-modes nil)
 (global-hl-line-mode -1)
 #+end_src
+
+** org-novelist
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-novelist
+  :recipe (:host github :repo "sympodius/org-novelist"))
+#+end_src
+
 * Work environment
 This will be my working environment config
 
