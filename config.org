@@ -1906,6 +1906,14 @@ https://nobiot.github.io/org-remark/
   (require 'org-remark-global-tracking)
   (org-remark-global-tracking-mode +1)
 
+  ;; Create a file of notes for each file, with the buffer name
+  (defun my/org-remark-file-name ()
+    (concat (file-name-base (org-remark-notes-file-name-function))
+            ".org"))
+
+  (setq org-remark-notes-file-name
+        #'my/org-remark-file-name)
+
   ;; Key-bind `org-remark-mark' to global-map so that you can call it
   ;; globally before the library is loaded.
   (define-key global-map (kbd "C-c m m") #'org-remark-mark)
