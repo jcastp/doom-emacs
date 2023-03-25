@@ -276,6 +276,111 @@ For when I want mixed pitch mode in org mode.
 #+begin_src emacs-lisp
 ;;(add-hook! 'org-mode-hook #'mixed-pitch-mode)
 #+end_src
+** fontaine
+I can change the fonts with just a single command.
+https://protesilaos.com/emacs/fontaine
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! fontaine
+  :recipe (:host github :repo "protesilaos/fontaine"))
+#+end_src
+
+Here will come the code for the fontaine package.
+#+begin_src emacs-lisp
+(after! fontaine
+(setq fontaine-presets
+      '(
+        ;; daily operations, same config as normal config
+        (regular
+         :default-family "Fira Code"
+         :default-weight normal
+         :default-height 110
+         :fixed-pitch-family "Fira Code"
+         :fixed-pitch-weight Medium ; falls back to :default-weight
+         :fixed-pitch-height 110
+         :variable-pitch-family "Fira Code"
+         :variable-pitch-weight normal
+         :variable-pitch-height 110
+         :bold-family nil ; use whatever the underlying face has
+         :bold-weight bold
+         :italic-family "Iosevka"
+         :italic-slant italic
+         :line-spacing 1
+         )
+        ;; Bigger face for variable width, so I can focus on it
+        (writing
+         :default-family "EB Garamond"
+         :default-weight normal
+         :default-height 150
+         :fixed-pitch-family "Iosevka"
+         :fixed-pitch-weight Medium ; falls back to :default-weight
+         :fixed-pitch-height 110
+         :variable-pitch-family "ETBembo"
+         :variable-pitch-weight Medium
+         :variable-pitch-height 200
+         :bold-family nil ; use whatever the underlying face has
+         :bold-weight bold
+         :italic-family "EB Garamond"
+         :italic-slant italic
+         :line-spacing 1
+         )
+        ;; change the variable width face to have a different view when editing
+        (editing
+         :default-family "Iosevka"
+         :default-weight normal
+         :default-height 130
+         :fixed-pitch-family "Iosevka"
+         :fixed-pitch-weight nil ; falls back to :default-weight
+         :fixed-pitch-height 110
+         :variable-pitch-family "Gentium"
+         :variable-pitch-weight normal
+         :variable-pitch-height 180
+         :bold-family nil ; use whatever the underlying face has
+         :bold-weight bold
+         :italic-family "Iosevka"
+         :italic-slant italic
+         :line-spacing 1
+         )
+        ;; change the variable width face to have a different view when editing
+        (variable-width
+         :default-family "Fira Code"
+         :default-weight normal
+         :default-height 130
+         :fixed-pitch-family "Iosevka"
+         :fixed-pitch-weight nil ; falls back to :default-weight
+         :fixed-pitch-height 110
+         :variable-pitch-family "ETBembo"
+         :variable-pitch-weight normal
+         :variable-pitch-height 180
+         :bold-family nil ; use whatever the underlying face has
+         :bold-weight bold
+         :italic-family "Iosevka"
+         :italic-slant italic
+         :line-spacing 1
+         )
+        ;; For when I want to go back to all fixed width
+        (fixed-width
+         :default-family "Iosevka"
+         :default-weight normal
+         :default-height 130
+         :fixed-pitch-family "Iosevka"
+         :fixed-pitch-weight Medium ; falls back to :default-weight
+         :fixed-pitch-height 110
+         :variable-pitch-family "Iosevka"
+         :variable-pitch-weight Medium
+         :variable-pitch-height 130
+         :bold-family nil ; use whatever the underlying face has
+         :bold-weight bold
+         :italic-family "Iosevka"
+         :italic-slant italic
+         :line-spacing 1
+
+         )
+        )
+      )
+)
+#+end_src
+
 ** Font size increase/decrease
 Increase or decrease the font size.
 
@@ -304,7 +409,7 @@ https://github.com/kunalb/poet
 We establish the initial theme.
 
 #+begin_src emacs-lisp
-(consult-theme 'ef-dark)
+(consult-theme 'leuven)
 #+end_src
 
 ** Pixel precision scroll
@@ -1810,6 +1915,8 @@ https://nobiot.github.io/org-remark/
   (define-key global-map (kbd "C-c m r") #'org-remark-remove)
   (define-key global-map (kbd "C-c m j") #'org-remark-change)
 
+  ;; The remark file will be named based on the original file
+
   ;; Create highlighter pens for different parts
   ;; Since I use alternate dark and clear themes, these must be useful for both
   (org-remark-create "blue"
@@ -1867,110 +1974,6 @@ https://gitlab.com/Titan-C/org-cv
   :recipe (:host gitlab :repo "Titan-C/org-cv"))
 #+end_src
 
-** fontaine
-I can change the fonts with just a single command.
-https://protesilaos.com/emacs/fontaine
-
-#+begin_src emacs-lisp :tangle packages.el
-(package! fontaine
-  :recipe (:host github :repo "protesilaos/fontaine"))
-#+end_src
-
-Here will come the code for the fontaine package.
-#+begin_src emacs-lisp
-(after! fontaine
-(setq fontaine-presets
-      '(
-        ;; daily operations, same config as normal config
-        (regular
-         :default-family "Fira Code"
-         :default-weight normal
-         :default-height 110
-         :fixed-pitch-family "Fira Code"
-         :fixed-pitch-weight Medium ; falls back to :default-weight
-         :fixed-pitch-height 110
-         :variable-pitch-family "Fira Code"
-         :variable-pitch-weight normal
-         :variable-pitch-height 110
-         :bold-family nil ; use whatever the underlying face has
-         :bold-weight bold
-         :italic-family "Iosevka"
-         :italic-slant italic
-         :line-spacing 1
-         )
-        ;; Bigger face for variable width, so I can focus on it
-        (writing
-         :default-family "Iosevka"
-         :default-weight normal
-         :default-height 150
-         :fixed-pitch-family "Iosevka"
-         :fixed-pitch-weight Medium ; falls back to :default-weight
-         :fixed-pitch-height 110
-         :variable-pitch-family "ETBembo"
-         :variable-pitch-weight Medium
-         :variable-pitch-height 200
-         :bold-family nil ; use whatever the underlying face has
-         :bold-weight bold
-         :italic-family "EB Garamond"
-         :italic-slant italic
-         :line-spacing 1
-         )
-        ;; change the variable width face to have a different view when editing
-        (editing
-         :default-family "Iosevka"
-         :default-weight normal
-         :default-height 130
-         :fixed-pitch-family "Iosevka"
-         :fixed-pitch-weight nil ; falls back to :default-weight
-         :fixed-pitch-height 110
-         :variable-pitch-family "Gentium"
-         :variable-pitch-weight normal
-         :variable-pitch-height 180
-         :bold-family nil ; use whatever the underlying face has
-         :bold-weight bold
-         :italic-family "Iosevka"
-         :italic-slant italic
-         :line-spacing 1
-         )
-        ;; change the variable width face to have a different view when editing
-        (variable-width
-         :default-family "Fira Code"
-         :default-weight normal
-         :default-height 130
-         :fixed-pitch-family "Iosevka"
-         :fixed-pitch-weight nil ; falls back to :default-weight
-         :fixed-pitch-height 110
-         :variable-pitch-family "ETBembo"
-         :variable-pitch-weight normal
-         :variable-pitch-height 180
-         :bold-family nil ; use whatever the underlying face has
-         :bold-weight bold
-         :italic-family "Iosevka"
-         :italic-slant italic
-         :line-spacing 1
-         )
-        ;; For when I want to go back to all fixed width
-        (fixed-width
-         :default-family "Iosevka"
-         :default-weight normal
-         :default-height 130
-         :fixed-pitch-family "Iosevka"
-         :fixed-pitch-weight Medium ; falls back to :default-weight
-         :fixed-pitch-height 110
-         :variable-pitch-family "Iosevka"
-         :variable-pitch-weight Medium
-         :variable-pitch-height 130
-         :bold-family nil ; use whatever the underlying face has
-         :bold-weight bold
-         :italic-family "Iosevka"
-         :italic-slant italic
-         :line-spacing 1
-
-         )
-        )
-      )
-)
-#+end_src
 
 ** dimmer
 Dim the inactive buffers.
@@ -2008,6 +2011,28 @@ I find the line highlight distracting
 (global-hl-line-mode -1)
 #+end_src
 
+** org-pov
+#+begin_src emacs-lisp
+(defun parse-org-buffer ()
+  "Parse the current org-mode buffer and show a table of headings and POV values."
+  (interactive)
+  (let ((table-data (list '("Headings" "POV Values")))
+        (headings (org-element-map (org-element-parse-buffer) 'headline
+                    (lambda (headline)
+                      (let ((heading (org-element-property :title headline))
+                            (pov (org-element-property :POV headline)))
+                        (when pov
+                          (list heading (string-to-number pov))))))))
+    (dolist (heading headings)
+      (push heading table-data))
+    (setq table-data (nreverse table-data))
+    (with-output-to-temp-buffer "*org-table*"
+      (dolist (row table-data)
+        (insert (mapconcat 'identity row "\t") "\n"))))
+    (switch-to-buffer "*org-table*"))
+
+
+#+end_src
 
 * Work environment
 This will be my working environment config
