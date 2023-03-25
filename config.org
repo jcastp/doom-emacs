@@ -251,8 +251,8 @@ There are fixed and variable pitch fonts to define.
 #+begin_src emacs-lisp
 (setq
   ;; Font used for source code
-  ;; doom-font (font-spec :family "JetBrains Mono" :size 14 :weight 'Medium)
-   doom-font (font-spec :family "Fira Code" :size 14 :weight 'Medium)
+  ;;doom-font (font-spec :family "JetBrains Mono" :size 14 :weight 'Medium)
+  doom-font (font-spec :family "Fira Code" :size 14 :weight 'Medium)
   ;; doom-font (font-spec :family "Hasklig" :size 16 :weight 'Medium)
   ;; doom-font (font-spec :family "Iosevka Fixed" :size 16 :weight 'Medium)
   ;; doom-font (font-spec :family "Hack" :size 14)
@@ -260,12 +260,14 @@ There are fixed and variable pitch fonts to define.
   ;; Font used for normal writing
   ;;doom-variable-pitch-font (font-spec :family "Gentium Basic" :size 18)
   ;;doom-variable-pitch-font (font-spec :family "ETBookOT" :size 18)
-  doom-variable-pitch-font (font-spec :family "Fira Code" :size 14 :weight 'Medium)
   ;;doom-variable-pitch-font (font-spec :family "ETBembo" :size 18)
-  ;;doom-variable-pitch-font (font-spec :family "EB Garamond 12" :size 18 :weight 'Medium)
+
   ;;;; When you want to have a fixed font for the variable one
+  doom-variable-pitch-font (font-spec :family "Fira Code" :size 14 :weight 'Medium)
   ;;doom-variable-pitch-font (font-spec :family "JetBrains Mono" :size 16 :weight 'Extralight)
-  ;;doom-variable-pitch-font (font-spec :family "Iosevka" :size 16 :weight 'Regular)
+  ;;doom-variable-pitch-font (font-spec :family "JetBrains Mono" :size 18 :weight 'Light)
+  ;;doom-variable-pitch-font (font-spec :family "Iosevka" :size 26 :weight 'Regular)
+  ;;doom-variable-pitch-font (font-spec :family "Iosevka")
   )
 #+end_src
 
