@@ -1906,6 +1906,7 @@ https://nobiot.github.io/org-remark/
   (require 'org-remark-global-tracking)
   (org-remark-global-tracking-mode +1)
 
+
   ;; Create a file of notes for each file, with the buffer name
   (defun my/org-remark-file-name ()
     (concat (file-name-base (org-remark-notes-file-name-function))
@@ -1913,17 +1914,6 @@ https://nobiot.github.io/org-remark/
 
   (setq org-remark-notes-file-name
         #'my/org-remark-file-name)
-
-  ;; Key-bind `org-remark-mark' to global-map so that you can call it
-  ;; globally before the library is loaded.
-  (define-key global-map (kbd "C-c m m") #'org-remark-mark)
-  (define-key global-map (kbd "C-c m o") #'org-remark-open)
-  (define-key global-map (kbd "C-c m n") #'org-remark-view-next)
-  (define-key global-map (kbd "C-c m p") #'org-remark-view-prev)
-  (define-key global-map (kbd "C-c m r") #'org-remark-remove)
-  (define-key global-map (kbd "C-c m j") #'org-remark-change)
-
-  ;; The remark file will be named based on the original file
 
   ;; Create highlighter pens for different parts
   ;; Since I use alternate dark and clear themes, these must be useful for both
@@ -1944,6 +1934,20 @@ https://nobiot.github.io/org-remark/
 
   (org-remark-create "royal-blue"
                      '(:background "royal blue"))
+
+  ;; Key-bind `org-remark-mark' to global-map so that you can call it
+  ;; globally before the library is loaded.
+  (define-key global-map (kbd "C-c m m") #'org-remark-mark)
+  (define-key global-map (kbd "C-c m o") #'org-remark-open)
+  (define-key global-map (kbd "C-c m n") #'org-remark-view-next)
+  (define-key global-map (kbd "C-c m p") #'org-remark-view-prev)
+  (define-key global-map (kbd "C-c m r") #'org-remark-remove)
+  (define-key global-map (kbd "C-c m j") #'org-remark-change)
+  (define-key global-map (kbd "C-c m b") #'org-remark-mark-blue)
+
+  ;; The remark file will be named based on the original file
+
+
   )
 #+end_src
 
