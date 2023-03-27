@@ -1758,6 +1758,14 @@ Sometimes I want to create
 (defvar my/stories-directory "~/Nextcloud/escritura/historias/ejercicios"
   "Directory where org files created by `my/create-org-file' will be stored.")
 
+(defun my/create-empty-writing-file (text)
+  "Create a new org file with name format `%Y%m%d-<text>.org', where <text> is the `text' argument with spaces replaced by underscores. The file will be stored in `my/stories-directory'."
+  (interactive "sEnter file name: ")
+  (let* ((date (format-time-string "%Y%m%d"))
+         (filename (concat date "-" (replace-regexp-in-string " " "_" text) ".org"))
+         (full-path (concat my/stories-directory "/" filename)))
+    (find-file full-path)))
+
 (defun my/create-writing-exercise (text)
   "Create a new file with the current date and the specified TEXT.
 The file is saved in the directory specified by `my/stories-directory'.
