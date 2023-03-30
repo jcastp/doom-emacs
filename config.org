@@ -658,9 +658,9 @@ These are the custom states for the tasks, and the character associated to it.
   (setq org-todo-keywords
         '(
           ;; Status for tasks
-          (sequence "TODO(t)" "ONGOING(r!)" "WAITING(w@/!)" "|" "DONE(d!)" "CANCELED(c@/!)")
+          (sequence "TODO(t)" "ONGOING(o)" "WAITING(w@/!)" "|" "DONE(d!)" "CANCELED(c@/!)")
           ;; Status for writing
-          (sequence "TOWRITE(y)" "TOREVIEW(u@/!)" "REDO(i@/!)" "|" "FINISHED(o!)" "PURGE(p@/!)")
+          (sequence "TOWRITE(j)" "TOREVIEW(k@/!)" "REDO(l@/!)" "|" "FINISHED(ñ)" "PURGE(p@/!)")
           )
         )
   )
