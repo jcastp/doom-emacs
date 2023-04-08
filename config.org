@@ -1821,6 +1821,46 @@ This way, we rotate the themes."
 #+end_src
 
 * Testing
+** TODO treemacs config
+
+To change to the treemacs window, check this: https://github.com/doomemacs/doomemacs/issues/1177
+
+#+begin_src emacs-lisp
+;; where to store the persistant information
+;; only for home computer
+(if (not my-worksystem-p)
+    (progn
+      (setq treemacs-persist-file (expand-file-name "treemacs-persist" my-data-dir))
+      )
+  )
+;; indenting the treemacs tree structure
+(setq treemacs-indent-guide-mode t)
+
+;; this function allows for jumping back and forth from the treemacs window
+(require 'treemacs)
+(defun my/treemacs-back-and-forth ()
+  "Allows jumping back and forth the treemacs window if it exists,
+or open the treemacs, if it doesn't"
+  (interactive)
+  (if (treemacs-is-treemacs-window-selected?)
+      ;; then part
+      (progn
+        (other-window 1)
+        ;;(aw-flip-window)
+        ;;(treemacs-select-window)
+        )
+    ;; else part
+    (   progn
+      (treemacs-select-window)
+      )
+    )
+  )
+
+;; map a keybinding to this function
+(global-set-key (kbd "C-c o t") 'my/treemacs-back-and-forth)
+#+end_src
+
+
 ** projectile file
 Store my personal projects in the sync directory.
 
