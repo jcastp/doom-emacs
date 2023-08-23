@@ -48,8 +48,8 @@ Based on the environment variables.
 #+end_src
 
 ** Configure the config and data directories
-- Config directory contains the files that will be commited. All the files that will get emacs up and running will be here.
-- Data directory contains the files that should no be commited, but contains my own information, that is useful.
+- Config directory contains the files that will be committed. All the files that will get emacs up and running will be here.
+- Data directory contains the files that should no be committed, but contains my own information, that is useful.
 We will be using this either with concat or expand-file-name:
 - expand-file-name for when we have just a filename
 - concat for when we have a composite directory and filename, or as a secondary way to do it.
@@ -437,7 +437,6 @@ Used in the hydra snippets.
        ((t (:inherit ace-jump-face-foreground :height 5.0)))))
     )
 #+end_src
-
 
 * Navigation
 ** Uniquify
