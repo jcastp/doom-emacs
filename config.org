@@ -336,7 +336,6 @@ https://github.com/kunalb/poet
   :recipe (:host github :repo "kunalb/poet"))
 #+end_src
 
-
 ** Initial theme
 We establish the initial theme.
 
@@ -423,6 +422,23 @@ To show matching parens in all the buffers and modes.
 #+begin_src emacs-lisp
   (global-git-gutter-mode +1)
 #+end_src
+** ace-window
+To better manage more buffers in screen, as seen here: https://github.com/abo-abo/ace-window
+
+Used in the hydra snippets.
+#+begin_src emacs-lisp
+(after! ace-window
+    (setq aw-scope 'frame)
+    (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+    (global-set-key (kbd "M-o") 'ace-window)
+    ;; make the characters bigger, so it is easy to see
+    (custom-set-faces
+     '(aw-leading-char-face
+       ((t (:inherit ace-jump-face-foreground :height 5.0)))))
+    )
+#+end_src
+
+
 * Navigation
 ** Uniquify
 When several buffers visit identically-named files, Emacs must give the buffers distinct names. The usual method for making buffer names unique adds ‘<2>’, ‘<3>’, etc. to the end of the buffer names (all but one of them).
