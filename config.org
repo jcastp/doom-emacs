@@ -1,0 +1,48 @@
+#+TITLE: doom personal config
+#+AUTHOR: Javier Castilla
+#+EMAIL: jcastp@pm.me
+#+startup: overview
+#+language: en
+* General config
+** System information
+Variables to conditional load based on systems or locations.
+
+*** based on machine names
+Defining variables for conditional execution, based on machines:
+
+#+begin_src emacs-lisp
+;; working laptop vm
+(defvar my-worksystem-p (equal (system-name) "ESZAR1N1640"))
+;; My desktop machine, able to run anything
+(defvar my-desktopsystem-p (equal (system-name) "olimpo"))
+;; Writing machines, probably we can strip some features
+(defvar my-writinglaptop-p
+  (or (equal (system-name) "argos") (equal (system-name) "caliope"))
+  )
+#+end_src
+
+*** based on environment variables
+Home and Work environment.
+
+#+begin_src emacs-lisp
+(defvar my-workenvironment-p (string= (getenv "WORKING") "WORK"))
+(defvar my-homeenvironment-p (string= (getenv "WORKING") "HOME"))
+#+end_src
+
+** Personal information
+Based on the environment variables.
+
+#+begin_src emacs-lisp
+(if (not my-workenvironment-p)
+    ;; then part - personal use
+    (progn
+      (setq user-full-name "Javier Castilla"
+            user-mail-address "jcastp@pm.me")
+      )
+  ;; else part - work use
+  (progn
+    (setq user-full-name "Francisco Javier Castilla"
+          user-mail-address "franciscojavier.castilla@adidas.com")
+    )
+  )
+#+end_src
