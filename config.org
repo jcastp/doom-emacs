@@ -60,6 +60,24 @@ We will be using this either with concat or expand-file-name:
 (defvar my-data-dir "~/Nextcloud/config/.emacs.d/")
 #+end_src
 
+** Save command history
+It is nice to have commands and their history saved so that every time you get back to work, you can just re-run stuff as you need it. It isn't a radical feature, it is just part of a good user experience.
+
+#+begin_src emacs-lisp
+  ;;(setq savehist-file "~/Nextcloud/config/.emacs.d/savehist")
+  ;;(setq savehist-file (concat my-data-dir "savehist"))
+  (setq savehist-file (expand-file-name "savehist" my-data-dir))
+  (savehist-mode 1)
+  (setq history-length t)
+  (setq history-delete-duplicates t)
+  (setq savehist-save-minibuffer-history 1)
+  (setq savehist-additional-variables
+        '(kill-ring
+          search-ring
+          regexp-search-ring)
+        )
+#+end_src
+
 ** free-keys
 To know which keys are still free.
 
@@ -255,6 +273,61 @@ https://github.com/protesilaos/ef-themes
 (package! ef-themes
   :recipe (:host gitlab :repo "protesilaos/ef-themes"))
 #+end_src
+
+** Protesilaos modus themes
+Protesilaos very good themes. These themes are already included in the standard emacs, so we can get rid of the use-package definition, and retain only the config.
+
+#+begin_src emacs-lisp
+  ;;  (use-package modus-themes
+  ;;    :ensure t
+  ;;    :init
+      ;; Add all your customizations prior to loading the themes
+      (setq
+       modus-themes-completions nil
+       modus-themes-bold-constructs t
+       modus-themes-italic-constructs t
+       modus-themes-success-deuteranopia t
+       modus-themes-mixed-fonts t
+       modus-themes-intense-markup t
+       modus-themes-tabs-accented t
+       modus-themes-org-blocks '(tinted-background)
+       modus-themes-variable-pitch-ui nil
+       modus-themes-variable-pitch-headings nil
+
+       modus-themes-fringes nil ; {nil,'subtle,'intense}
+
+       ;; fonts for headings
+       modus-themes-headings
+       '((1 . (background overline rainbow 1.10))
+         (2 . (overline rainbow 1.05))
+         (3 . (rainbow 1.1))
+         (4 . (rainbow no-bold 1.0))
+         (t . (monochrome no-bold 1.0)))
+       ;; scales up the headings
+       modus-themes-scale-headings t
+       )
+
+      ;; TODO it seems this does not work for me
+      ;; set the headings scale
+      ;; 4 is the bigger one, 1 the smallest
+      ;; (setq
+      ;;  modus-themes-scale-1 1.05
+      ;;  modus-themes-scale-2 1.1
+      ;;  modus-themes-scale-3 1.15
+      ;;  modus-themes-scale-4 1.3
+      ;;  modus-themes-scale-title 1.4
+      ;;  modus-themes-scale-small 0.9)
+
+      ;; Load the theme files before enabling a theme (else you get an error).
+      ;;(modus-themes-load-themes)
+
+      ;;:config
+      ;; Load the theme of your choice:
+      ;; (modus-themes-load-vivendi)
+
+
+#+end_src
+
 ** poet theme
 https://github.com/kunalb/poet
 
@@ -262,6 +335,7 @@ https://github.com/kunalb/poet
 (package! poet
   :recipe (:host github :repo "kunalb/poet"))
 #+end_src
+
 
 ** Initial theme
 We establish the initial theme.
@@ -345,6 +419,10 @@ To show matching parens in all the buffers and modes.
 (show-smartparens-global-mode 1)
 #+end_src
 
+** git-gutter global mode
+#+begin_src emacs-lisp
+  (global-git-gutter-mode +1)
+#+end_src
 * Navigation
 ** Uniquify
 When several buffers visit identically-named files, Emacs must give the buffers distinct names. The usual method for making buffer names unique adds ‘<2>’, ‘<3>’, etc. to the end of the buffer names (all but one of them).
@@ -1268,6 +1346,30 @@ https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html
     )
   ))
   )
+#+end_src
+
+** Completion notes in to the Logbook
+#+begin_src emacs-lisp
+  (setq org-log-into-drawer t)
+#+end_src
+
+** Custom notes and timestamp
+Put a note or a timestamp when something changes. For example:
+- When the tasks is marked as DONE
+- When the schedule or deadline date is changed
+
+#+begin_src emacs-lisp
+  ;; Adds a timestamp to the state
+  ;;(setq org-log-done 'time)
+    (setq org-log-done nil)
+
+  ;; Adds a custom note to the state
+  ;;(setq org-log-done 'note)
+
+  ;; When the deadline or the schedule date is moved.
+  ;; to keep track of how many times I have moved a task to the future.
+  (setq org-log-redeadline (quote time))
+  (setq org-log-reschedule (quote time))
 #+end_src
 
 * Writing
