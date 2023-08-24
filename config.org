@@ -343,6 +343,26 @@ We establish the initial theme.
 (consult-theme 'leuven)
 #+end_src
 
+** Fontify the header
+Fontify the whole line for headings (with a background color). Works well with Leuven theme:
+
+#+begin_src emacs-lisp
+  (setq org-fontify-whole-heading-line t)
+#+end_src
+
+Different sizes for the different org headings.
+#+begin_src emacs-lisp
+  (custom-theme-set-faces
+   'user
+   `(org-level-4 ((t (:height 1.0))))
+   `(org-level-3 ((t (:height 1.1))))
+   `(org-level-2 ((t (:height 1.2))))
+   `(org-level-1 ((t (:height 1.35))))
+   `(org-document-title ((t (:height 1.6 :underline nil))))
+   )
+#+end_src
+
+*
 ** full path in the title bar
 Put the complete path on the title bar, along the filename.
 
