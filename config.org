@@ -60,6 +60,14 @@ We will be using this either with concat or expand-file-name:
 (defvar my-data-dir "~/Nextcloud/config/.emacs.d/")
 #+end_src
 
+** evil-escape configuration
+We get out of the insert mode with just a key chord, instead of having to look for the Esc key.
+
+#+begin_src emacs-lisp
+(evil-escape-mode 1)
+(setq-default evil-escape-key-sequence "jk")
+#+end_src
+
 ** Save command history
 It is nice to have commands and their history saved so that every time you get back to work, you can just re-run stuff as you need it. It isn't a radical feature, it is just part of a good user experience.
 
