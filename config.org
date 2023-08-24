@@ -134,6 +134,14 @@ To automatically close parenthesis and and other punctuation signs.
       )
 #+end_src
 
+** persp-save location
+#+begin_src emacs-lisp
+(after! persp-mode
+  (setq persp-save-dir (expand-file-name "persp-confs/" my-data-dir))
+)
+#+end_src
+
+
 * UI
 ** Define fonts
 Define the fonts for Doom emacs.
