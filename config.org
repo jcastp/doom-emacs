@@ -141,7 +141,16 @@ To automatically close parenthesis and and other punctuation signs.
 )
 #+end_src
 
+** avy-goto-line keybindings
+I want to map the avy-goto-line to the gsl keybinding.
 
+#+begin_src emacs-lisp
+(map!
+ (:map evilem-map
+       "l" (evilem-create #'avy-goto-line)
+       )
+ )
+#+end_src
 * UI
 ** Define fonts
 Define the fonts for Doom emacs.
