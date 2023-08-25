@@ -147,8 +147,7 @@ I want to map the avy-goto-line to the gsl keybinding.
 #+begin_src emacs-lisp
 (map!
  (:map evilem-map
-       "l" (evilem-create #'avy-goto-line)
-       )
+       "l" #'avy-goto-line)
  )
 #+end_src
 * UI
