@@ -515,6 +515,22 @@ Better menus list
 #+end_src
 
 * Orgmode
+** org-modern
+https://github.com/minad/org-modern
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-modern
+  :recipe (:host github
+           :repo "minad/org-modern")
+  )
+#+end_src
+
+#+begin_src emacs-lisp
+(after! org
+(global-org-modern-mode)
+  )
+#+end_src
+
 ** Custom notes and timestamp
 Put a note or a timestamp when something changes. For example:
 - When the tasks is marked as DONE
