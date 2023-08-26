@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: secuela
+# key: secuela
+# --
+#+begin_comment
+- *Reacción emocional*:
+- *Revisión, lógica y razón*:
+- *Anticipación*:
+- *Elección*:
+#+end_comment

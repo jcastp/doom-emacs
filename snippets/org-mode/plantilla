@@ -1,0 +1,144 @@
+# -*- mode: snippet -*-
+# name: plantilla escritura
+# key: plantilla
+# --
+* Plantilla :ignore:noexport:
+** Tema
+# Expresa el tema de la manera más sencilla posible.
++ Posiciones
+  # Expresa todas las posibles posiciones con respecto al problema moral de la historia, para luego asignárselas a los personajes y demás elementos de la historia.
+** Problema
+# Expresa el problema principal y los secundarios en el mundo de la historia.
++ Complicaciones
+  # Expresa todas las posibles complicaciones que pueden traer estos problemas. Podemos aplicarlas luego a escenas.
+** Personajes
+# Los personajes de la historia deben ser personas vivas e interesantes, con su manera de pensar y actuar, con sus dudas y problemas que solucionar.
+*** Personaje principal
+- Concepto:
+- Tema:
+- Problema:
+- Debilidad:
+- Necesidad:
+- Deseo: 
+- Aspecto:
+- Aspecto:
+- Relación:
+- Posesión:
+**** Cambio
+# etapas del cambio y momentos en los que se realiza
+**** Notas
+# Todo lo demás que queramos documentar.
+*** Oponente
+- Concepto:
+- Tema:
+- Problema:
+- Debilidad:
+- Necesidad:
+- Deseo: 
+- Aspecto:
+- Aspecto:
+- Relación:
+- Posesión:
+**** Cambio
+# etapas del cambio y momentos en los que se realiza
+**** Notas
+# Todo lo demás que queramos documentar.
+*** Personaje aliado
+- Concepto:
+- Tema:
+- Problema:
+- Debilidad:
+- Necesidad:
+- Deseo: 
+- Aspecto:
+- Aspecto:
+- Relación:
+- Posesión:
+**** Cambio
+# etapas del cambio y momentos en los que se realiza
+**** Notas
+# Todo lo demás que queramos documentar.
+*** Personaje genérico
+- Concepto:
+- Tema:
+- Problema:
+- Debilidad:
+- Necesidad:
+- Deseo: 
+- Aspecto:
+- Aspecto:
+- Relación:
+- Posesión:
+**** Cambio
+# etapas del cambio y momentos en los que se realiza
+**** Notas
+# Todo lo demás que queramos documentar.
+** Escenarios
+** Símbolos
+** Trama
+*** Puntos
+- Auto-revelación, Necesidad y Deseo
+  # El Cambio del héroe, la estructura fundamental de la historia. ¿Qué aprende el héroe al final? ¿Qué conoce al principio? ¿En qué está equivocado al inicio de la historia? ¿Cómo se transforma y de qué manera lo hace?
+- Fantasma y mundo de la historia
+  # ¿Qué le ha pasado al héroe antes de la historia y por qué le afecta ahora? Puede ser la fuente de la Debilidad.
+  # ¿Dónde transcurre la historia? Como hemos establecido, debe estar relacionado con el Tema, Problema, Necesidad, Deseo, Símbolos y Personajes.
+- Debilidad y Necesidad
+  # El héroe ha de tener una debilidad psicológica (que le afecta a él) y moral (que afecta a los demás).
+  # La Necesidad es que necesita para eliminar la debilidad y conseguir una vida mejor.
+- Evento incitador
+  # Es un evento externo que hace que el héroe discierna un objetivo y se ponga a actuar. Conecta Necesidad y Deseo. El evento tiene que lanzarlo a un sitio peor del que estaba (bastante peor).
+- Deseo
+  # La meta externa que le hace creer que, si lo consigue, mejorará su vida.
+  # Debe comenzar flojo, pero va subiendo de intensidad.
+- Aliado o aliados
+  # La gente que ayudará al héroe en su viaje.
+  # Debes darles deseos propios que les ayuden a desarrollarse como personas.
+- Oponente y/o misterio
+  # La relación más importante, pues luchan por el mismo objetivo. Elige al que pueda atacar con más intensidad la debilidad del héroe.
+  # No descubras demasiado: usa jerarquías de oponentes y revela sólo a piezas.
+  # ¿Quién quiere evitar que el héroe consiga lo que quiere? ¿Qué quiere el oponente (misma meta que el héroe)? ¿Cuáles son los valores del oponente y cómo se diferencian de los del héroe?
+- Falso aliado-Oponente
+  # Dilema del personaje, incluye revelaciones de cuan poderoso es el oponente.
+- Primera revelación y decisión: cambio de Deseo y Motivo
+  # Nueva información que fuerza al héroe a decidir y moverse en una nueva dirección. Ajuste del deseo y el motivo.
+  # Las revelaciones han de ser progresivas y aumentadas. ¡No usar los tres actos! Sólo hay tres revelaciones, cuando en películas hay entre 7 y 10.
+- Plan
+  # Guías y estrategias que usa el héroe para superar a su oponente y conseguir su objetivo. El plan inicial debe fallar, pues el oponente es fuerte. El héroe ha de adaptarse y conseguir una nueva estrategia.
+- Plan del Oponente y Contraataque
+  # El oponente también actúa, no es pasivo. Ataca al héroe y le obstaculiza su avance. Cada ataque es una revelación.
+- Empuje
+  # Las acciones asociadas al plan del héroe. El héroe suele perder, por lo que toma decisiones cada vez más inmorales. Las acciones han de ser cambiantes también, no las mismas.
+- Ataque de aliado
+  # Cuando el héroe se vuelve más inmoral, un aliado le critica, pero el héroe se revuelve y justifica sus acciones. Tiene que terminar cuestionándose sus acciones.
+- Aparente derrota
+  # El punto más bajo del héroe, cerca de 2/3 o 3/4 de la historia. Cree que ha perdido el objetivo y el oponente ha ganado.
+  # No debe ser algo menor, sino casi catastrófico.
+- Segunda revelación y decisión: Empuje obsesivo, cambio de Deseo y Motivo
+  # Hay una revelación que le pone de nuevo en el camino, pues la victoria es aún posible. Ahora está obsesionado, pues es la última oportunidad. Se convierte en casi un tirano.
+  # Cambio en el deseo y el motivo.
+- Revelación a la audiencia
+  # Revelación del falso-aliado oponente, o una nueva pieza de información.
+  # La audiencia se adelanta al héroe, sabe más que él.
+- Tercera revelación y Decisión
+  # Suele ser el héroe descubriendo la revelación a la audiencia, u otro conocimiento oculto. Demuestra el verdadero poder del oponente.
+  # El héroe se siente más fuerte y con más determinación para ganar.
+- Puerta, Umbral, Visita a la muerte
+  # Las opciones del héroe se estrechan, de tal modo que no le queda espacio para maniobrar. Su curso de acción disminuye y está casi obligado a pasar por el Umbral (opciones limitadas), la visita a la Muerte, que suele ser psicológica, al aceptar sus errores pasados.
+- Batalla
+  # El enfrentamiento entre las dos maneras de hacer las cosas y el objetivo final de la lucha: los valores e ideas de lo que está en juego.
+  # Todo converge aquí, como un embudo. Todas los personajes y líneas de acción terminan aquí, en el espacio más reducido posible.
+  # Se revela con claridad el tema.
+- Auto-revelación
+  # El héroe se da cuenta de quién es en realidad y descubre su verdadero yo.
+  # Si la revelación también es moral, aprende la manera de actuar con los demás.
+  # Se le puede dar también una revelación al oponente. Debe estar ligada a la revelación del héroe.
+- Decisión moral
+  # Momento de la verdad: decisión entre dos rumbos de acción. Es la prueba de que el héroe ha aprendido de la auto revelación.
+  # Debe ser una decisión relevante, entre dos opciones positivas, o dos negativas.
+- Nuevo equilibrio
+  # Todo vuelve a la normalidad, pero el héroe ha cambiado.
+  
+#  LocalWords:  FATE GMC
+
+** Escenas
+

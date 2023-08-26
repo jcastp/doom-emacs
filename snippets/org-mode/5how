@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: Las 5 W + cómo
+# key: 5how
+# --
+#+begin_comment
+- *Quién*:
+- *Qué*:
+- *Cuándo*:
+- *Dónde*:
+- *Por qué*:
+- *Cómo*:
+#+end_comment

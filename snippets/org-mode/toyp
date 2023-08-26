@@ -1,0 +1,93 @@
+# -*- mode: snippet -*-
+# name: take of your pants plantilla
+# key: toyp
+# --
+* Tres bloques de construcción
+Toda escena ha de estar construida con, al menos, uno de estos ladrillos.
+
+** Núcleo de la historia
+Personaje, meta externa, antagonista, trama y final
+
+** Arco del personaje
+El cambio, desde su deseo a su necesidad, a través de su defecto.
+
+** Tema
+El hilo moral de la historia.
+
+* Núcleo de la historia
+** Personaje
+# Nombre, y todos los detalles que sean relevantes y necesitemos conocer.
+** Meta externa
+# Debe estar relacionada con la meta interna, que a su vez está relacionada con el defecto.
+# Cuando vaya en por de la meta externa, el personaje debe darse cuenta de la meta interna.
+** Antagonista
+# La persona que lucha por la misma meta externa que el personaje. Tiene que haber conflicto entre ellos.
+** Trama
+# Tres clases de ladrillos para construir: arco de personaje, tema y núcleo de la historia.
+# Esta parte expande a más pasos*
+** Final
+# Si el personaje consigue su meta externa o no.
+# Si la lección aprendida es suave (todo sale bien) o si es dura (no todo sale bien).
+
+** Defecto
+# El defecto principal del personaje, que le hace no conseguir la vida que quiere.
+** Aliado
+# La única voz que puede forzar al personaje a escuchar y ver sus defectos. La única que le puede enseñar que lo está haciendo mal y que necesita volver a su camino.
+** Tema
+# La idea unificadora de la historia, que puede ser resumida como una premisa.
+
+
+* Trama
+** Escena inicial
+# Prepara el escenario. Muestra al personaje, y el tema o el defecto. Debe ser relevante.
+# Defecto: muestra el punto A, abajo.
+# Tema: muestra el tema
+** Evento incitador
+# Algo echa al personaje fuera de su vida ordinaria. Quizás sea un destello de su defecto. O tal vez vea su meta externa por primera vez
+# Muy relacionado con su meta externa
+** Personaje se da cuenta de su meta externa
+# A veces coincide con el evento incitador. Si no, el personaje se da cuenta de que quiere algo y decide perseguirlo
+# Relacionado con su defecto
+** Muestra del defecto
+# Enseña al lector cómo afecta el defecto al personaje y cómo afecta a su vida, su impacto real.
+# Crea tensión y un avance de que el personaje debe cambiar para convertirse en una persona mejor.
+** Empuje hacia la meta
+# Proporciona al protagonista un plan defectuoso. La meta está unida a su defecto. No conseguirá su meta, porque su defecto se lo impide. Debe superar su defecto antes de conseguir su meta
+# El empuje se relaciona con el defecto, pero incluye el tema también.
+** El antagonista se revela
+# Antagonista = realidad alternativa, lente opuesta para examinar el tema
+# El segundo personaje más importante de la historia, que lucha por el la misma meta que el protagonista. Muestra sus motivos.
+** Frustración #1
+# Las cosas van mal, el personaje es alejado de su meta, falla.
+# Muestra el tema y, quizás, al antagonista
+** Revisitando el defecto
+# Muestra que el fallo, el retraso, la lucha perdida, es debido al defecto.
+# Siembra las semillas de la verdad en la mente del personaje: necesita cambiar algo, pero el personaje reniega, por ahora.
+** Nuevo empuje hacia la meta
+# Nuevo plan, mejor, más cauteloso, pero, como el defecto no se ha superado, aún está destinado a fallar.
+** El antagonista ataca
+# Ahora que el personaje se hace más consciente de su defecto, y sabe mejor cómo obtener su meta, es el mejor momento para lanzar el ataque del antagonista.
+# Ya no lucha contra fuerzas invisible, sino contra un enemigo real que quiere lo mismo que él.
+# Tema: Cómo alcanzar su meta.
+** Frustración #2
+# El personaje pierde de nuevo, esta vez contra el antagonista, subiendo las apuestas.
+# El ciclo de plan, ataque, frustración se puede hacer varias veces, pero cada vez el personaje debe darse cuenta con lentitud de la verdad.
+# La meta está más lejos que nunca.
+** Meta cambiada
+# Como la meta está más lejos que nunca, el personaje abandona su búsqueda, y se centra en otra, ligeramente relacionada. Se cede la meta al antagonista.
+# Asegúrate de que la nueva meta esté ligada por el tema, núcleo de la historia y el arco del personaje.
+** El aliado ataca
+# El aliado, usando su influencia sobre el personaje, le fuerza a mirarse en un espejo.
+# El problema es el defecto y el aliado ataca sin piedad. No hay manera de ignorarlo, de ignorar el defecto. El personaje debe saber que el problema está en su interior.
+** Empuje final
+# El personaje renueva sus votos para conseguir su meta inicial.
+# Necesita enfrentarse al antagonista, pero ahora ya sabe que tiene un defecto.
+# Instrospección, sacrificio, el umbral ... cualquier método para mostrar al lector que el personaje sabe qué ha de hacer.
+** Batalla
+# Confronta al antagoniista con su nueva visión y misión. El personaje lucha por derrotar su defecto.
+** Muerte
+# La muerte del defecto. En medio de la batalla, el personaje encuentra su fuerza interior y mata a la persona que era para convertirse en la que tenía que ser.
+# Sacrificio, muerte, la estocada final ... señales de que el héroe ha cambiado.
+** Resultado
+# ¿Consigue la meta externa? ¿Es una lección suave o dura?
+# Cierra el arco del personaje y reexamina, una vez más, el tema.

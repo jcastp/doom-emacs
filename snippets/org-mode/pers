@@ -1,0 +1,26 @@
+# -*- mode: snippet -*- 
+# name: plantilla para personaje
+# key: pers
+# --
+** Personaje                                                     :personaje:
+# resumen breve del personaje
+*** Apariencia
+# Descripción, pero no solo física, sino de actitud y capacidad
+*** Objetivos y motivación
+# Qué mueve y por qué al personaje. Puede ser el resumen del Goal, Motivation, Conflict
+*** Expectativas y paradojas
+# Cada personaje tiene unas expectativas depositadas en él desde el momento de su creación, ya sea por su origen, su profesión, su ambiente. También ha de tener paradojas, rasgos inesperados para su trasfondo.
+*** Defecto, deseo, necesidad
+*** Pensamientos, creencias y valores
+# Cómo ve el mundo
+*** Los 5 rasgos de personalidad
+**** Sociabilidad
+# Extraversión - Introversión
+**** Amabilidad
+# Agradable - Rudo
+**** Neuroticismo
+# Estabilidad emocional
+**** Responsabilidad
+# 
+**** Apertura a la Experiencia
+# Conservador - Experimentador

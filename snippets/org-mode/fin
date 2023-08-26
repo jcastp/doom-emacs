@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: salto entre escenas
+# key: fin
+# --
+#+LATEX: ~\\\\
+#+LATEX: ~\\\\
+#+HTML:<br><br>

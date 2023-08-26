@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: escena_properties
+# key: escena
+# --
+:PROPERTIES:
+:PoV: $1
+:Personajes: $2
+:Trama: $3
+:Linea_temporal: 
+:Localizacion:
+:Descripcion:
+:Resumen:
+:Motivacion_escena:
+:Fuente_conflicto:
+:Que_esta_juego:
+:Emocion:
+:END:

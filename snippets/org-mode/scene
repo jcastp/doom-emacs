@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: scene
+# key: scene
+# --
+:PROPERTIES:
+:PoV: $1
+:Characters: $2
+:Plot: $3
+:Temporal_line: 
+:Location:
+:Description:
+:Summary:
+:Scene_motivation:
+:Source_conflict:
+:Stakes:
+:Scene_objective:
+:Emotion:
+:END:
