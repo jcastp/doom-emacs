@@ -507,8 +507,9 @@ Better menus list
 (setq imenu-list-position 'right)
 ;; Establish the depth of the entries shown
 (setq org-imenu-depth 5)
+(setq imenu-list-size 0.2)
 ;; map the keys
-(global-unset-key (kbd "M-i"))
+;; (global-unset-key (kbd "M-i"))
 ;;(global-set-key (kbd "C-c s I") #'imenu-list-smart-toggle)
 ;; Once you open imenu, focus on it
 (setq imenu-list-focus-after-activation t)
