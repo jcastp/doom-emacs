@@ -513,6 +513,11 @@ Better menus list
 ;;(global-set-key (kbd "C-c s I") #'imenu-list-smart-toggle)
 ;; Once you open imenu, focus on it
 (setq imenu-list-focus-after-activation t)
+;; configuring the keybinding as /la/ doom emacs
+;; https://rameezkhan.me/posts/2020/2020-07-03--adding-keybindings-to-doom-emacs/
+(map! :leader
+      :desc "imenu toggle "
+      "s I" #'imenu-list-smart-toggle)
 #+end_src
 
 * Orgmode
