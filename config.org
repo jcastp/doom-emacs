@@ -418,6 +418,9 @@ Open a branch into a different frame, but the same buffer:
     (windmove-right)
     )
   ;;(global-set-key (kbd "C-c 8" ) 'my/org-tree-open-in-right-frame)
+  (map! :leader
+        :desc "Open org tree to indirect buffer"
+        "b 8" #'my/org-tree-open-in-right-frame)
   )
 #+end_src
 
