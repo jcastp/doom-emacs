@@ -1611,6 +1611,12 @@ https://nobiot.github.io/org-remark/
   )
 #+end_src
 
+** org-timeblock
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-timeblock
+  :recipe (:host github :repo "ichernyshovvv/org-timeblock"))
+#+end_src
+
 * Work environment
 This will be my working environment config
 
