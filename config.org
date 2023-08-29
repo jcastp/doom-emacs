@@ -170,7 +170,7 @@ There are fixed and variable pitch fonts to define.
   ;;doom-variable-pitch-font (font-spec :family "ETBembo" :size 18)
 
   ;;;; When you want to have a fixed font for the variable one
-  doom-variable-pitch-font (font-spec :family "Fira Code" :size 14 :weight 'Medium)
+  ;;doom-variable-pitch-font (font-spec :family "Fira Code" :size 14 :weight 'Medium)
   ;;doom-variable-pitch-font (font-spec :family "JetBrains Mono" :size 16 :weight 'Extralight)
   ;;doom-variable-pitch-font (font-spec :family "JetBrains Mono" :size 18 :weight 'Light)
   ;;doom-variable-pitch-font (font-spec :family "Iosevka" :size 26 :weight 'Regular)
