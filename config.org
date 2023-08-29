@@ -484,6 +484,25 @@ Used in the hydra snippets.
        ((t (:inherit ace-jump-face-foreground :height 5.0)))))
     )
 #+end_src
+** beacon
+To show the line I am after a long jump.
+#+begin_src emacs-lisp :tangle packages.el
+(package! beacon
+ :recipe (:host github :repo "Malabarba/beacon")
+)
+#+end_src
+
+#+begin_src emacs-lisp
+(after! beacon
+ (beacon-mode t)
+    (setq beacon-push-mark 35
+      beacon-blink-duration 0.5
+      beacon-blink-delay 0.5
+      beacon-blink-when-focused t
+      beacon-color "deep sky blue")
+
+    )
+#+end_src
 
 * Navigation
 ** Uniquify
