@@ -504,6 +504,25 @@ To show the line I am after a long jump.
     )
 #+end_src
 
+** dimmer
+I want to differentiate the window I'm working with.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! dimmer
+  :recipe (:host github :repo "gonewest818/dimmer.el"))
+#+end_src
+
+#+begin_src emacs-lisp
+(dimmer-configure-which-key)
+(dimmer-mode t)
+(dimmer-configure-magit)
+(dimmer-configure-org)
+
+;; configure the dimmer
+(setq dimmer-adjustment-mode :both)
+(setq dimmer-fraction 0.3)
+#+end_src
+
 * Navigation
 ** Uniquify
 When several buffers visit identically-named files, Emacs must give the buffers distinct names. The usual method for making buffer names unique adds ‘<2>’, ‘<3>’, etc. to the end of the buffer names (all but one of them).
