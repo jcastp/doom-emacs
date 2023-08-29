@@ -528,16 +528,16 @@ Better menus list
 https://github.com/minad/org-modern
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! org-modern
-  :recipe (:host github
-           :repo "minad/org-modern")
-  )
+;;( package! org-modern
+ ;;  :recipe (:host github
+ ;;           :repo "minad/org-modern")
+ ;;  )
 #+end_src
 
 #+begin_src emacs-lisp
-(after! org
-(global-org-modern-mode)
-  )
+;;( after! org
+;; (global-org-modern-mode)
+;;   )
 #+end_src
 
 ** Custom notes and timestamp
