@@ -364,7 +364,7 @@ https://github.com/kunalb/poet
 We establish the initial theme.
 
 #+begin_src emacs-lisp
-(consult-theme 'leuven)
+(consult-theme 'poet-dark)
 #+end_src
 
 ** Fontify the header
