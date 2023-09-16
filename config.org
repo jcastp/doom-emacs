@@ -1658,6 +1658,18 @@ https://github.com/ichernyshovvv/org-timeblock
   :recipe (:host github :repo "ichernyshovvv/org-timeblock"))
 #+end_src
 
+** TODO denote
+For basic note taking.
+https://github.com/protesilaos/denote
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! denote
+  :recipe (:host github :repo "protesilaos/denote"))
+#+end_src
+
+#+begin_src emacs-lisp
+(setq denote-directory "/home/jcastp/Nextcloud/personal/denote/")
+#+end_src
 * Work environment
 This will be my working environment config
 
