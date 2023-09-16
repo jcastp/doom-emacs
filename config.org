@@ -1670,6 +1670,21 @@ https://github.com/protesilaos/denote
 #+begin_src emacs-lisp
 (setq denote-directory "/home/jcastp/Nextcloud/personal/denote/")
 #+end_src
+** TODO elfeed and elfeed-org
+Configuration for the elfeed and the org files.
+#+begin_src emacs-lisp
+;; database for elfeed
+(after! elfeed
+  (elfeed-org)
+(setq elfeed-db-directory (expand-file-name "elfeed/db/" my-data-dir))
+
+;; Optionally specify a number of files containing elfeed
+;; configuration. If not set then the location below is used.
+;; Note: The customize interface is also supported.
+(setq rmh-elfeed-org-files (list "~/Nextcloud/config/.emacs.d/elfeed/elfeed.org"))
+)
+#+end_src
+
 * Work environment
 This will be my working environment config
 
