@@ -1701,6 +1701,27 @@ Configuration for the elfeed and the org files.
 )
 #+end_src
 
+** bibtex config
+I will store the main bibliography file in my data directory:
+
+*** citar
+#+begin_src emacs-lisp :tangle packages.el
+(package! citar
+  :recipe (:host github :repo "emacs-citar/citar"))
+#+end_src
+#+begin_src emacs-lisp
+(after! citar
+(org-cite-global-bibliography
+     (directory-files
+      (concat (getenv "HOME") "/Nextcloud/config/.emacs.d/bibtex/") t
+      "^[A-Z|a-z|0-9].+.bib$"))
+    (citar-bibliography org-cite-global-bibliography)
+    (org-cite-insert-processor 'citar)
+    (org-cite-follow-processor 'citar)
+    (org-cite-activate-processor 'citar)
+    )
+#+end_src
+
 * Work environment
 This will be my working environment config
 
