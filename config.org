@@ -1508,7 +1508,7 @@ Put a note or a timestamp when something changes. For example:
 #+end_src
 ** TODO org tags justified
 #+begin_src emacs-lisp
-(setq org-tags-column -80)
+(setq org-tags-column 0)
 #+end_src
 * Writing
 ** org-journal
