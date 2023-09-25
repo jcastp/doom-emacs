@@ -1722,6 +1722,21 @@ I will store the main bibliography file in my data directory:
     )
 #+end_src
 
+
+** TODO paste in line after
+#+begin_src emacs-lisp
+(defun evil-paste-below ()
+  "Create an empty line below, move cursor to it, and paste the contents of the yank ring."
+  (interactive)
+  (evil-open-below 1)   ; Create an empty line below
+  (forward-line)        ; Move cursor to the empty line
+  (yank)               ; Paste the contents of the yank ring
+  (evil-force-normal-state) ; Force normal state
+  )
+
+;; Bind the function to a key, for example, to "SPC p" in Evil's normal state
+(evil-define-key 'normal global-map (kbd "SPC P") 'evil-paste-below)
+#+end_src
 * Work environment
 This will be my working environment config
 
