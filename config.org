@@ -1728,9 +1728,10 @@ I will store the main bibliography file in my data directory:
 (defun evil-paste-below ()
   "Create an empty line below, move cursor to it, and paste the contents of the yank ring."
   (interactive)
-  (evil-open-below 1)   ; Create an empty line below
+  ;;(evil-open-below 1)   ; Create an empty line below
   (forward-line)        ; Move cursor to the empty line
   (yank)               ; Paste the contents of the yank ring
+  ;;(evil-open-below 1)   ; Create an empty line below
   (evil-force-normal-state) ; Force normal state
   )
 
