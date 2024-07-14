@@ -34,7 +34,6 @@ Defining variables for conditional execution, based on machines:
 			      (not (string= (getenv "WORKING") "WORK")))
   )
 (defvar my-workenvironment-p (string= (getenv "WORKING") "WORK"))
-
 #+end_src
 
 *** based on environment variables
@@ -73,7 +72,6 @@ Home and Work environment.
     ;;(shell-command "bash ~/Nextcloud/config/mount-encrypted-dirs.sh")
     )
   )
-
 #+end_src
 
 ** Personal information
@@ -92,6 +90,7 @@ It contains the variables =user-full-name= and =user-mail-address=
 We will be using this either with concat or expand-file-name:
 - expand-file-name for when we have just a filename
 - concat for when we have a composite directory and filename, or as a secondary way to do it.
+  
 #+begin_src emacs-lisp
 ;; this is the same as the doom-user-dir
 (defvar my-config-dir "~/.doom.d/")
@@ -116,29 +115,28 @@ https://www.gnu.org/software/emacs/manual/html_node/emacs/Network-Security.html
 #+begin_src emacs-lisp
   (setq network-security-level 'high)
 #+end_src
+
 ** Movement
 Some keys redefined to better adjust to the whole emacs key environment.
 #+begin_src emacs-lisp
-  (global-set-key (kbd "M-p") 'backward-paragraph)
-  (global-set-key (kbd "M-n") 'forward-paragraph)
+(global-set-key (kbd "M-p") 'backward-paragraph)
+(global-set-key (kbd "M-n") 'forward-paragraph)
 #+end_src
 
 ** Save command history
 It is nice to have commands and their history saved so that every time you get back to work, you can just re-run stuff as you need it. It isn't a radical feature, it is just part of a good user experience.
 
 #+begin_src emacs-lisp
-  ;;(setq savehist-file "~/Nextcloud/config/.emacs.d/savehist")
-  ;;(setq savehist-file (concat my-data-dir "savehist"))
-  (setq savehist-file (expand-file-name "savehist" my-data-dir))
-  (savehist-mode 1)
-  (setq history-length t)
-  (setq history-delete-duplicates t)
-  (setq savehist-save-minibuffer-history 1)
-  (setq savehist-additional-variables
-        '(kill-ring
-          search-ring
-          regexp-search-ring)
-        )
+(setq savehist-file (expand-file-name "savehist" my-data-dir))
+(savehist-mode 1)
+(setq history-length t)
+(setq history-delete-duplicates t)
+(setq savehist-save-minibuffer-history 1)
+(setq savehist-additional-variables
+      '(kill-ring
+        search-ring
+        regexp-search-ring)
+      )
 #+end_src
 
 ** free-keys
@@ -152,30 +150,29 @@ To know which keys are still free.
 ** auto revert mode
 When a file is changed in disk, the buffer reloads to reflect that change.
 #+begin_src emacs-lisp
-  (global-auto-revert-mode 1)
+(global-auto-revert-mode 1)
 #+end_src
 
 Change dired buffers when the directory is changed:
 #+begin_src emacs-lisp
-  ;; auto refresh dired when file changes
-  (add-hook 'dired-mode-hook 'auto-revert-mode)
+;; auto refresh dired when file changes
+(add-hook 'dired-mode-hook 'auto-revert-mode)
 #+end_src
 
 ** Bookmarks
 All the config related to the bookmarks.
 
 #+begin_src emacs-lisp
-;;(setq bookmark-default-file "~/Nextcloud/config/.emacs.d/bookmarks")  ;;define file to use.
 (setq bookmark-default-file (expand-file-name "bookmarks" my-data-dir))
 (setq bookmark-save-flag 1)  ;save bookmarks to .emacs.bmk after each entry
 #+end_src
 
 ** recentf
 #+begin_src emacs-lisp
-  ;; where to store the recent list file
-  (setq recentf-save-file (expand-file-name "recentf" my-data-dir))
-  (recentf-mode 1)
-  ;;(global-set-key (kbd "C-c d r") #'recentf)
+;; where to store the recent list file
+(setq recentf-save-file (expand-file-name "recentf" my-data-dir))
+(recentf-mode 1)
+;;(global-set-key (kbd "C-c d r") #'recentf)
 #+end_src
 
 ** Abbreviation mode
@@ -183,7 +180,6 @@ Defines a set of abbreviations that permits complete words with just some charac
 
 #+begin_src emacs-lisp
 ;;where do we read the abbrevs from
-;;(setq abbrev-file-name "~/Nextcloud/config/.emacs.d/abbrev_defs")
 (setq abbrev-file-name (expand-file-name "abbrev_defs" my-data-dir))
 (setq-default abbrev-mode t)
 ;; save abbrevs when files are saved
@@ -220,8 +216,8 @@ To automatically close parenthesis and and other punctuation signs.
 ** set firefox as the default browser
 Setting firefox as the default browser for opening http/s links.
 #+begin_src emacs-lisp
-  (setq browse-url-firefox-program "firefox")
-  (setq browse-url-browser-function 'browse-url-firefox)
+(setq browse-url-firefox-program "firefox")
+(setq browse-url-browser-function 'browse-url-firefox)
 #+end_src
 
 * UI
@@ -463,19 +459,19 @@ We establish the initial theme.
 Fontify the whole line for headings (with a background color). Works well with Leuven theme:
 
 #+begin_src emacs-lisp
-  (setq org-fontify-whole-heading-line t)
+(setq org-fontify-whole-heading-line t)
 #+end_src
 
 Different sizes for the different org headings.
 #+begin_src emacs-lisp
-  (custom-theme-set-faces
-   'user
-   `(org-level-4 ((t (:height 1.0))))
-   `(org-level-3 ((t (:height 1.1))))
-   `(org-level-2 ((t (:height 1.2))))
-   `(org-level-1 ((t (:height 1.35))))
-   `(org-document-title ((t (:height 1.6 :underline nil))))
-   )
+(custom-theme-set-faces
+ 'user
+ `(org-level-4 ((t (:height 1.0))))
+ `(org-level-3 ((t (:height 1.1))))
+ `(org-level-2 ((t (:height 1.2))))
+ `(org-level-1 ((t (:height 1.35))))
+ `(org-document-title ((t (:height 1.6 :underline nil))))
+ )
 #+end_src
 
 ** full path in the title bar
