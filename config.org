@@ -1782,7 +1782,8 @@ https://github.com/bastibe/org-journal
 (after! org-journal
   (setq org-journal-date-prefix "#+TITLE: ")
   (setq org-journal-file-format "%Y-%m-%d.org")
-  (setq org-journal-dir "~/Nextcloud/personal/diario/")
+  ;;(setq org-journal-dir "~/Nextcloud/personal/diario/")
+  (setq org-journal-dir (expand-file-name "personal/diario" my-clear-directory))
   (setq org-journal-date-format "%A, %d %B %Y")
   (setq org-journal-encrypt-journal nil)
   )
