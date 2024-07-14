@@ -98,7 +98,13 @@ We will be using this either with concat or expand-file-name:
 (defvar my-data-dir "~/Nextcloud/config/.emacs.d/")
 #+end_src
 
+** Start with a maximized frame
+#+begin_src emacs-lisp
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+#+end_src
+
 ** Unmap the C-z key
+
 Unmap the C-z key, so no way to minimize or suspend emacs accidentally.
 #+begin_src emacs-lisp
   (global-unset-key (kbd "C-z"))
@@ -204,7 +210,8 @@ To automatically close parenthesis and and other punctuation signs.
 
 ** persp-save location
 #+begin_src emacs-lisp
-(after! persp-mode
+(use-package! persp-mode
+  :config
   (setq persp-save-dir (expand-file-name "persp-confs/" my-data-dir))
 )
 #+end_src
@@ -261,8 +268,9 @@ https://protesilaos.com/emacs/fontaine
 
 Here will come the code for the fontaine package.
 #+begin_src emacs-lisp
-(after! fontaine
-(setq fontaine-presets
+(use-package! fontaine
+  :config
+  (setq fontaine-presets
       '(
         ;; daily operations, same config as normal config
         (regular
@@ -535,15 +543,16 @@ To better manage more buffers in screen, as seen here: https://github.com/abo-ab
 
 Used in the hydra snippets.
 #+begin_src emacs-lisp
-(after! ace-window
-    (setq aw-scope 'frame)
-    (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
-    (global-set-key (kbd "M-o") 'ace-window)
-    ;; make the characters bigger, so it is easy to see
-    (custom-set-faces
-     '(aw-leading-char-face
-       ((t (:inherit ace-jump-face-foreground :height 5.0)))))
-    )
+(use-package! ace-window
+  :config
+  (setq aw-scope 'frame)
+  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+  (global-set-key (kbd "M-o") 'ace-window)
+  ;; make the characters bigger, so it is easy to see
+  (custom-set-faces
+   '(aw-leading-char-face
+     ((t (:inherit ace-jump-face-foreground :height 5.0)))))
+  )
 #+end_src
 
 ** beacon
@@ -555,14 +564,14 @@ To show the line I am after a long jump.
 #+end_src
 
 #+begin_src emacs-lisp
-(after! beacon
- (beacon-mode t)
-    (setq beacon-push-mark 35
-      beacon-blink-duration 0.5
-      beacon-blink-delay 0.5
-      beacon-blink-when-focused t
-      beacon-color "deep sky blue")
-
+(use-package! beacon
+  :config
+  (beacon-mode t)
+  (setq beacon-push-mark 35
+        beacon-blink-duration 0.5
+        beacon-blink-delay 0.5
+        beacon-blink-when-focused t
+        beacon-color "deep sky blue")
     )
 #+end_src
 
@@ -583,6 +592,20 @@ I want to differentiate the window I'm working with.
 ;; configure the dimmer
 (setq dimmer-adjustment-mode :both)
 (setq dimmer-fraction 0.3)
+#+end_src
+
+** Font size increase/decrease
+Increase or decrease the font size
+#+begin_src emacs-lisp
+(global-set-key (kbd "M-+") 'text-scale-increase)
+(global-set-key (kbd "M--") 'text-scale-decrease)
+#+end_src
+** Time and date
+Put time and date on the status line
+#+begin_src emacs-lisp
+  (setq display-time-day-and-date t
+        display-time-24hr-format t)
+  (display-time)
 #+end_src
 
 * Navigation
@@ -623,21 +646,92 @@ Better menus list
       "s I" #'imenu-list-smart-toggle)
 #+end_src
 
-* Orgmode
-** org-modern
-https://github.com/minad/org-modern
+** consult keybindings
+#+begin_src emacs-lisp
+(map! :after consult
+      "C-s" #'consult-line
+      "M-y" #'consult-yank-from-kill-ring
+      "M-i" #'consult-imenu
+      "M-g i" #'consult-imenu-multi
+      "M-g h" #'consult-org-heading
+      "M-g m" #'consult-mark
+      "M-s f" #'consult-find
+      "M-s r" #'consult-ripgrep
+      )
+#+end_src
 
-#+begin_src emacs-lisp :tangle packages.el
-;;( package! org-modern
- ;;  :recipe (:host github
- ;;           :repo "minad/org-modern")
- ;;  )
+** Keyboard chords
+Shortcuts to commands using just quick key combinations.
+
+#+begin_src emacs :tangle packages.el
+(package! key-chord)
 #+end_src
 
 #+begin_src emacs-lisp
-;;( after! org
-;; (global-org-modern-mode)
-;;   )
+(use-package! key-chord
+  :config
+  (key-chord-mode 1)
+  ;; Max time delay between two presses of the same key to be considered a key chord.
+  ;; Should normally be a little longer than `key-chord-two-keys-delay'.
+  (setq key-chord-two-keys-delay 0.1)
+  (setq key-chord-one-key-delay 0.2) ; default 0.2
+  (key-chord-define-global "ññ" 'eshell)
+  (key-chord-define-global "kk" 'other-window)
+  (key-chord-define-global "hh" 'ace-window)
+  (key-chord-define-global "jj" 'avy-goto-char-2)
+  (key-chord-define-global "jk" 'avy-goto-word-0)
+  (key-chord-define-global "jl" 'avy-goto-line)
+  ;;(key-chord-define-global "zz" 'undo-tree-visualize)
+  ;;(key-chord-define-global "ww" 'hydra-move/body)
+  ;;(key-chord-define-global "yy" 'hydra-buffer-mgmt/body)
+  )
+#+end_src
+
+** expand region
+https://github.com/magnars/expand-region.el
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! expand-region)
+#+end_src
+
+Select relevant regions incrementally.
+#+begin_src emacs-lisp
+(map!
+      "C-ñ" #'er/expand-region)
+#+end_src
+
+* Orgmode
+** some org configs for better behavior and usage
+#+begin_src emacs-lisp
+(setq
+ ;; tag alignment
+ ;; this value allows for modern themes and column fill to work well together.
+ org-auto-align-tags t
+ org-tags-column 0
+ ;; org fold - edit in an invisible region
+ org-fold-catch-invisible-edits 'show-and-error
+ ;; C-a and C-e will move the cursor just the heading. No todo keyworks, no tags
+ org-special-ctrl-a/e t
+ ;; insert new heading after the current subtree
+ org-insert-heading-respect-content t
+ )
+#+end_src
+** org-id
+To create and use internal valid and unique links in org-mode, we will use the =org-id= features.
+#+begin_src emacs-lisp
+;; org-id are globally unique UUIDs
+(setq org-id-method 'uuid)
+;; It will use the CUSTOM_ID, if it exists
+;;or will create a new one in the form or UUID, as seen above
+(setq org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
+;; file to store the local =org-id= locations
+;; This way is synced to all my computers
+(setq org-id-locations-file (expand-file-name "org-id-locations" my-data-dir))
+#+end_src
+** Org is a variable pitch mode
+Require the org mode.
+#+begin_src emacs-lisp
+(add-hook 'org-mode-hook 'variable-pitch-mode)
 #+end_src
 
 ** Custom notes and timestamp
@@ -675,6 +769,43 @@ These are the custom states for the tasks, and the character associated to it.
         )
   )
 #+end_src
+** org-clock
+Remap the org-clock-in to a better key binding.
+#+begin_src emacs-lisp
+  (defun my/org-set-clock ()
+    "One-off function for `org-mode' task clocking.
+
+  Behaviour:
+   ,* When there is no running clock, start
+    the clock for the item at point.
+   ,* When there is already a running clock and
+    `point' is at the item which is being clocked
+    stop the corresponding clock.
+   ,* When there is already a running clock but `point'
+    is not at the item which is being clocked,
+    stop the clock and restart it for item at `point'."
+    (interactive)
+    (let ((interrupting (and (not org-clock-resolving-clocks-due-to-idleness)
+                             (org-clocking-p))))
+      (if interrupting
+          (if (save-excursion
+                (org-back-to-heading t)
+                (and (equal (marker-buffer org-clock-hd-marker)
+                            (current-buffer))
+                     (= (marker-position org-clock-hd-marker)
+                        (point))
+                     (equal org-clock-current-task (nth 4 (org-heading-components)))))
+              (org-clock-out)
+            (org-clock-in))
+        (org-clock-in))
+      )
+    )
+
+  ;; keybindings
+  (global-set-key (kbd "C-c C-x C-i") 'org-clock-in)
+  (global-set-key (kbd "C-c C-x C-o") 'org-clock-out)
+  (global-set-key (kbd "C-c C-x i") 'my/org-set-clock)
+#+end_src
 
 ** orgmode Agenda
 All the agenda configs
@@ -687,7 +818,8 @@ We define the agenda files in this variable
   (setq org-agenda-files '(
                            ;; normal task files
                            "~/Nextcloud/agenda/tasks.org"
-                           "~/Nextcloud/agenda/inbox.org"
+                           ;; added this one to be able to search in it, and add from here to the main task files.
+  			 "~/Nextcloud/agenda/someday.org"
                            )
         )
   )
@@ -869,14 +1001,11 @@ We define some agenda custom commands, to refine views, and get a clearer undest
 )
 #+end_src
 
-*** Show next 15 days in the agenda view
+*** Show next 7 days in the agenda view
 I need a more clear view for things to come. We can see 15 days from now.
-
 #+begin_src emacs-lisp
-(after! org
-  (setq org-agenda-span 15)
+  (setq org-agenda-span 'week)
   (setq org-agenda-start-on-weekday nil)
-  )
 #+end_src
 
 *** Show the agenda in another window
@@ -1197,36 +1326,58 @@ Here I will add template captures for doing several things:
 #+begin_src emacs-lisp
 (after! org
   (setq org-capture-templates'(
+  			     ("t" "My TODO task format." entry
+                               (file+headline "~/Nextcloud/agenda/tasks.org" "Tasks")
+                               "** TODO %i%? \n:LOGBOOK: \n:CREATED: %U \n:END:"
+                                 :empty-lines-after 1)
 
-                               ;; task related captures
-                               ("i" "Inbox (tasks)" entry
-                                (file+headline "~/Nextcloud/agenda/tasks.org" "Inbox")
-                                "* TODO %i%? \nEntered on %U"
-                                :empty-lines-after 2)
+  			     ("p" "New project." entry
+                                (file+headline "~/Nextcloud/agenda/tasks.org" "Projects")
+                                 "** TODO %? \n:LOGBOOK: \n:CREATED: %U \n:END:\n  :PROPERTIES:\n:COOKIE_DATA: todo recursive\n:END:\n   - Objetivo:"
+                                :empty-lines-after 1)
 
+  			     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                ;; Writing related things
 
-                               ;; ;; writing ideas
-                               ("I" "Writing idea." entry
-                                (file+headline "~/Nextcloud/escritura/retazos/ideas.org" "otras")
-                                "** %i%? \nEntered on %U"
-                                :empty-lines-after 2)
+  			     ;; Everything that I find interesting to create, no matter what it is
+  			     ("h" "Compost heap" item
+                                (file+headline "~/Nextcloud/escritura/ideas/compost_heap.org" "Compost heap")
+                                 "%i"
+                                 :empty-lines-after 1)
 
-                               ;; ;; Character idea
-                               ("p" "Personaje" entry
-                                (file "~/Nextcloud/escritura/retazos/personajes.org")
-                                "* %i%? \nEntered on %U"
+  			     ;; A possible writing idea
+                               ("w" "Writing idea." entry
+                                (file+headline "~/Nextcloud/escritura/retazos/ideas.org" "Ideas")
+                                "** TODO %?\n*** Personajes\n- \n*** Ambientación\n*** Eventos\n"
                                 :empty-lines-after 1)
 
-                               ;; ;; all other writing snippets I want to keep
-                               ("h" "Compost heap" item
-                                (file+headline "~/Nextcloud/escritura/retazos/compost_heap.org" "Compost heap")
-                                "- %i%?"
+                               ;; An interesenting character
+                               ("P" "Personaje" entry
+                                (file "~/Nextcloud/escritura/ideas/personajes.org")
+                                "* %i%?"
                                 :empty-lines-after 1)
-
                                )
         )
   )
+#+end_src
+
+** Capture to this buffer
+https://github.com/ballantony/emacs-writing/blob/main/DoomEmacsWriting.org
+
+Used to capture notes in this file. Useful to maintain notes and snippets separated by projects. I will use this for my writing projects.
+#+begin_src emacs-lisp
+  (defun my/capture-to-this-buffer ()
+    "Capture note to this buffer"
+    (interactive)
+    (cond  ((not  (eq major-mode 'org-mode))
+            (message "Can't capture to non org-mode buffer"))
+           (t
+            (let* ((this-file buffer-file-name)
+                   (org-capture-templates
+                    `(("t" "Todo" entry (file+headline ,this-file "Notes")
+                       "** TODO %?"))))
+              (org-capture)))))
+  (global-set-key (kbd "C-c C") 'my/capture-to-this-buffer)
 #+end_src
 
 ** Remove the markup indicators
@@ -1733,15 +1884,16 @@ https://nobiot.github.io/org-remark/
 Configuration for the elfeed and the org files.
 #+begin_src emacs-lisp
 ;; database for elfeed
-(after! elfeed
+(use-package! elfeed
+  :config
   (elfeed-org)
-(setq elfeed-db-directory (expand-file-name "elfeed/db/" my-data-dir))
+  (setq elfeed-db-directory (expand-file-name "elfeed/db/" my-data-dir))
 
-;; Optionally specify a number of files containing elfeed
-;; configuration. If not set then the location below is used.
-;; Note: The customize interface is also supported.
-(setq rmh-elfeed-org-files (list "~/Nextcloud/config/.emacs.d/elfeed/elfeed.org"))
-)
+  ;; Optionally specify a number of files containing elfeed
+  ;; configuration. If not set then the location below is used.
+  ;; Note: The customize interface is also supported.
+  (setq rmh-elfeed-org-files (list "~/Nextcloud/config/.emacs.d/elfeed/elfeed.org"))
+  )
 #+end_src
 
 ** TODO Mastodon
@@ -1761,6 +1913,90 @@ Only evaluated if in my home environment, my encrypted directory is mounted, as 
   ;; my auth information is now in my encrypted directory
   (setq mastodon-client--token-file (expand-file-name "personal/emacs/mastodon.plstore" my-clear-directory))
   )
+#+end_src
+
+** Nov.el
+Read e-pub in emacs.
+
+https://tech.toryanderson.com/2022/11/23/viewing-epub-in-emacs/
+
+#+begin_src emacs-lisp :tangle packages.el
+  (package! esxml
+    :recipe (:host github :repo "tali713/esxml"))
+
+   (package! nov
+     :recipe (:host nil :repo "https://depp.brause.cc/nov.el.git"))
+#+end_src
+
+
+#+begin_src emacs-lisp
+(use-package! nov
+     :config
+     (setq nov-text-width 100)
+     ;;(setq nov-text-width t)
+     (setq visual-fill-column-center-text t)
+     (add-hook 'nov-mode-hook 'visual-line-mode)
+     (add-hook 'nov-mode-hook 'visual-fill-column-mode)
+     ;; We save the place we left the e-pub in this file:
+     (setq nov-save-place-file (expand-file-name "nov-places" my-data-dir))
+    (defun my/nov-font-setup ()
+      (face-remap-add-relative 'variable-pitch :family "Gentium"
+                                :height 1.2))
+     (add-hook 'nov-mode-hook 'my/nov-font-setup)
+     (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+     )
+#+end_src
+
+** calibre
+https://github.com/chenyanming/calibredb.el
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! calibredb)
+#+end_src
+
+#+begin_src emacs-lisp
+;; load this only on my home env
+(if (and
+     my-homeenvironment-p
+     ;; the calibre library ddbb exists
+     (file-exists-p "/home/calibre_libros/metadata.db"))
+    (progn
+      ;; here comes the actions I want to be done at a home environment
+      (use-package! calibredb
+        :config
+        (setq calibredb-root-dir "/home/calibre_libros/")
+        (setq calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir))
+        (setq calibredb-library-alist '(("/home/calibre_libros/")
+                                        ))
+        (setq calibredb-size-show t)
+        (setq calibredb-id-width 10)
+        )))
+#+end_src
+
+** reading list
+Here I will configure my personal method for a reading list.
+I used org-books, but the package seems to not be maintained, and the URL fetching seems to be broken, so I will rely on my own personal list.
+
+#+begin_src emacs-lisp
+  ;; where my book list will be stored
+  (defvar my-booklist-file (expand-file-name "Nextcloud/agenda/books.org" (getenv "HOME")))
+#+end_src
+
+#+begin_src emacs-lisp
+  (add-to-list 'org-capture-templates
+  	     '(
+  	       ;; books to read
+  	       "b"
+  	       "Manual book entry"
+  	       entry
+  	       (file+headline "~/Nextcloud/agenda/books.org" "inbox")
+  	       "** %^{TITLE}\n:PROPERTIES:\n:ADDED: %<[%Y-%02m-%02d]>\n:END:%^{AUTHOR}p\n%?"
+  	       :empty-lines 1
+  	       )
+  	     ;; append at the end of the capture list
+  	     t
+  	     )
+
 #+end_src
 
 * Work environment
