@@ -850,6 +850,28 @@ We define the agenda files in this variable
   )
 #+end_src
 
+
+*** icons for the agenda categories
+Have some fancy icons for the categories.
+#+begin_src emacs-lisp
+(after! org
+  (customize-set-value
+   'org-agenda-category-icon-alist
+   `(
+     ("calendar" "~/Nextcloud/config/icons/calendar.svg" nil nil :ascent center :mask heuristic)
+     ("tasks" "~/Nextcloud/config/icons/check-square.svg" nil nil :ascent center :mask heuristic)
+     ("projects" "~/Nextcloud/config/icons/list.svg" nil nil :ascent center :mask heuristic)
+     ("financial" "~/Nextcloud/config/icons/dollar-sign.svg" nil nil :ascent center :mask heuristic)
+     ("birthdays" "~/Nextcloud/config/icons/heart.svg" nil nil :ascent center :mask heuristic)
+     ("revision" "~/Nextcloud/config/icons/shuffle.svg" nil nil :ascent center :mask heuristic)
+     ("habits" "~/Nextcloud/config/icons/refresh-ccw.svg" nil nil :ascent center :mask heuristic)
+     ("care" "~/Nextcloud/config/icons/heart.svg" nil nil :ascent center :mask heuristic)
+     )
+   )
+  )
+#+end_src
+
+
 *** Get rid of the DONE tasks in the agenda view
 We dont want the cluttering in our views. If a task is done, don't show it on the agenda view.
 
