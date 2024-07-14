@@ -209,6 +209,13 @@ To automatically close parenthesis and and other punctuation signs.
 )
 #+end_src
 
+** set firefox as the default browser
+Setting firefox as the default browser for opening http/s links.
+#+begin_src emacs-lisp
+  (setq browse-url-firefox-program "firefox")
+  (setq browse-url-browser-function 'browse-url-firefox)
+#+end_src
+
 * UI
 ** Define fonts
 Define the fonts for Doom emacs.
@@ -1735,6 +1742,25 @@ Configuration for the elfeed and the org files.
 ;; Note: The customize interface is also supported.
 (setq rmh-elfeed-org-files (list "~/Nextcloud/config/.emacs.d/elfeed/elfeed.org"))
 )
+#+end_src
+
+** TODO Mastodon
+https://github.com/emacsmirror/mastodon
+
+I can now check mastodon from emacs.
+Only evaluated if in my home environment, my encrypted directory is mounted, as the auth information is stored there.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! mastodon)
+#+end_src
+
+#+begin_src emacs-lisp
+(if (and my-clear-directory-is-mounted-p my-homeenvironment-p)
+    (setq mastodon-instance-url "https://mastodon.online"
+  	  mastodon-active-user "jcastp")
+  ;; my auth information is now in my encrypted directory
+  (setq mastodon-client--token-file (expand-file-name "personal/emacs/mastodon.plstore" my-clear-directory))
+  )
 #+end_src
 
 * Work environment
