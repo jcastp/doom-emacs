@@ -98,6 +98,24 @@ We will be using this either with concat or expand-file-name:
 (defvar my-data-dir "~/Nextcloud/config/.emacs.d/")
 #+end_src
 
+** Unmap the C-z key
+Unmap the C-z key, so no way to minimize or suspend emacs accidentally.
+#+begin_src emacs-lisp
+  (global-unset-key (kbd "C-z"))
+#+end_src
+** Network security set to high
+Enforcing the network security.
+https://www.gnu.org/software/emacs/manual/html_node/emacs/Network-Security.html
+#+begin_src emacs-lisp
+  (setq network-security-level 'high)
+#+end_src
+** Movement
+Some keys redefined to better adjust to the whole emacs key environment.
+#+begin_src emacs-lisp
+  (global-set-key (kbd "M-p") 'backward-paragraph)
+  (global-set-key (kbd "M-n") 'forward-paragraph)
+#+end_src
+
 ** Save command history
 It is nice to have commands and their history saved so that every time you get back to work, you can just re-run stuff as you need it. It isn't a radical feature, it is just part of a good user experience.
 
@@ -124,6 +142,18 @@ To know which keys are still free.
   :recipe (:host github :repo "Fuco1/free-keys"))
 #+end_src
 
+** auto revert mode
+When a file is changed in disk, the buffer reloads to reflect that change.
+#+begin_src emacs-lisp
+  (global-auto-revert-mode 1)
+#+end_src
+
+Change dired buffers when the directory is changed:
+#+begin_src emacs-lisp
+  ;; auto refresh dired when file changes
+  (add-hook 'dired-mode-hook 'auto-revert-mode)
+#+end_src
+
 ** Bookmarks
 All the config related to the bookmarks.
 
@@ -131,6 +161,14 @@ All the config related to the bookmarks.
 ;;(setq bookmark-default-file "~/Nextcloud/config/.emacs.d/bookmarks")  ;;define file to use.
 (setq bookmark-default-file (expand-file-name "bookmarks" my-data-dir))
 (setq bookmark-save-flag 1)  ;save bookmarks to .emacs.bmk after each entry
+#+end_src
+
+** recentf
+#+begin_src emacs-lisp
+  ;; where to store the recent list file
+  (setq recentf-save-file (expand-file-name "recentf" my-data-dir))
+  (recentf-mode 1)
+  ;;(global-set-key (kbd "C-c d r") #'recentf)
 #+end_src
 
 ** Abbreviation mode
@@ -142,7 +180,7 @@ Defines a set of abbreviations that permits complete words with just some charac
 (setq abbrev-file-name (expand-file-name "abbrev_defs" my-data-dir))
 (setq-default abbrev-mode t)
 ;; save abbrevs when files are saved
-(setq save-abbrevs 'silent)
+(setq save-abbrevs 'silently)
 #+end_src
 
 ** electric pair mode
