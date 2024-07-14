@@ -60,6 +60,14 @@ We will be using this either with concat or expand-file-name:
 (defvar my-data-dir "~/Nextcloud/config/.emacs.d/")
 #+end_src
 
+** evil-escape configuration
+We get out of the insert mode with just a key chord, instead of having to look for the Esc key.
+
+#+begin_src emacs-lisp
+(evil-escape-mode 1)
+(setq-default evil-escape-key-sequence "jk")
+#+end_src
+
 ** Save command history
 It is nice to have commands and their history saved so that every time you get back to work, you can just re-run stuff as you need it. It isn't a radical feature, it is just part of a good user experience.
 
@@ -133,6 +141,15 @@ To automatically close parenthesis and and other punctuation signs.
 )
 #+end_src
 
+** avy-goto-line keybindings
+I want to map the avy-goto-line to the gsl keybinding.
+
+#+begin_src emacs-lisp
+(map!
+ (:map evilem-map
+       "l" #'avy-goto-line)
+ )
+#+end_src
 * UI
 ** Define fonts
 Define the fonts for Doom emacs.
@@ -369,6 +386,7 @@ Different sizes for the different org headings.
    )
 #+end_src
 
+*
 ** full path in the title bar
 Put the complete path on the title bar, along the filename.
 
@@ -447,6 +465,10 @@ To show matching parens in all the buffers and modes.
 (show-smartparens-global-mode 1)
 #+end_src
 
+** git-gutter global mode
+#+begin_src emacs-lisp
+  (global-git-gutter-mode +1)
+#+end_src
 ** ace-window
 To better manage more buffers in screen, as seen here: https://github.com/abo-abo/ace-window
 
@@ -462,7 +484,6 @@ Used in the hydra snippets.
        ((t (:inherit ace-jump-face-foreground :height 5.0)))))
     )
 #+end_src
-
 ** beacon
 To show the line I am after a long jump.
 #+begin_src emacs-lisp :tangle packages.el
@@ -802,7 +823,7 @@ I want to see the agenda side by side of the files I'm working with.
 (setq org-agenda-window-setup 'reorganize-frame)
 #+end_src
 
-*** Refile entries
+** Refile entries
 This lets you choose refiling targets in heading depth of 9, and lets you get also the files in the same directory hierarchy.
 
 #+begin_src emacs-lisp
@@ -1485,12 +1506,10 @@ Put a note or a timestamp when something changes. For example:
                         )
         )
 #+end_src
-
 ** TODO org tags justified
 #+begin_src emacs-lisp
 (setq org-tags-column 0)
 #+end_src
-
 * Writing
 ** org-journal
 This is for journaling every day, if possible.
@@ -1646,6 +1665,27 @@ https://nobiot.github.io/org-remark/
   )
 #+end_src
 
+** org-timeblock
+I still don't know how to use this one.
+https://github.com/ichernyshovvv/org-timeblock
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-timeblock
+  :recipe (:host github :repo "ichernyshovvv/org-timeblock"))
+#+end_src
+
+** TODO denote
+For basic note taking.
+https://github.com/protesilaos/denote
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! denote
+  :recipe (:host github :repo "protesilaos/denote"))
+#+end_src
+
+#+begin_src emacs-lisp
+(setq denote-directory "/home/jcastp/Nextcloud/personal/denote/")
+#+end_src
 ** TODO elfeed and elfeed-org
 Configuration for the elfeed and the org files.
 #+begin_src emacs-lisp
@@ -1661,6 +1701,43 @@ Configuration for the elfeed and the org files.
 )
 #+end_src
 
+** bibtex config
+I will store the main bibliography file in my data directory:
+
+*** citar
+#+begin_src emacs-lisp :tangle packages.el
+(package! citar
+  :recipe (:host github :repo "emacs-citar/citar"))
+#+end_src
+#+begin_src emacs-lisp
+(after! citar
+(org-cite-global-bibliography
+     (directory-files
+      (concat (getenv "HOME") "/Nextcloud/config/.emacs.d/bibtex/") t
+      "^[A-Z|a-z|0-9].+.bib$"))
+    (citar-bibliography org-cite-global-bibliography)
+    (org-cite-insert-processor 'citar)
+    (org-cite-follow-processor 'citar)
+    (org-cite-activate-processor 'citar)
+    )
+#+end_src
+
+
+** TODO paste in line after
+#+begin_src emacs-lisp
+(defun evil-paste-below ()
+  "Create an empty line below, move cursor to it, and paste the contents of the yank ring."
+  (interactive)
+  ;;(evil-open-below 1)   ; Create an empty line below
+  (forward-line)        ; Move cursor to the empty line
+  (yank)               ; Paste the contents of the yank ring
+  ;;(evil-open-below 1)   ; Create an empty line below
+  (evil-force-normal-state) ; Force normal state
+  )
+
+;; Bind the function to a key, for example, to "SPC p" in Evil's normal state
+(evil-define-key 'normal global-map (kbd "SPC P") 'evil-paste-below)
+#+end_src
 * Work environment
 This will be my working environment config
 
