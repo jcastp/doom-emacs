@@ -824,7 +824,15 @@ Remap the org-clock-in to a better key binding.
   (global-set-key (kbd "C-c C-x i") 'my/org-set-clock)
 #+end_src
 
+** org-habits
+Enable org-habits.
+
+#+begin_src emacs-lisp
+(after! org
+  (add-to-list 'org-modules 'org-habit t))
+#+end_src
 ** orgmode Agenda
+
 All the agenda configs
 
 *** Agenda files
