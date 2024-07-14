@@ -173,6 +173,9 @@ All the config related to the bookmarks.
 (setq recentf-save-file (expand-file-name "recentf" my-data-dir))
 (recentf-mode 1)
 ;;(global-set-key (kbd "C-c d r") #'recentf)
+(map! :leader
+      :desc "Recent files list"
+      "d r" #'recentf)
 #+end_src
 
 ** Abbreviation mode
