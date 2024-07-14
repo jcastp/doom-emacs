@@ -3,6 +3,7 @@
 #+EMAIL: jcastp@pm.me
 #+startup: overview
 #+language: en
+
 * Summary
 This is the literate config for my doom emacs use cases.
 
@@ -1343,26 +1344,24 @@ Here I will add template captures for doing several things:
 #+begin_src emacs-lisp
 (after! org
   (setq org-capture-templates'(
-  			     ("t" "My TODO task format." entry
-                               (file+headline "~/Nextcloud/agenda/tasks.org" "Tasks")
-                               "** TODO %i%? \n:LOGBOOK: \n:CREATED: %U \n:END:"
-                                 :empty-lines-after 1)
-
-  			     ("p" "New project." entry
-                                (file+headline "~/Nextcloud/agenda/tasks.org" "Projects")
-                                 "** TODO %? \n:LOGBOOK: \n:CREATED: %U \n:END:\n  :PROPERTIES:\n:COOKIE_DATA: todo recursive\n:END:\n   - Objetivo:"
+                               ("t" "My TODO task format." entry
+                                (file+headline "~/Nextcloud/agenda/tasks.org" "Tasks")
+                                "** TODO %i%? \n:LOGBOOK: \n:CREATED: %U \n:END:"
                                 :empty-lines-after 1)
 
-  			     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                               ("p" "New project." entry
+                                (file+headline "~/Nextcloud/agenda/tasks.org" "Projects")
+                                "** TODO %? \n:LOGBOOK: \n:CREATED: %U \n:END:\n  :PROPERTIES:\n:COOKIE_DATA: todo recursive\n:END:\n   - Objetivo:"
+                                :empty-lines-after 1)
+
                                ;; Writing related things
-
-  			     ;; Everything that I find interesting to create, no matter what it is
-  			     ("h" "Compost heap" item
+		               ;; Everything that I find interesting to create, no matter what it is
+	                       ("h" "Compost heap" item
                                 (file+headline "~/Nextcloud/escritura/ideas/compost_heap.org" "Compost heap")
-                                 "%i"
-                                 :empty-lines-after 1)
+                                "%i"
+                                :empty-lines-after 1)
 
-  			     ;; A possible writing idea
+		               ;; A possible writing idea
                                ("w" "Writing idea." entry
                                 (file+headline "~/Nextcloud/escritura/retazos/ideas.org" "Ideas")
                                 "** TODO %?\n*** Personajes\n- \n*** Ambientación\n*** Eventos\n"
