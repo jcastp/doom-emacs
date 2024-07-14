@@ -1954,10 +1954,11 @@ Only evaluated if in my home environment, my encrypted directory is mounted, as 
 
 #+begin_src emacs-lisp
 (if (and my-clear-directory-is-mounted-p my-homeenvironment-p)
-    (setq mastodon-instance-url "https://mastodon.online"
-  	  mastodon-active-user "jcastp")
-  ;; my auth information is now in my encrypted directory
-  (setq mastodon-client--token-file (expand-file-name "personal/emacs/mastodon.plstore" my-clear-directory))
+    (progn
+      (setq mastodon-instance-url "https://mastodon.online"
+  	    mastodon-active-user "jcastp")
+      ;; my auth information is now in my encrypted directory
+      (setq mastodon-client--token-file (expand-file-name "personal/emacs/mastodon.plstore" my-clear-directory)))
   )
 #+end_src
 
