@@ -98,6 +98,10 @@ We will be using this either with concat or expand-file-name:
 (defvar my-data-dir "~/Nextcloud/config/.emacs.d/")
 #+end_src
 
+** Don't show compile warnings
+#+begin_src emacs-lisp
+(setq byte-compile-warnings nil)
+#+end_src
 ** Start with a maximized frame
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
