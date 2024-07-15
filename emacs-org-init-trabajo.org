@@ -16,13 +16,25 @@ It is supposed to run over the generic emacs config, and overwrites that config 
 ;; (enable-theme 'ef-light)
 #+end_src
 
+** recent files for work
+#+begin_src emacs-lisp
+(setq recentf-save-file (expand-file-name "recentf-work" my-data-dir))
+#+end_src
+
+** Fixed width font for work environment
+I work better with fixed fonts in this kind of environments
+
+#+begin_src emacs-lisp
+  (fontaine-set-preset 'work)
+#+end_src
+
 ** Put the correct agenda files for work
 #+begin_src emacs-lisp :tangle yes
 ;; empty the org-agenda-files
 (setq org-agenda-files '(""))
 ;; And now, populate with the work environment
 ;; This needs to be changed when you change company!!!
-(setq org-agenda-files '("~/Nextcloud/agenda/trabajo/adidas.org"
+(setq org-agenda-files '("~/Nextcloud/agenda/trabajo/trabajo.org"
                          )
       )
 #+end_src
@@ -35,6 +47,7 @@ Since this is a different environment, I also have to change this to refile thin
   (setq org-refile-targets '(
                             (nil :maxlevel . 9)
                             (org-agenda-files :maxlevel . 9)
+                            ("~/Nextcloud/agenda/trabajo/trabajo_backlog.org" :maxlevel . 9)
                             )
   )
   (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
@@ -192,7 +205,7 @@ I need a different custom agenda commands to see the tasks better.
 (setq org-todo-keywords
       '(
         ;; Status for tasks
-        (sequence "TODO(t)" "WAITING(w@/!)" "ONGOING(o@/!)" "|" "DONE(d@/!)" "CANCELED(c@/!)")
+        (sequence "TODO(t)" "WAITING(w@/!)" "ONGOING(o@/!)" "|" "DONE(d@/!)" "DELEGATED(D@/!)" "CANCELED(c@/!)")
         )
       )
 #+end_src
@@ -200,25 +213,27 @@ I need a different custom agenda commands to see the tasks better.
 As work is different from home, I need specific templates.
 #+begin_src emacs-lisp :tangle yes
 (setq org-capture-templates'(
-
                              ("i" "Inbox (work)" entry
-                              (file+headline "~/Nextcloud/agenda/trabajo/adidas.org" "Inbox")
-                              "** TODO %?\n:PROPERTIES:\n:type: task\n:END:\n")
+                              (file+headline "~/Nextcloud/agenda/trabajo/trabajo.org" "Inbox")
+                              "** TODO %? %^g \n:LOGBOOK: \n:CREATED: %U \n:END:")
 
                              ("I" "New incident." entry
-                              (file+headline "~/Nextcloud/agenda/trabajo/adidas.org" "Incidents")
+                              (file+headline "~/Nextcloud/agenda/trabajo/trabajo.org" "Incidents")
                               "** TODO %?")
 
-
                              ("b" "Backlog entry." entry
-                              (file+headline "~/Nextcloud/agenda/trabajo/adidas_backlog.org" "Backlog")
+                              (file+headline "~/Nextcloud/agenda/trabajo/trabajo_backlog.org" "Backlog")
                               "** TODO %?\n")
 
-                             )
-      )
+  			     ;; For meeting note taking
+                             ("m" "Meeting notes" entry
+                              (file+headline "~/Nextcloud/agenda/trabajo/trabajo_meetings.org" "Meetings")
+                              "** %T - %?\n"
+  			      :jump-to-captured t
+  			      )))
 #+end_src
 
 ** Load the task list for work
 #+begin_src emacs-lisp :tangle yes
-(find-file "~/Nextcloud/agenda/trabajo/adidas.org")
+(find-file "~/Nextcloud/agenda/trabajo/trabajo.org")
 #+end_src
