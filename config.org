@@ -1784,6 +1784,7 @@ We put some fancy visual effects on org-mode.
 #+begin_src emacs-lisp :tangle yes
 (use-package! org-modern
   :after org
+  :hook (org-mode . org-modern-mode)
   :config
   (setq org-modern-star nil        ;; we keep the stars instead the triangles
         org-modern-priority nil    ;; keep the priority
