@@ -1785,11 +1785,9 @@ We put some fancy visual effects on org-mode.
 (use-package! org-modern
   :after org
   :config
-  (setq
-   ;; we keep the stars instead the triangles
-   org-modern-star nil
-   ;; keep the priority
-   org-modern-priority nil)
+  (setq org-modern-star nil        ;; we keep the stars instead the triangles
+        org-modern-priority nil    ;; keep the priority
+        )
   (org-modern-mode 1)
   )
 #+end_src
