@@ -1774,6 +1774,26 @@ Put a note or a timestamp when something changes. For example:
 (setq org-tags-column 0)
 #+end_src
 
+** TODO org-modern
+We put some fancy visual effects on org-mode.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-modern)
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+(use-package! org-modern
+  :after org
+  :config
+  (setq
+   ;; we keep the stars instead the triangles
+   org-modern-star nil
+   ;; keep the priority
+   org-modern-priority nil)
+  (org-modern-mode 1)
+  )
+#+end_src
+
 * Writing
 ** org-journal
 This is for journaling every day, if possible.
