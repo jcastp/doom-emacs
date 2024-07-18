@@ -20,6 +20,23 @@ It is supposed to run over the generic emacs config, and overwrites that config 
 #+begin_src emacs-lisp
 (setq recentf-save-file (expand-file-name "recentf-work" my-data-dir))
 #+end_src
+** icons for the agenda categories
+Have some fancy icons for the categories.
+#+begin_src emacs-lisp
+(after! org
+  (customize-set-value
+   'org-agenda-category-icon-alist
+   `(
+     ("calendar" "~/Nextcloud/config/icons/calendar.svg" nil nil :ascent center :mask heuristic)
+     ("tasks" "~/Nextcloud/config/icons/check-square.svg" nil nil :ascent center :mask heuristic)
+     ("projects" "~/Nextcloud/config/icons/list.svg" nil nil :ascent center :mask heuristic)
+     ("okr" "~/Nextcloud/config/icons/target.svg" nil nil :ascent center :mask heuristic)
+     ("inbox" "~/Nextcloud/config/icons/inbox.svg" nil nil :ascent center :mask heuristic)
+     )
+   )
+  )
+#+end_src
+
 
 ** Fixed width font for work environment
 I work better with fixed fonts in this kind of environments
