@@ -1962,6 +1962,21 @@ Configuration for the elfeed and the org files.
   ;; configuration. If not set then the location below is used.
   ;; Note: The customize interface is also supported.
   (setq rmh-elfeed-org-files (list "~/Nextcloud/config/.emacs.d/elfeed/elfeed.org"))
+  ;; put the filter to 1 month ago by default
+  (setq elfeed-search-set-filter "@1-month-ago")
+
+  ;; open elfeed and update it
+  (defun my/elfeed()
+    "Opens elfeed and updates it in just a go."
+    (interactive)
+    (elfeed)
+    (elfeed-update)
+    )
+
+  (map! :leader
+        :desc "elfeed refresh and UI"
+        "d f" #'my/elfeed)
+
   )
 #+end_src
 
