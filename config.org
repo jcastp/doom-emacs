@@ -459,7 +459,7 @@ https://github.com/kunalb/poet
 We establish the initial theme.
 
 #+begin_src emacs-lisp
-(consult-theme 'doom-one)
+(consult-theme 'doom-vibrant)
 #+end_src
 
 ** Fontify the header
