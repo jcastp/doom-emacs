@@ -2005,11 +2005,12 @@ Only evaluated if in my home environment, my encrypted directory is mounted, as 
       (setq mastodon-instance-url "https://mastodon.online"
   	    mastodon-active-user "jcastp")
       ;; my auth information is now in my encrypted directory
-      (setq mastodon-client--token-file (expand-file-name "personal/emacs/mastodon.plstore" my-clear-directory)))
-  ;; Create a keybinding to mastodon
-  (map! :leader
-      :desc "Mastodon"
-      "d m" #'mastodon)
+      (setq mastodon-client--token-file (expand-file-name "personal/emacs/mastodon.plstore" my-clear-directory))
+      ;; Create a keybinding to mastodon
+      (map! :leader
+            :desc "Mastodon"
+            "d m" #'mastodon)
+      )
   )
 #+end_src
 
