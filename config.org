@@ -2143,6 +2143,47 @@ I just want the org-agenda lines to be just on one line, so I remove the visual-
 (add-hook 'org-agenda-mode-hook 'my/org-agenda-format)
 #+end_src
 
+
+** ellama
+#+begin_src emacs-lisp :tangle packages.el
+(package! ellama
+  :recipe (:host github :repo "s-kostyaev/ellama"))
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+(use-package! ellama
+  :init
+  :config
+  ;; setup key bindings
+  (setopt ellama-keymap-prefix "C-c d e")
+  (require 'llm-ollama)
+  ;; initial model
+  (setopt ellama-provider
+          (make-llm-ollama
+           :chat-model "phi3:medium"
+           :embedding-model "phi3:medium"))
+  (setopt ellama-providers
+          '(
+            ;; ("phi3:medium" . (make-llm-ollama
+            ;;                   :chat-model "phi3:medium"
+            ;;                   :embedding-model "phi3:medium"))
+            ;; ("deepseek-coder-v2:16b" . (make-llm-ollama
+            ;;                             :chat-model "deepseek-coder-v2:16b"
+            ;;                             :embedding-model "deepseek-coder-v2:16b"))
+            ;; ("gemma2:27b" . (make-llm-ollama
+            ;;                  :chat-model "gemma2:27b"
+            ;;                  :embedding-model "gemma2:27b"))
+            ;; ("dolphin-mixtral" . (make-llm-ollama
+            ;;                       :chat-model "dolphin-mixtral"
+            ;;                       :embedding-model "dolphin-mixtral"))
+            ;; ("llama3" . (make-llm-ollama
+	    ;;              :chat-model "llama3"
+	    ;;              :embedding-model "llama3"))
+	    )
+          )
+  )
+#+end_src
+
 * Work environment
 This will be my working environment config
 
