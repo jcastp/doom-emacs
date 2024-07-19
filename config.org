@@ -2188,6 +2188,19 @@ I just want the org-agenda lines to be just on one line, so I remove the visual-
   )
 #+end_src
 
+
+** TODO ready-player mode
+#+begin_src emacs-lisp :tangle packages.el
+(package! ready-player
+   :recipe (:host github :repo "xenodium/ready-player"))
+#+end_src
+#+begin_src emacs-lisp
+  (use-package! ready-player
+    :config
+    (ready-player-mode)
+    (setq ready-player-repeat t))
+#+end_src
+
 * Work environment
 This will be my working environment config
 
