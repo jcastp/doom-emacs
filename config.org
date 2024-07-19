@@ -854,7 +854,6 @@ We define the agenda files in this variable
   )
 #+end_src
 
-
 *** icons for the agenda categories
 Have some fancy icons for the categories.
 #+begin_src emacs-lisp
@@ -874,7 +873,6 @@ Have some fancy icons for the categories.
    )
   )
 #+end_src
-
 
 *** Get rid of the DONE tasks in the agenda view
 We dont want the cluttering in our views. If a task is done, don't show it on the agenda view.
@@ -2121,6 +2119,17 @@ Time intervals, such as pomodoro.
                            :advance (do (announce "Break time is over!")
                                         (notify "Break time is over!")))))
   )
+#+end_src
+
+** TODO Remove visual-fill-mode in org-agenda-mode
+I just want the org-agenda lines to be just on one line, so I remove the visual-fill-mode from all the agenda views.
+
+#+begin_src emacs-lisp :tangle yes
+(defun my/org-agenda-format ()
+  "Set some special configs for org-agenda mode."
+  (visual-line-fill-column-mode 0)
+  )
+(add-hook 'org-agenda-mode-hook 'my/org-agenda-format)
 #+end_src
 
 * Work environment
