@@ -1875,7 +1875,6 @@ and stores the output in the file."
     ))
 #+end_src
 
-
 * Programming
 
 
@@ -2149,7 +2148,7 @@ I just want the org-agenda lines to be just on one line, so I remove the visual-
 #+end_src
 
 
-** ellama
+** TODO ellama
 #+begin_src emacs-lisp :tangle packages.el
 (package! ellama
   :recipe (:host github :repo "s-kostyaev/ellama"))
