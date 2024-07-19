@@ -1875,6 +1875,17 @@ and stores the output in the file."
     ))
 #+end_src
 
+
+* Programming
+
+
+** display-fill-column-indicator-mode
+Show the end of the line limit for the programming modes.
+
+#+begin_src emacs-lisp :tangle yes
+(add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
+#+end_src
+
 * Testing
 ** projectile file
 Store my personal projects in the sync directory.
