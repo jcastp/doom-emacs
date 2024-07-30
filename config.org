@@ -2188,7 +2188,6 @@ I just want the org-agenda lines to be just on one line, so I remove the visual-
 (add-hook 'org-agenda-mode-hook 'my/org-agenda-format)
 #+end_src
 
-
 ** TODO ellama
 #+begin_src emacs-lisp :tangle packages.el
 (package! ellama
@@ -2228,7 +2227,6 @@ I just want the org-agenda lines to be just on one line, so I remove the visual-
           )
   )
 #+end_src
-
 
 ** TODO ready-player mode
 #+begin_src emacs-lisp :tangle packages.el
