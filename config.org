@@ -448,8 +448,10 @@ Also, rotate the list of themes applied.
 
 #+begin_src emacs-lisp
 ;; define the lists of clear and dark themes
-(setq my/themes-dark '(ef-deuteranopia-dark modus-vivendi))
-(setq my/themes-clear '(ef-deuteranopia-light modus-operandi))
+(setq my/themes-dark '(ef-deuteranopia-dark
+                       modus-vivendi))
+(setq my/themes-clear '(ef-deuteranopia-light
+                        modus-operandi))
 
 ;; establish if we start with a dark or clear theme
 ;; boolean variable: t is dark, nil is clear
