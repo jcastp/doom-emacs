@@ -503,7 +503,8 @@ Open a branch into a different frame, but the same buffer:
 #+begin_src emacs-lisp
 ;; this is done to open the indirect buffer in another window
 ;; instead on the main one
-(after! org
+(use-package! org
+  :config
   (setq org-indirect-buffer-display 'other-window)
 
   (defun my/org-tree-open-in-right-frame ()
@@ -724,35 +725,41 @@ Select relevant regions incrementally.
 * Orgmode
 ** some org configs for better behavior and usage
 #+begin_src emacs-lisp
-(setq
- ;; tag alignment
- ;; this value allows for modern themes and column fill to work well together.
- org-auto-align-tags t
- org-tags-column 0
- ;; org fold - edit in an invisible region
- org-fold-catch-invisible-edits 'show-and-error
- ;; C-a and C-e will move the cursor just the heading. No todo keyworks, no tags
- org-special-ctrl-a/e t
- ;; insert new heading after the current subtree
- org-insert-heading-respect-content t
- )
+(use-package! org
+  :config
+  (setq
+   ;; tag alignment
+   ;; this value allows for modern themes and column fill to work well together.
+   org-auto-align-tags t
+   org-tags-column 0
+   ;; org fold - edit in an invisible region
+   org-fold-catch-invisible-edits 'show-and-error
+   ;; C-a and C-e will move the cursor just the heading. No todo keyworks, no tags
+   org-special-ctrl-a/e t
+   ;; insert new heading after the current subtree
+   org-insert-heading-respect-content t
+   ))
 #+end_src
 ** org-id
 To create and use internal valid and unique links in org-mode, we will use the =org-id= features.
 #+begin_src emacs-lisp
-;; org-id are globally unique UUIDs
-(setq org-id-method 'uuid)
-;; It will use the CUSTOM_ID, if it exists
-;;or will create a new one in the form or UUID, as seen above
-(setq org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
-;; file to store the local =org-id= locations
-;; This way is synced to all my computers
-(setq org-id-locations-file (expand-file-name "org-id-locations" my-data-dir))
+(use-package! org
+  :config
+  ;; org-id are globally unique UUIDs
+  (setq org-id-method 'uuid)
+  ;; It will use the CUSTOM_ID, if it exists
+  ;;or will create a new one in the form or UUID, as seen above
+  (setq org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
+  ;; file to store the local =org-id= locations
+  ;; This way is synced to all my computers
+  (setq org-id-locations-file (expand-file-name "org-id-locations" my-data-dir)))
 #+end_src
 ** Org is a variable pitch mode
 Require the org mode.
 #+begin_src emacs-lisp
-(add-hook 'org-mode-hook 'variable-pitch-mode)
+(use-package! org
+  :config
+  (add-hook 'org-mode-hook 'variable-pitch-mode))
 #+end_src
 
 ** Custom notes and timestamp
@@ -761,7 +768,8 @@ Put a note or a timestamp when something changes. For example:
 - When the schedule or deadline date is changed
 
 #+begin_src emacs-lisp
-(after! org
+(use-package! org
+  :config
   ;; Adds a timestamp to the state
   (setq org-log-done 'time)
 
@@ -771,15 +779,15 @@ Put a note or a timestamp when something changes. For example:
   ;; When the deadline or the schedule date is moved.
   ;; to keep track of how many times I have moved a task to the future.
   (setq org-log-redeadline (quote time))
-  (setq org-log-reschedule (quote time))
-)
+  (setq org-log-reschedule (quote time)))
 #+end_src
 
 ** Custom states for the tasks
 These are the custom states for the tasks, and the character associated to it.
 
 #+begin_src emacs-lisp
-(after! org
+(use-package! org
+  :config
   (setq org-todo-keywords
         '(
           ;; Status for tasks
@@ -790,6 +798,7 @@ These are the custom states for the tasks, and the character associated to it.
         )
   )
 #+end_src
+
 ** org-clock
 Remap the org-clock-in to a better key binding.
 #+begin_src emacs-lisp
@@ -832,9 +841,11 @@ Remap the org-clock-in to a better key binding.
 Enable org-habits.
 
 #+begin_src emacs-lisp
-(after! org
+(use-package! org
+  :config
   (add-to-list 'org-modules 'org-habit t))
 #+end_src
+
 ** orgmode Agenda
 
 All the agenda configs
@@ -843,12 +854,13 @@ All the agenda configs
 We define the agenda files in this variable
 
 #+begin_src emacs-lisp
-(after! org
+(use-package! org
+  :config
   (setq org-agenda-files '(
                            ;; normal task files
                            "~/Nextcloud/agenda/tasks.org"
                            ;; added this one to be able to search in it, and add from here to the main task files.
-  			 "~/Nextcloud/agenda/someday.org"
+  			   "~/Nextcloud/agenda/someday.org"
                            )
         )
   )
@@ -857,7 +869,8 @@ We define the agenda files in this variable
 *** icons for the agenda categories
 Have some fancy icons for the categories.
 #+begin_src emacs-lisp
-(after! org
+(use-package! org
+  :config
   (customize-set-value
    'org-agenda-category-icon-alist
    `(
@@ -878,7 +891,8 @@ Have some fancy icons for the categories.
 We dont want the cluttering in our views. If a task is done, don't show it on the agenda view.
 
 #+begin_src emacs-lisp
-(after! org
+(use-package! org
+  :config
   (setq org-agenda-skip-scheduled-if-done t)
   (setq org-agenda-skip-deadline-if-done t)
   (setq org-agenda-skip-timestamp-if-done t)
@@ -889,7 +903,8 @@ We dont want the cluttering in our views. If a task is done, don't show it on th
 We define some agenda custom commands, to refine views, and get a clearer undestanding of the tasks.
 
 #+begin_src emacs-lisp
-(after! org
+(use-package! org
+  :config
   (setq org-agenda-custom-commands
        '(
          ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1053,21 +1068,27 @@ We define some agenda custom commands, to refine views, and get a clearer undest
 *** Show next 7 days in the agenda view
 I need a more clear view for things to come. We can see 15 days from now.
 #+begin_src emacs-lisp
+(use-package! org
+  :config
   (setq org-agenda-span 'week)
   (setq org-agenda-start-on-weekday nil)
+  )
 #+end_src
 
 *** Show the agenda in another window
 I want to see the agenda side by side of the files I'm working with.
 #+begin_src emacs-lisp
-(setq org-agenda-window-setup 'reorganize-frame)
+(use-package! org
+  :config
+  (setq org-agenda-window-setup 'reorganize-frame))
 #+end_src
 
 *** Refile entries
 This lets you choose refiling targets in heading depth of 9, and lets you get also the files in the same directory hierarchy.
 
 #+begin_src emacs-lisp
-(after! org
+(use-package! org
+  :config
   (setq org-refile-targets '(
                              (nil :maxlevel . 9)
                              (org-agenda-files :maxlevel . 9)
@@ -1086,7 +1107,8 @@ This lets you choose refiling targets in heading depth of 9, and lets you get al
 
 *** Remove the "validate" link from html exports
 #+begin_src emacs-lisp
-(after! org
+(use-package! org
+  :config
   ;; don't show the "validate" link on org-html exports
   (setq org-html-validation-link nil)
   )
@@ -1096,7 +1118,8 @@ This lets you choose refiling targets in heading depth of 9, and lets you get al
 This allows headlines to be ignored in the exports. To do so, the ignore tag (C-c C-c ignore) has to be in the header to be ignored. *We only ignore the headlines, the content is still shown.*
 
 #+begin_src emacs-lisp
-(after! org
+(use-package! org
+  :config
   (load "~/Nextcloud/config/.emacs.d/vendor/ox-extra/ox-extra.el")
   (require 'ox-extra)
   (ox-extras-activate '(ignore-headlines))
@@ -1110,7 +1133,8 @@ All the latex exports
 memoir is a class used to create beautiful documents.
 
 #+begin_src emacs-lisp
-(after! org
+(use-package! org
+  :config
   (add-to-list 'org-latex-classes
        '("memoir"
                  "\\documentclass[a4paper,17pt,openright,twoside]{memoir}
@@ -1163,7 +1187,8 @@ memoir is a class used to create beautiful documents.
 memoir is a class used to create beautiful documents.
 
 #+begin_src emacs-lisp
-(after! org
+(use-package! org
+  :config
   (add-to-list 'org-latex-classes
        '("memoir_draft"
                  "\\documentclass[a4paper,17pt,draft,openright,twoside]{memoir}
@@ -1218,7 +1243,8 @@ memoir is a class used to create beautiful documents.
 Same as memoir class, but it start just with chapters, no "part"
 
 #+begin_src emacs-lisp
-(after! org
+(use-package! org
+  :config
   (add-to-list 'org-latex-classes
        '("memoir_chapter"
                  "\\documentclass[a4paper,17pt,openright,twoside]{memoir}
@@ -1261,7 +1287,8 @@ Same as memoir class, but it start just with chapters, no "part"
 Same as memoir class, but it start just with chapters, no "part"
 
 #+begin_src emacs-lisp
-(after! org
+(use-package! org
+  :config
   (add-to-list 'org-latex-classes
        '("memoir_chapter_draft"
                  "\\documentclass[a4paper,17pt,draft,openright,twoside]{memoir}
@@ -1316,7 +1343,8 @@ Same as memoir class, but it start just with chapters, no "part"
 
 
 #+begin_src emacs-lisp
-(after! org
+(use-package! org
+  :config
   (add-to-list 'org-latex-classes
        '("reporting"
                  "\\documentclass[a4paper,17pt,openright,twoside]{article}
@@ -1364,7 +1392,8 @@ Same as memoir class, but it start just with chapters, no "part"
 Add smart quotes for latex
 
 #+begin_src emacs-lisp
-(after! org
+(use-package! org
+  :config
   (setq org-export-with-smart-quotes t)
   )
 #+end_src
@@ -1373,7 +1402,8 @@ Add smart quotes for latex
 Here I will add template captures for doing several things:
 
 #+begin_src emacs-lisp
-(after! org
+(use-package! org
+  :config
   (setq org-capture-templates'(
                                ("t" "My TODO task format." entry
                                 (file+headline "~/Nextcloud/agenda/tasks.org" "Tasks")
@@ -1431,7 +1461,8 @@ Used to capture notes in this file. Useful to maintain notes and snippets separa
 No need to see the markup indicators when writing.
 
 #+begin_src emacs-lisp
-(after! org
+(use-package! org
+  :config
   (setq org-hide-emphasis-markers t)
 )
 #+end_src
@@ -1454,7 +1485,8 @@ No need to see the markup indicators when writing.
 Org-roam related config.
 
 #+begin_src emacs-lisp
-(after! org-roam
+(use-package! org-roam
+  :config
   (setq org-roam-v2-ack t)
   (setq org-roam-directory (file-truename "~/Nextcloud/personal/roam"))
 
@@ -1508,41 +1540,44 @@ To search by title and tags, we will use the information contained here:
 
 https://github.com/org-roam/org-roam/pull/2054
 #+begin_src emacs-lisp
-(after! org-roam
-(setq org-roam-node-display-template
-      (concat "${title:*} "
-              (propertize "${tags:20}" 'face 'org-tag)))
-)
+(use-package! org-roam
+  :config
+  (setq org-roam-node-display-template
+        (concat "${title:*} "
+                (propertize "${tags:20}" 'face 'org-tag)))
+  )
 #+end_src
 
 *** Search using content or roam using ripgrep
 This does full text search on my roam notes.
 
 #+begin_src emacs-lisp
-(after! org-roam
-(defun my/org-roam-rg-search ()
-  "Search org-roam directory using consult-ripgrep. With live-preview."
-  (interactive)
-  (let ((consult-ripgrep-command "rg --null --ignore-case --type org --line-buffered --color=always --max-columns=500 --no-heading --line-number . -e ARG OPTS"))
-    (consult-ripgrep org-roam-directory)))
-(global-set-key (kbd "C-c rr") 'my/org-roam-rg-search)
-)
+(use-package! org-roam
+  :config
+  (defun my/org-roam-rg-search ()
+    "Search org-roam directory using consult-ripgrep. With live-preview."
+    ((insert )nteractive)
+    (let ((consult-ripgrep-command "rg --null --ignore-case --type org --line-buffered --color=always --max-columns=500 --no-heading --line-number . -e ARG OPTS"))
+      (consult-ripgrep org-roam-directory)))
+  (global-set-key (kbd "C-c rr") 'my/org-roam-rg-search)
+  )
 #+end_src
 
 *** Dailies config
 #+begin_src emacs-lisp
-(after! org-roam
-;; Daily notes for org-roam
-;; Directory is relative to org-roam-directory
-(setq org-roam-dailies-directory "daily/")
+(use-package! org-roam
+  :config
+  ;; Daily notes for org-roam
+  ;; Directory is relative to org-roam-directory
+  (setq org-roam-dailies-directory "daily/")
 
-;; Capture template for the dailies
-(setq org-roam-dailies-capture-templates
-      '(("d" "default" entry
-         "* %?"
-         :if-new (file+head "%<%Y-%m-%d>.org"
-                            "#+title: %<%Y-%m-%d>\n#+filetags: daily\n"))))
-)
+  ;; Capture template for the dailies
+  (setq org-roam-dailies-capture-templates
+        '(("d" "default" entry
+           "* %?"
+           :if-new (file+head "%<%Y-%m-%d>.org"
+                              "#+title: %<%Y-%m-%d>\n#+filetags: daily\n"))))
+  )
 #+end_src
 
 *** org-roam-ui
@@ -1555,12 +1590,13 @@ Load org-roam UI and all its dependencies.
 #+end_src
 
 #+begin_src emacs-lisp
-(after! org-roam
-(use-package! org-roam-ui
-  ;;:after org-roam
-  :hook (org-roam . org-roam-ui-mode)
+(use-package! org-roam
+  :config
+  (use-package! org-roam-ui
+    ;;:after org-roam
+    :hook (org-roam . org-roam-ui-mode)
+    )
   )
-)
 #+end_src
 
 *** org-roam TODOs to the agenda
@@ -1571,44 +1607,45 @@ TODO: I need to activate this only for my personal profile, and not my work prof
 https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html
 
 #+begin_src emacs-lisp
-(after! org-roam
+(use-package! org-roam
+  :config
 
-;; Load this only on my personal profile, and not in my work one
+  ;; Load this only on my personal profile, and not in my work one
   (if my-homeenvironment-p
-         (progn
+      (progn
 
 
 
-  ;; we want to load these functions if org-roam is present
-  (if (not(require 'org-roam nil t))
-          ;; if condition
-          (message "org-roam not found")
+        ;; we want to load these functions if org-roam is present
+        (if (not(require 'org-roam nil t))
+            ;; if condition
+            (message "org-roam not found")
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    ;; else condition
+          ;; else condition
 
-    (setq my/roamtag "roamtag")
+          (setq my/roamtag "roamtag")
 
-    (defun vulpea-buffer-prop-set (name value)
-        "Set a file property called NAME to VALUE in buffer file.
+          (defun vulpea-buffer-prop-set (name value)
+            "Set a file property called NAME to VALUE in buffer file.
           If the property is already set, replace its value."
-        (setq name (downcase name))
-        (org-with-point-at 1
-          (let ((case-fold-search t))
-            (if (re-search-forward (concat "^#\\+" name ":\\(.*\\)")
-                                   (point-max) t)
-                (replace-match (concat "#+" name ": " value) 'fixedcase)
-              (while (and (not (eobp))
-                          (looking-at "^[#:]"))
-                (if (save-excursion (end-of-line) (eobp))
-                    (progn
-                      (end-of-line)
-                      (insert "\n"))
-                  (forward-line)
-                  (beginning-of-line)))
-              (insert "#+" name ": " value "\n")))))
+            (setq name (downcase name))
+            (org-with-point-at 1
+              (let ((case-fold-search t))
+                (if (re-search-forward (concat "^#\\+" name ":\\(.*\\)")
+                                       (point-max) t)
+                    (replace-match (concat "#+" name ": " value) 'fixedcase)
+                  (while (and (not (eobp))
+                              (looking-at "^[#:]"))
+                    (if (save-excursion (end-of-line) (eobp))
+                        (progn
+                          (end-of-line)
+                          (insert "\n"))
+                      (forward-line)
+                      (beginning-of-line)))
+                  (insert "#+" name ": " value "\n")))))
 
-    (defun vulpea-buffer-prop-set-list (name values &optional separators)
-      "Set a file property called NAME to VALUES in current buffer.
+          (defun vulpea-buffer-prop-set-list (name values &optional separators)
+            "Set a file property called NAME to VALUES in current buffer.
           VALUES are quoted and combined into single string using
           `combine-and-quote-strings'.
           If SEPARATORS is non-nil, it should be a regular expression
@@ -1616,117 +1653,117 @@ https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html
           If nil it defaults to `split-string-default-separators', normally
           \"[ \f\t\n\r\v]+\", and OMIT-NULLS is forced to t.
           If the property is already set, replace its value."
-      (vulpea-buffer-prop-set
-       name (combine-and-quote-strings values separators)))
+            (vulpea-buffer-prop-set
+             name (combine-and-quote-strings values separators)))
 
-    (defun vulpea-buffer-tags-set (&rest tags)
-      "Set TAGS in current buffer.
+          (defun vulpea-buffer-tags-set (&rest tags)
+            "Set TAGS in current buffer.
             If filetags value is already set, replace it."
-      (vulpea-buffer-prop-set "filetags" (string-join tags " ")))
+            (vulpea-buffer-prop-set "filetags" (string-join tags " ")))
 
-    (defun vulpea-buffer-prop-get (name)
-      "Get a buffer property called NAME as a string."
-      (org-with-point-at 1
-        (when (re-search-forward (concat "^#\\+" name ": \\(.*\\)")
-                                 (point-max) t)
-          (buffer-substring-no-properties
-           (match-beginning 1)
-           (match-end 1)))))
+          (defun vulpea-buffer-prop-get (name)
+            "Get a buffer property called NAME as a string."
+            (org-with-point-at 1
+              (when (re-search-forward (concat "^#\\+" name ": \\(.*\\)")
+                                       (point-max) t)
+                (buffer-substring-no-properties
+                 (match-beginning 1)
+                 (match-end 1)))))
 
 
-    (defun vulpea-buffer-prop-get-list (name &optional separators)
-      "Get a buffer property NAME as a list using SEPARATORS.
+          (defun vulpea-buffer-prop-get-list (name &optional separators)
+            "Get a buffer property NAME as a list using SEPARATORS.
               If SEPARATORS is non-nil, it should be a regular expression
               matching text that separates, but is not part of, the substrings.
               If nil it defaults to `split-string-default-separators', normally
               \"[ \f\t\n\r\v]+\", and OMIT-NULLS is forced to t."
-      (let ((value (vulpea-buffer-prop-get name)))
-        (when (and value (not (string-empty-p value)))
-          (split-string-and-unquote value separators))))
+            (let ((value (vulpea-buffer-prop-get name)))
+              (when (and value (not (string-empty-p value)))
+                (split-string-and-unquote value separators))))
 
-    (defun vulpea-buffer-tags-get ()
-      "Return filetags value in current buffer."
-      (vulpea-buffer-prop-get-list "filetags" " "))
+          (defun vulpea-buffer-tags-get ()
+            "Return filetags value in current buffer."
+            (vulpea-buffer-prop-get-list "filetags" " "))
 
-    (defun vulpea-buffer-tags-add (tag)
-      "Add a TAG to filetags in current buffer."
-      (let* ((tags (vulpea-buffer-tags-get))
-             (tags (append tags (list tag))))
-        (apply #'vulpea-buffer-tags-set tags)))
+          (defun vulpea-buffer-tags-add (tag)
+            "Add a TAG to filetags in current buffer."
+            (let* ((tags (vulpea-buffer-tags-get))
+                   (tags (append tags (list tag))))
+              (apply #'vulpea-buffer-tags-set tags)))
 
 
 
-    (defun vulpea-project-p ()
-      "Return non-nil if current buffer has any todo entry.
+          (defun vulpea-project-p ()
+            "Return non-nil if current buffer has any todo entry.
 
                   TODO entries marked as done are ignored, meaning the this
                   function returns nil if current buffer contains only completed
                   tasks."
-      (seq-find                                 ; (3)
-       (lambda (type)
-         (eq type 'todo))
-       (org-element-map                         ; (2)
-           (org-element-parse-buffer 'headline) ; (1)
-           'headline
-         (lambda (h)
-           (org-element-property :todo-type h)))))
+            (seq-find                                 ; (3)
+             (lambda (type)
+               (eq type 'todo))
+             (org-element-map                         ; (2)
+                 (org-element-parse-buffer 'headline) ; (1)
+                 'headline
+               (lambda (h)
+                 (org-element-property :todo-type h)))))
 
-    (defun vulpea-project-update-tag ()
-      "Update PROJECT tag in the current buffer."
-      (when (and (not (active-minibuffer-window))
-                 (vulpea-buffer-p))
-        (save-excursion
-          (goto-char (point-min))
-          (let* ((tags (vulpea-buffer-tags-get))
-                 (original-tags tags))
-            (if (vulpea-project-p)
-                (setq tags (cons "roamtag" tags))
-              (setq tags (remove "roamtag" tags)))
+          (defun vulpea-project-update-tag ()
+            "Update PROJECT tag in the current buffer."
+            (when (and (not (active-minibuffer-window))
+                       (vulpea-buffer-p))
+              (save-excursion
+                (goto-char (point-min))
+                (let* ((tags (vulpea-buffer-tags-get))
+                       (original-tags tags))
+                  (if (vulpea-project-p)
+                      (setq tags (cons "roamtag" tags))
+                    (setq tags (remove "roamtag" tags)))
 
-            ;; cleanup duplicates
-            (setq tags (seq-uniq tags))
+                  ;; cleanup duplicates
+                  (setq tags (seq-uniq tags))
 
-            ;; update tags if changed
-            (when (or (seq-difference tags original-tags)
-                      (seq-difference original-tags tags))
-              (apply #'vulpea-buffer-tags-set tags))))))
+                  ;; update tags if changed
+                  (when (or (seq-difference tags original-tags)
+                            (seq-difference original-tags tags))
+                    (apply #'vulpea-buffer-tags-set tags))))))
 
-    (defun vulpea-buffer-p ()
-      "Return non-nil if the currently visited buffer is a note."
-      (and buffer-file-name
-           (string-prefix-p
-            (expand-file-name (file-name-as-directory org-roam-directory))
-            (file-name-directory buffer-file-name))))
+          (defun vulpea-buffer-p ()
+            "Return non-nil if the currently visited buffer is a note."
+            (and buffer-file-name
+                 (string-prefix-p
+                  (expand-file-name (file-name-as-directory org-roam-directory))
+                  (file-name-directory buffer-file-name))))
 
-    (defun vulpea-project-files ()
-      "Return a list of note files containing 'roamtag' tag." ;
-      (seq-uniq
-       (seq-map
-        #'car
-        (org-roam-db-query
-         [:select [nodes:file]
-                  :from tags
-                  :left-join nodes
-                  :on (= tags:node-id nodes:id)
-                  :where (like tag (quote "%\"roamtag\"%"))]))))
+          (defun vulpea-project-files ()
+            "Return a list of note files containing 'roamtag' tag." ;
+            (seq-uniq
+             (seq-map
+              #'car
+              (org-roam-db-query
+               [:select [nodes:file]
+                :from tags
+                :left-join nodes
+                :on (= tags:node-id nodes:id)
+                :where (like tag (quote "%\"roamtag\"%"))]))))
 
-    ;; This will overwrite the current agenda files, and we don't want that
-    (defun vulpea-agenda-files-update (&rest _)
-      "Update the value of `org-agenda-files'."
-      (setq org-agenda-files (vulpea-project-files)))
+          ;; This will overwrite the current agenda files, and we don't want that
+          (defun vulpea-agenda-files-update (&rest _)
+            "Update the value of `org-agenda-files'."
+            (setq org-agenda-files (vulpea-project-files)))
 
-    (defun inject-vulpea-project-files (org-agenda-files)
-      (append org-agenda-files (vulpea-project-files)))
-    (advice-add 'org-agenda-files :filter-return #'inject-vulpea-project-files)
+          (defun inject-vulpea-project-files (org-agenda-files)
+            (append org-agenda-files (vulpea-project-files)))
+          (advice-add 'org-agenda-files :filter-return #'inject-vulpea-project-files)
 
-    (add-hook 'find-file-hook #'vulpea-project-update-tag)
-    (add-hook 'before-save-hook #'vulpea-project-update-tag)
+          (add-hook 'find-file-hook #'vulpea-project-update-tag)
+          (add-hook 'before-save-hook #'vulpea-project-update-tag)
 
-    ;; original code that overwrites the agenda files
-    ;;  (advice-add 'org-agenda :before #'vulpea-agenda-files-update)
-    ;;  (advice-add 'org-todo-list :before #'vulpea-agenda-files-update)
-    )
-  ))
+          ;; original code that overwrites the agenda files
+          ;;  (advice-add 'org-agenda :before #'vulpea-agenda-files-update)
+          ;;  (advice-add 'org-todo-list :before #'vulpea-agenda-files-update)
+          )
+        ))
   )
 #+end_src
 
@@ -1801,7 +1838,8 @@ https://github.com/bastibe/org-journal
 
 #+begin_src emacs-lisp
 ;;("C-c r ñ" . org-journal-new-entry)
-(after! org-journal
+(use-package! org-journal
+  :config
   (setq org-journal-date-prefix "#+TITLE: ")
   (setq org-journal-file-format "%Y-%m-%d.org")
   ;;(setq org-journal-dir "~/Nextcloud/personal/diario/")
@@ -1908,7 +1946,8 @@ https://nobiot.github.io/org-remark/
 #+end_src
 
 #+begin_src emacs-lisp
-(after! org
+(use-package! org
+  :config
   (require 'org-remark)
   (require 'org-remark-global-tracking)
   (org-remark-global-tracking-mode +1)
@@ -1953,8 +1992,6 @@ https://nobiot.github.io/org-remark/
   (define-key global-map (kbd "C-c m b") #'org-remark-mark-blue)
 
   ;; The remark file will be named based on the original file
-
-
   )
 #+end_src
 
