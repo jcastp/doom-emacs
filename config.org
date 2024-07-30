@@ -1792,6 +1792,9 @@ Put a note or a timestamp when something changes. For example:
 #+end_src
 
 ** TODO org custom tags
+
+The org tags are organized by location, tools, and activities.
+
 #+begin_src emacs-lips
   (setq org-tag-alist '(
                         ;; Contexts based on locations
@@ -1799,7 +1802,7 @@ Put a note or a timestamp when something changes. For example:
                         ;; Contexts based on tools
                         ("computer" . ?c) ("mobile" . ?m)  ("penpaper" . ?p)
                         ;; Contexts based on activities
-                        ("emacs" . ?e)  ("writing" . ?w) ("reading" . ?r)
+                        ("emacs" . ?e) ("writing" . ?w) ("reading" . ?r) ("personal" . ?p) ("calls" . ?C)
                         )
         )
 #+end_src
