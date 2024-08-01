@@ -2319,7 +2319,7 @@ Since I work in two languages, I need a method to change the dictionary. It will
 (use-package guess-language
   :config
   (setq guess-language-languages '(en es))
-  (setq guess-language-min-paragraph-length 80)
+  (setq guess-language-min-paragraph-length 35)
   ;; define the dicts I want to use for my languages
   (setq guess-language-langcodes
   	'((en . ("en_US" "English"))
