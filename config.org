@@ -2307,6 +2307,29 @@ I just want the org-agenda lines to be just on one line, so I remove the visual-
     (setq ready-player-repeat t))
 #+end_src
 
+
+** TODO guess-language
+Since I work in two languages, I need a method to change the dictionary. It will be better if it can be done automatically.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! guess-language)
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+(use-package guess-language
+  :config
+  (setq guess-language-languages '(en es))
+  (setq guess-language-min-paragraph-length 80)
+  ;; define the dicts I want to use for my languages
+  (setq guess-language-langcodes
+  	'((en . ("en_US" "English"))
+  	  (es . ("es_ES" "Spanish"))))
+  (guess-language-mode)
+  ;; activate the mode when I go to text files
+  (add-hook 'text-mode-hook (lambda () (guess-language-mode 1)))
+  (add-hook 'org-mode-hook (lambda () (guess-language-mode 1)))
+  )
+#+end_src
 * Work environment
 This will be my working environment config
 
