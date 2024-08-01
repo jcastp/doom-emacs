@@ -576,7 +576,8 @@ Open a branch into a different frame, but the same buffer:
   (defun my/org-tree-open-in-right-frame ()
     (interactive)
     (org-tree-to-indirect-buffer)
-    (windmove-right)
+    ;;(windmove-right)
+    (other-window 1) ;; to move to the newly generated window
     )
   ;;(global-set-key (kbd "C-c 8" ) 'my/org-tree-open-in-right-frame)
   (map! :leader
