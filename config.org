@@ -840,6 +840,16 @@ Translate a word
   (eww (concat "https://www.deepl.com/translator#en/es/" palabra))
   )
 #+end_src
+** Buscar sinónimos
+Seach for synonyms for Spanish words.
+
+#+begin_src emacs-lisp
+  (defun my/sinonimo (palabra)
+    "Busca una palabra en un diccionario de sinónimos"
+    (interactive "s¿Qué palabra quieres buscar? ")
+    (eww (concat "https://www.wordreference.com/sinonimos/" palabra)))
+#+end_src
+
 ** TODO Count words in orgmode, excluding comments, drawers, and properties
 =count-words= function is good, but in orgmode still counts all the words, including comments, properties, and drawers.
 
