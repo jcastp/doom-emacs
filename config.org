@@ -316,6 +316,13 @@ Better menus list
       "s I" #'imenu-list-smart-toggle)
 #+end_src
 
+** avy-goto-line config
+I want to map the =avy-goto-line= to one of the key mapping in doom emacs.
+#+begin_src emacs-lisp :tangle yes
+(map! :leader
+      :desc "avy-goto-line"
+      "s l" #'avy-goto-line)
+#+end_src
 * Org config
 
 ** some org configs for better behavior and usage
