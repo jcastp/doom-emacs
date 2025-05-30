@@ -313,6 +313,23 @@ Increase or decrease the font size
 (global-set-key (kbd "M--") 'text-scale-decrease)
 #+end_src
 
+** fontaine
+I can change the fonts with just a single command.
+https://protesilaos.com/emacs/fontaine
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! fontaine
+  :recipe (:host github :repo "protesilaos/fontaine"))
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+(use-package! fontaine
+:config
+(map! :leader
+      :desc "fontaine"
+      "d g" #'fontaine-set-preset))
+#+end_src
+
 * Navigation
 ** imenu-list
 Better menus list
