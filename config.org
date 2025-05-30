@@ -98,6 +98,12 @@ It contains the variables =user-full-name= and =user-mail-address=
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+end_src
 
+** evil-escape mapped to a key chord
+#+begin_src emacs-lisp :tangle yes
+(after! evil-escape
+  (setq evil-escape-key-sequence "jk"))
+#+end_src
+
 ** Save command history
 It is nice to have commands and their history saved so that every time you get back to work, you can just re-run stuff as you need it. It isn't a radical feature, it is just part of a good user experience.
 
@@ -161,12 +167,6 @@ To automatically close parenthesis and other punctuation signs.
       `(lambda (c)
          (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c)))
       )
-#+end_src
-
-** evil-escape mapped to a key chord
-#+begin_src emacs-lisp :tangle yes
-(after! evil-escape
-  (setq evil-escape-key-sequence "jk"))
 #+end_src
 
 * UI
