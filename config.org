@@ -13,13 +13,17 @@ I will try to document and compartmentalize the sections, so it's easier to foll
 ** variable definition
 I define here some very basic variables to configure several parts of the config.
 
+*** Directories used by emacs
 #+begin_src emacs-lisp
 (defvar my-config-dir "~/.doom.d/"
   "Personal config directory.")
 
 (defvar my-data-dir "~/Nextcloud/config/.emacs.d/"
   "Personal data directory.")
+#+end_src
 
+*** Machine names
+#+begin_src emacs-lisp
 ;; working laptop vm
 (defvar my-worksystem-p (equal (system-name) "lubuntuwork")
   "Name of my working machine.")
@@ -36,7 +40,10 @@ I define here some very basic variables to configure several parts of the config
 			    (equal (system-name) "argos")
 			    (equal (system-name) "caliope"))
   "Names of my writing laptops.")
+#+end_src
 
+*** Environments
+#+begin_src emacs-lisp
 (defvar my-homeenvironment-p (or
 			      (string= (getenv "WORKING") "HOME")
 			      (not (string= (getenv "WORKING") "WORK")))
@@ -44,7 +51,10 @@ I define here some very basic variables to configure several parts of the config
 
 (defvar my-workenvironment-p (string= (getenv "WORKING") "WORK")
   "My work environment predicate.")
+#+end_src
 
+*** Encrypted data directories
+#+begin_src emacs-lisp
 ;; define my clear directory
 (defvar my-clear-directory (expand-file-name "Nextcloud_claro/gocryptfs_claro" (getenv "HOME"))
   "My decrupted directory.")
