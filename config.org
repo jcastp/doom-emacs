@@ -357,12 +357,17 @@ Better menus list
       "s I" #'imenu-list-smart-toggle)
 #+end_src
 
-** avy-goto-line config
-I want to map the =avy-goto-line= to one of the key mapping in doom emacs.
+** avy keyconfig
+I want to map the avy jump functions to some doom emacs keybindings.
 #+begin_src emacs-lisp :tangle yes
-(map! :leader
-      :desc "avy-goto-line"
-      "s l" #'avy-goto-line)
+;; (map! :leader
+;;       :desc "avy-goto-line"
+;;       "j l" #'avy-goto-line)
+ (map! :leader
+ (:prefix-map ("j" . "jump")
+               :desc "jump to 2 chars"                         "j"   #'avy-goto-char-2
+               :desc "jump to chars-timer"                         "k"   #'avy-goto-char-timer
+               :desc "jump to line"                         "l"   #'avy-goto-line))
 #+end_src
 
 * Org config
