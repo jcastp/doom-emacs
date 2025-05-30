@@ -872,20 +872,6 @@ Here I will add template captures for doing several things:
         )
   #+end_src
 
-** org-appear
-/Hides/ the *emphasis* marks +of+ from orgmode, until you are on them.
-#+begin_src emacs-lisp :tangle packages.el
-(package! org-appear
-  :recipe (:host github
-           :repo "awth13/org-appear"))
-#+end_src
-
-#+begin_src emacs-lisp
-  (use-package org-appear
-    :hook (org-mode . org-appear-mode)
-    )
-#+end_src
-
 ** org-ql
 https://github.com/alphapapa/org-ql
 #+begin_src emacs-lisp :tangle packages.el
