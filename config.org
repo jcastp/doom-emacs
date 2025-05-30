@@ -163,6 +163,12 @@ To automatically close parenthesis and other punctuation signs.
       )
 #+end_src
 
+** evil-escape mapped to a key chord
+#+begin_src emacs-lisp :tangle yes
+(after! evil-escape
+  (setq evil-escape-key-sequence "jk"))
+#+end_src
+
 * UI
 ** ef-themes
 Colorful themes.
