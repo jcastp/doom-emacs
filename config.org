@@ -291,6 +291,21 @@ I want to differentiate the window I'm working with.
 (setq dimmer-fraction 0.3)
 #+end_src
 
+** Define fonts
+#+begin_src emacs-lisp :tangle yes
+(setq
+  ;; Font used for source code
+  ;;doom-font (font-spec :family "Iosevka Comfy" :size 18 :weight 'Medium)
+
+  ;; Font used for normal writing
+  ;;doom-variable-pitch-font (font-spec :family "Gentium Basic" :size 18)
+  ;;doom-variable-pitch-font (font-spec :family "ETBookOT" :size 18)
+  doom-variable-pitch-font (font-spec :family "ETBembo" :size 14)
+
+  ;; When you want to have a different fixed font for the variable one
+  ;;doom-variable-pitch-font (font-spec :family "Iosevka Comfy" :size 18 :weight 'Regular)
+ )
+#+end_src
 ** Font size increase/decrease
 Increase or decrease the font size
 #+begin_src emacs-lisp
