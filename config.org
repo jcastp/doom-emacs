@@ -463,10 +463,64 @@ https://protesilaos.com/emacs/fontaine
 
 #+begin_src emacs-lisp :tangle yes
 (use-package! fontaine
-:config
-(map! :leader
-      :desc "fontaine"
-      "d g" #'fontaine-set-preset))
+  :config
+  (setq fontaine-presets
+        '(
+          ;; daily operations, same config as normal config
+          (regular
+           :default-family "DejaVu Sans Mono"
+           :default-weight normal
+           :default-height 110
+           :fixed-pitch-family "DejaVu Sans Mono"
+           :fixed-pitch-weight Light ; falls back to :default-weight
+           :fixed-pitch-height 110
+           :variable-pitch-family "DejaVu Sans Mono"
+           :variable-pitch-weight Medium
+           :variable-pitch-height 120
+           :bold-family nil ; use whatever the underlying face has
+           :bold-weight bold
+           :italic-family "DejaVu Sans Mono"
+           :italic-slant italic
+           :line-spacing 0
+           )
+          ;; Aporetic sans mono font
+          (aporetic-sans-mono
+           :default-family "Aporetic Sans Mono"
+           :default-weight normal
+           :default-height 120
+           :fixed-pitch-family "Aporetic Sans Mono"
+           :fixed-pitch-weight Light ; falls back to :default-weight
+           :fixed-pitch-height 110
+           :variable-pitch-family "Aporetic Sans"
+           :variable-pitch-weight Medium
+           :variable-pitch-height 140
+           :bold-family nil ; use whatever the underlying face has
+           :bold-weight bold
+           :italic-family "Aporetic Sans Mono"
+           :italic-slant italic
+           :line-spacing 0
+           )
+
+          ;; work
+          (work
+           :default-family "Aporetic Sans Mono"
+           :default-weight normal
+           :default-height 120
+           :fixed-pitch-family "Aporetic Sans Mono"
+           :fixed-pitch-weight Light ; falls back to :default-weight
+           :fixed-pitch-height 110
+           :variable-pitch-family "Aporetic Sans"
+           :variable-pitch-weight Medium
+           :variable-pitch-height 140
+           :bold-family nil ; use whatever the underlying face has
+           :bold-weight bold
+           :italic-family "Aporetic Sans Mono"
+           :italic-slant italic
+           :line-spacing 0
+           )
+          )))
+
+
 #+end_src
 
 * Navigation
@@ -975,7 +1029,6 @@ Useful to maintain notes and snippets separated by projects. I will use this for
                  `(("t" "Todo" entry (file+headline ,this-file "Notes")
                     "** TODO %?"))))
            (org-capture)))))
-;; (global-set-key (kbd "C-c C") 'my/capture-to-this-buffer)
 #+end_src
 
 
@@ -1504,14 +1557,7 @@ Configuration for the elfeed and the org files.
     "Opens elfeed and updates it in just a go."
     (interactive)
     (elfeed)
-    (elfeed-update)
-    )
-
-  (map! :leader
-        :desc "elfeed refresh and UI"
-        "d f" #'my/elfeed)
-
-  )
+    (elfeed-update)))
 #+end_src
 
 ** Nov.el
@@ -1544,4 +1590,27 @@ https://tech.toryanderson.com/2022/11/23/viewing-epub-in-emacs/
      (add-hook 'nov-mode-hook 'my/nov-font-setup)
      (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
      )
+#+end_src
+
+* My custom key bindings
+This is where I'm going to define my own keybindings.
+
+I use one of the free prefixes, SPC d, to map my own functions, the ones I will be using more.
+#+begin_src emacs-lisp :tangle yes
+(map! :leader
+      (:prefix-map ("d" . "my own functions")
+       :desc "capture to this buffer"  "c"  #'my/capture-to-this-buffer
+       :desc "elfeed"                  "e"  #'my/elfeed
+       :desc "fontaine preset"         "f"  #'fontaine-set-preset
+       :desc "theme changer"           "0"  #'my/theme-changer
+       ))
+#+end_src
+* Work environment
+This will be my working environment config
+
+#+begin_src emacs-lisp
+;; Load this config when using the work computer
+(if my-workenvironment-p
+    (progn
+      (org-babel-load-file "~/.doom.d/emacs-org-init-trabajo.org")))
 #+end_src
