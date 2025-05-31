@@ -502,6 +502,7 @@ This mode restricts the lines up until a set margin, and wraps them logically at
 
 #+begin_src emacs-lisp :tangle yes
 (setq visual-fill-column-width 110)
+(setq visual-fill-column-center-text t)
 
 (map! :leader
       ;; remapping this as I don't use it that much
@@ -525,9 +526,6 @@ Better menus list
 ;; Establish the depth of the entries shown
 (setq org-imenu-depth 5)
 (setq imenu-list-size 0.2)
-;; map the keys
-;; (global-unset-key (kbd "M-i"))
-;;(global-set-key (kbd "C-c s I") #'imenu-list-smart-toggle)
 ;; Once you open imenu, focus on it
 (setq imenu-list-focus-after-activation t)
 ;; configuring the keybinding as /la/ doom emacs
@@ -1589,7 +1587,6 @@ https://tech.toryanderson.com/2022/11/23/viewing-epub-in-emacs/
      :config
      (setq nov-text-width 100)
      ;;(setq nov-text-width t)
-     ;;(setq visual-fill-column-center-text t)
      (add-hook 'nov-mode-hook 'visual-line-mode)
      (add-hook 'nov-mode-hook 'visual-fill-column-mode)
      ;; We save the place we left the e-pub in this file:
