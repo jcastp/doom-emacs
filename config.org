@@ -1602,12 +1602,16 @@ I use one of the free prefixes, SPC d, to map my own functions, the ones I will 
        :desc "fontaine preset"         "f"  #'fontaine-set-preset
        :desc "theme changer"           "0"  #'my/theme-changer
        ))
+#+end_src
 
+Remaping the org-mode-at-point.
+#+begin_src emacs-lisp :tangle yes
 ;; remap the org-open-at-point to a more convenient keybinding.
 (map! :leader
       :desc "org open at point"
       "o o" #'org-open-at-point)
 #+end_src
+
 * Work environment
 This will be my working environment config
 
