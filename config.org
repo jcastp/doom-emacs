@@ -334,29 +334,6 @@ Put time and date on the status line
 (display-time)
 #+end_src
 
-** Open indirect buffer
-Open a branch into a different frame, but the same buffer:
-
-#+begin_src emacs-lisp
-;; this is done to open the indirect buffer in another window
-;; instead on the main one
-(use-package! org
-  :config
-  (setq org-indirect-buffer-display 'other-window)
-
-  (defun my/org-tree-open-in-right-frame ()
-    (interactive)
-    (org-tree-to-indirect-buffer)
-    ;;(windmove-right)
-    (other-window 1) ;; to move to the newly generated window
-    )
-  ;;(global-set-key (kbd "C-c 8" ) 'my/org-tree-open-in-right-frame)
-  (map! :leader
-        :desc "Open org tree to indirect buffer"
-        "b 8" #'my/org-tree-open-in-right-frame)
-  )
-#+end_src
-
 ** Battery management
 On laptops it's nice to know how much power you have.
 
@@ -555,6 +532,29 @@ I want to map the avy jump functions to some doom emacs keybindings.
        :desc "jump to 2 chars"           "j"   #'avy-goto-char-2
        :desc "jump to chars-timer"       "k"   #'avy-goto-char-timer
        :desc "jump to line"              "l"   #'avy-goto-line))
+#+end_src
+
+** Open indirect buffer
+Open a branch into a different frame, but the same buffer:
+
+#+begin_src emacs-lisp
+;; this is done to open the indirect buffer in another window
+;; instead on the main one
+(use-package! org
+  :config
+  (setq org-indirect-buffer-display 'other-window)
+
+  (defun my/org-tree-open-in-right-frame ()
+    (interactive)
+    (org-tree-to-indirect-buffer)
+    ;;(windmove-right)
+    (other-window 1) ;; to move to the newly generated window
+    )
+  ;;(global-set-key (kbd "C-c 8" ) 'my/org-tree-open-in-right-frame)
+  (map! :leader
+        :desc "Open org tree to indirect buffer"
+        "b 8" #'my/org-tree-open-in-right-frame)
+  )
 #+end_src
 
 * Org config
