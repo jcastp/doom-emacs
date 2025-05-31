@@ -504,7 +504,10 @@ This mode restricts the lines up until a set margin.
 (setq visual-fill-column-width 110)
 
 (map! :leader
-      :desc "visual fill column"      "t V" #'visual-fill-column-mode
+      ;; remapping this as I don't use it that much
+      :desc "visible mode"            "t V" #'visible-mode
+      ;; assigning this to my more used visible-fill-column-mode
+      :desc "visual fill column"      "t v" #'visual-fill-column-mode
       )
 #+end_src
 * Navigation
