@@ -496,6 +496,17 @@ https://protesilaos.com/emacs/fontaine
           )))
 #+end_src
 
+** visual fill column
+https://github.com/joostkremers/visual-fill-column
+This mode restricts the lines up until a set margin.
+
+#+begin_src emacs-lisp :tangle yes
+(setq visual-fill-column-width 110)
+
+(map! :leader
+      :desc "visual fill column"      "t V" #'visual-fill-column-mode
+      )
+#+end_src
 * Navigation
 ** imenu-list
 Better menus list
@@ -1575,7 +1586,7 @@ https://tech.toryanderson.com/2022/11/23/viewing-epub-in-emacs/
      :config
      (setq nov-text-width 100)
      ;;(setq nov-text-width t)
-     (setq visual-fill-column-center-text t)
+     ;;(setq visual-fill-column-center-text t)
      (add-hook 'nov-mode-hook 'visual-line-mode)
      (add-hook 'nov-mode-hook 'visual-fill-column-mode)
      ;; We save the place we left the e-pub in this file:
