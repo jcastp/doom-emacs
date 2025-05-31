@@ -1602,6 +1602,18 @@ I use one of the free prefixes, SPC d, to map my own functions, the ones I will 
        ))
 #+end_src
 
+Mapping my org roam functions:
+- my random roam node
+- my random todo roam node
+- my agenda restricted to roam
+
+#+begin_src emacs-lisp :tangle yes
+(map! :leader
+      :desc "random todo roam node"      "m m t" #'my/random-roam-todo-node
+      :desc "random roam node"           "m m T" #'my/random-roam-node
+      :desc "roam agenda"                "m m a" #'my/agenda-restrict-to-roam
+      )
+#+end_src
 * Work environment
 This will be my working environment config
 
