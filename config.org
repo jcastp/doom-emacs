@@ -439,7 +439,6 @@ I want to differentiate the window I'm working with.
 
   ;; Font used for normal writing
   ;;doom-variable-pitch-font (font-spec :family "Gentium Basic" :size 18)
-  ;;doom-variable-pitch-font (font-spec :family "ETBookOT" :size 18)
   doom-variable-pitch-font (font-spec :family "ETBembo" :size 14)
 
   ;; When you want to have a different fixed font for the variable one
