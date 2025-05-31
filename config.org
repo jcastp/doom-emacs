@@ -323,8 +323,6 @@ Function to change between dark and clear themes, based on past variables.
       (setq my/themes-clear (my/rotate-list my/themes-clear))
       ;; mark the theme is clear now
       (setq my-theme-dark-p nil))))
-
-(global-set-key (kbd "C-c 0") 'my/theme-changer)
 #+end_src
 
 ** Time and date
