@@ -519,8 +519,6 @@ https://protesilaos.com/emacs/fontaine
            :line-spacing 0
            )
           )))
-
-
 #+end_src
 
 * Navigation
@@ -546,7 +544,7 @@ Better menus list
 ;; configuring the keybinding as /la/ doom emacs
 ;; https://rameezkhan.me/posts/2020/2020-07-03--adding-keybindings-to-doom-emacs/
 (map! :leader
-      :desc "imenu toggle "
+      :desc "imenu toggle"
       "s I" #'imenu-list-smart-toggle)
 #+end_src
 
