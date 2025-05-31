@@ -498,7 +498,7 @@ https://protesilaos.com/emacs/fontaine
 
 ** visual fill column
 https://github.com/joostkremers/visual-fill-column
-This mode restricts the lines up until a set margin.
+This mode restricts the lines up until a set margin, and wraps them logically at that point.
 
 #+begin_src emacs-lisp :tangle yes
 (setq visual-fill-column-width 110)
