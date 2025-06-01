@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: org title
+# key: title
+# --
+#+title: $0
+#+author: Javier Castilla
+#+EMAIL: jcastp@pm.me
+#+language: es
