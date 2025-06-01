@@ -119,6 +119,20 @@ It is nice to have commands and their history saved so that every time you get b
         regexp-search-ring)
       )
 #+end_src
+** recentf
+Configure where we save the recent files opened, so I don't loose them once I reinstall doom emacs.
+#+begin_src emacs-lisp
+;; where to store the recent list file
+(after! recentf
+  (setq recentf-save-file (expand-file-name "recentf" my-data-dir)))
+#+end_src
+** persp-save location
+#+begin_src emacs-lisp
+(use-package! persp-mode
+  :config
+  (setq persp-save-dir (expand-file-name "persp-confs/" my-data-dir))
+)
+#+end_src
 ** auto revert mode
 When a file is changed in disk, the buffer reloads to reflect that change.
 #+begin_src emacs-lisp
