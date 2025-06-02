@@ -620,6 +620,11 @@ To create and use internal valid and unique links in org-mode, we will use the =
   (setq org-id-locations-file (expand-file-name "org-id-locations" my-data-dir)))
 #+end_src
 
+** Completion notes in to the Logbook
+Change notes are stored in the node's drawer, so we can fold it conveniently.
+#+begin_src emacs-lisp
+(setq org-log-into-drawer t)
+#+end_src
 ** Custom states for the tasks
 These are the custom states for the tasks, and the character associated to it.
 
