@@ -1396,6 +1396,14 @@ Open a random roam node with the roamtag tag (that maps to a TODO entry).
 ;; (global-set-key (kbd "C-c n T") 'my/random-roam-todo-node)
 #+end_src
 
+** org-modern changes
+I don't use all the org-modern features, so I disable some of them here:
+#+begin_src emacs-lisp :tangle yes
+(after! org-modern
+  (setq org-modern-table nil)
+  (setq org-modern-progress 8))
+#+end_src
+
 * Writing
 ** TODO guess-language
 Since I work in two languages, I need a method to change the dictionary. It will be better if it can be done automatically.
