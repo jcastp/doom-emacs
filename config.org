@@ -586,7 +586,6 @@ Open a branch into a different frame, but the same buffer:
 #+end_src
 
 * Org config
-
 ** some org configs for better behavior and usage
 #+begin_src emacs-lisp
 (use-package! org
@@ -1059,7 +1058,6 @@ Useful to maintain notes and snippets separated by projects. I will use this for
                     "** TODO %?"))))
            (org-capture)))))
 #+end_src
-
 
 ** Orgmode org-roam config
 Org-roam related config.
