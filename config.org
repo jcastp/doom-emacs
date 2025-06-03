@@ -1405,14 +1405,17 @@ I don't use all the org-modern features, so I disable some of them here:
 #+end_src
 
 * Writing
-** TODO guess-language
+** CANCELED guess-language
+:LOGBOOK:
+- State "CANCELED"   from "TODO"       [2025-06-03 Tue 08:22]
+:END:
 Since I work in two languages, I need a method to change the dictionary. It will be better if it can be done automatically.
 
-#+begin_src emacs-lisp :tangle packages.el
+#+begin_src emacs-lisp :tangle no
 (package! guess-language)
 #+end_src
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
 (use-package guess-language
   :config
   (setq guess-language-languages '(en es))
