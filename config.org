@@ -237,11 +237,12 @@ To interact with ollama local llms.
 
 ** C-z to undo
 #+begin_src emacs-lisp :tangle yes
+;; unmap the C-z keybinding
+(global-unset-key (kbd "C-z"))
+;; map C-z to undo
 (map!
- "C-z" #'undo
- )
+ "C-z" #'undo)
 #+end_src
-
 
 * UI
 ** ef-themes
