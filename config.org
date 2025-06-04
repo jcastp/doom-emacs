@@ -241,6 +241,8 @@ To interact with ollama local llms.
  "C-z" #'undo
  )
 #+end_src
+
+
 * UI
 ** ef-themes
 Colorful themes.
@@ -535,7 +537,7 @@ This mode restricts the lines up until a set margin, and wraps them logically at
 
 ** consult-line to C-s
 #+begin_src emacs-lisp :tangle yes
-(map! :after consult
+(map!
       "C-s" #'consult-line
       "M-y" #'consult-yank-from-kill-ring
       "M-i" #'consult-imenu
@@ -546,6 +548,33 @@ This mode restricts the lines up until a set margin, and wraps them logically at
       "M-s r" #'consult-ripgrep
       )
 #+end_src
+** Keyboard chords
+Shortcuts to commands using just quick key combinations.
+
+#+begin_src emacs :tangle packages.el
+(package! key-chord)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! key-chord
+  :config
+  (key-chord-mode 1)
+  ;; Max time delay between two presses of the same key to be considered a key chord.
+  ;; Should normally be a little longer than `key-chord-two-keys-delay'.
+  (setq key-chord-two-keys-delay 0.1)
+  (setq key-chord-one-key-delay 0.2) ; default 0.2
+  (key-chord-define-global "ññ" 'eshell)
+  (key-chord-define-global "kk" 'other-window)
+  (key-chord-define-global "hh" 'ace-window)
+  (key-chord-define-global "jj" 'avy-goto-char-2)
+  (key-chord-define-global "jk" 'avy-goto-char-timer)
+  (key-chord-define-global "jl" 'avy-goto-line)
+  ;;(key-chord-define-global "zz" 'undo-tree-visualize)
+  ;;(key-chord-define-global "ww" 'hydra-move/body)
+  ;;(key-chord-define-global "yy" 'hydra-buffer-mgmt/body)
+  )
+#+end_src
+
 ** imenu-list
 Better menus list.
 
@@ -571,10 +600,10 @@ Better menus list.
       "s I" #'imenu-list-smart-toggle)
 #+end_src
 
-** avy keyconfig
+** CANCELED avy keyconfig
 I want to map the avy jump functions to some doom emacs keybindings.
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
 (map! :leader
       (:prefix-map ("j" . "jump")
        :desc "jump to 2 chars"           "j"   #'avy-goto-char-2
