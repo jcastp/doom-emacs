@@ -243,6 +243,12 @@ To interact with ollama local llms.
 (map!
  "C-z" #'undo)
 #+end_src
+** set firefox as the default browser
+Setting firefox as the default browser for opening http/s links.
+#+begin_src emacs-lisp
+(setq browse-url-firefox-program "firefox")
+(setq browse-url-browser-function 'browse-url-firefox)
+#+end_src
 
 * UI
 ** ef-themes
