@@ -235,6 +235,12 @@ To interact with ollama local llms.
                                                     :models present_models))))))
 #+end_src
 
+** C-z to undo
+#+begin_src emacs-lisp :tangle yes
+(map!
+ "C-z" #'undo
+ )
+#+end_src
 * UI
 ** ef-themes
 Colorful themes.
