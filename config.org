@@ -535,6 +535,12 @@ This mode restricts the lines up until a set margin, and wraps them logically at
       )
 #+end_src
 * Navigation
+** Movement for paragraphs
+Some keys redefined to better adjust to the whole emacs key environment.
+#+begin_src emacs-lisp
+(global-set-key (kbd "M-p") 'backward-paragraph)
+(global-set-key (kbd "M-n") 'forward-paragraph)
+#+end_src
 
 ** consult-line to C-s
 #+begin_src emacs-lisp :tangle yes
