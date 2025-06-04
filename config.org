@@ -640,12 +640,13 @@ Open a branch into a different frame, but the same buffer:
     ;;(windmove-right)
     (other-window 1) ;; to move to the newly generated window
     )
-  ;;(global-set-key (kbd "C-c 8" ) 'my/org-tree-open-in-right-frame)
-  (map! :leader
-        :desc "Open org tree to indirect buffer"
-        "b 8" #'my/org-tree-open-in-right-frame)
+  (global-set-key (kbd "C-c 8" ) 'my/org-tree-open-in-right-frame)
+  ;; (map! :leader
+  ;;       :desc "Open org tree to indirect buffer"
+  ;;       "b 8" #'my/org-tree-open-in-right-frame)
   )
 #+end_src
+
 * Org config
 ** some org configs for better behavior and usage
 #+begin_src emacs-lisp
