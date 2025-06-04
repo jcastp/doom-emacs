@@ -526,6 +526,20 @@ This mode restricts the lines up until a set margin, and wraps them logically at
       )
 #+end_src
 * Navigation
+
+** consult-line to C-s
+#+begin_src emacs-lisp :tangle yes
+(map! :after consult
+      "C-s" #'consult-line
+      "M-y" #'consult-yank-from-kill-ring
+      "M-i" #'consult-imenu
+      "M-g i" #'consult-imenu-multi
+      "M-g h" #'consult-org-heading
+      "M-g m" #'consult-mark
+      "M-s f" #'consult-find
+      "M-s r" #'consult-ripgrep
+      )
+#+end_src
 ** imenu-list
 Better menus list.
 
@@ -584,7 +598,6 @@ Open a branch into a different frame, but the same buffer:
         "b 8" #'my/org-tree-open-in-right-frame)
   )
 #+end_src
-
 * Org config
 ** some org configs for better behavior and usage
 #+begin_src emacs-lisp
