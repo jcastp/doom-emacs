@@ -1735,9 +1735,9 @@ Mapping my org roam functions:
 
 #+begin_src emacs-lisp :tangle yes
 (map! :leader
-      :desc "random todo roam node"      "m m t" #'my/random-roam-todo-node
-      :desc "random roam node"           "m m T" #'my/random-roam-node
-      :desc "roam agenda"                "m m a" #'my/agenda-restrict-to-roam
+      :desc "random todo roam node"      "n r t" #'my/random-roam-todo-node
+      :desc "random roam node"           "n r T" #'my/random-roam-node
+      :desc "roam agenda"                "n r a" #'my/agenda-restrict-to-roam
       )
 #+end_src
 * Work environment
