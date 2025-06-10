@@ -1063,12 +1063,12 @@ Here I will add template captures for doing several things:
                                ;;   "* TODO %i%? "
                                ;;   :empty-lines-after 1)
 
-  			      ("t" "My TODO task format." entry
+                               ("t" "My TODO task format." entry
                                 (file+headline "~/Nextcloud/agenda/tasks.org" "Tasks")
-                                "** TODO %i%? \n"
+                                "** TODO %i%? %^g \n"
                                   :empty-lines-after 1)
 
-  			     ("p" "New project." entry
+                               ("p" "New project." entry
                                 (file+headline "~/Nextcloud/agenda/tasks.org" "Projects")
                                  "** TODO %? \n :PROPERTIES:\n:COOKIE_DATA: todo recursive\n:END:\n   - Objetivo:"
                                 :empty-lines-after 1)
@@ -1076,13 +1076,13 @@ Here I will add template captures for doing several things:
   			     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                ;; Writing related things
 
-  			     ;; Everything that I find interesting to create, no matter what it is
-  			     ("h" "Compost heap" item
+                               ;; Everything that I find interesting to create, no matter what it is
+                               ("h" "Compost heap" item
                                 (file+headline "~/Nextcloud/escritura/retazos/compost_heap.org" "Compost heap")
                                  "%i"
                                  :empty-lines-after 1)
 
-  			     ;; A possible writing idea
+                               ;; A possible writing idea
                                ("w" "Writing idea." entry
                                 (file+headline "~/Nextcloud/escritura/retazos/ideas.org" "Ideas")
                                 "** TODO %?\n*** Personajes\n- \n*** Ambientación\n*** Eventos\n"
