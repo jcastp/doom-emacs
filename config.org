@@ -1506,7 +1506,6 @@ https://github.com/bastibe/org-journal
   :config
   (setq org-journal-date-prefix "#+TITLE: ")
   (setq org-journal-file-format "%Y-%m-%d.org")
-  ;;(setq org-journal-dir "~/Nextcloud/personal/diario/")
   (setq org-journal-dir (expand-file-name "personal/diario" my-clear-directory))
   (setq org-journal-date-format "%A, %d %B %Y")
   (setq org-journal-encrypt-journal nil)
@@ -1545,16 +1544,6 @@ Translate a word
   (eww (concat "https://www.deepl.com/translator#en/es/" palabra))
   )
 #+end_src
-** Buscar sinónimos
-Seach for synonyms for Spanish words.
-
-#+begin_src emacs-lisp
-  (defun my/sinonimo (palabra)
-    "Busca una palabra en un diccionario de sinónimos"
-    (interactive "s¿Qué palabra quieres buscar? ")
-    (eww (concat "https://www.wordreference.com/sinonimos/" palabra)))
-#+end_src
-
 ** TODO Count words in orgmode, excluding comments, drawers, and properties
 =count-words= function is good, but in orgmode still counts all the words, including comments, properties, and drawers.
 
