@@ -1,23 +1,29 @@
-* Emacs config specific to the work environment
+#+title: emacs config for work
+#+author: Javier Castilla
+#+EMAIL: jcastp@pm.me
+#+language: es
+
 This configuration is just a patch to work with the work environment.
 It is supposed to run over the generic emacs config, and overwrites that config with the custom config for work environment.
 
-** Defining my own work directory
+* Defining my own work directory
 #+begin_src emacs-lisp :tangle yes
 ;; (defvar my-work-dir "/mnt/c/Users/castifrc/OneDrive - adidas/agenda/"
 ;;   "My own working directory")
 #+end_src
 
-** clear theme
+* clear theme
 #+begin_src emacs-lisp :tangle yes
 (consult-theme 'ef-light)
 #+end_src
 
-** recent files for work
+* recent files for work
 #+begin_src emacs-lisp
 (setq recentf-save-file (expand-file-name "recentf-work" my-data-dir))
+#+end_#+begin_src
+
 #+end_src
-** icons for the agenda categories
+* icons for the agenda categories
 Have some fancy icons for the categories.
 #+begin_src emacs-lisp
 (after! org
@@ -28,21 +34,17 @@ Have some fancy icons for the categories.
      ("tasks" "~/Nextcloud/config/icons/check-square.svg" nil nil :ascent center :mask heuristic)
      ("projects" "~/Nextcloud/config/icons/list.svg" nil nil :ascent center :mask heuristic)
      ("okr" "~/Nextcloud/config/icons/target.svg" nil nil :ascent center :mask heuristic)
-     ("inbox" "~/Nextcloud/config/icons/inbox.svg" nil nil :ascent center :mask heuristic)
-     )
-   )
-  )
+     ("inbox" "~/Nextcloud/config/icons/inbox.svg" nil nil :ascent center :mask heuristic))))
 #+end_src
 
-
-** Fixed width font for work environment
+* Fixed width font for work environment
 I work better with fixed fonts in this kind of environments
 
 #+begin_src emacs-lisp
 (fontaine-set-preset 'work)
 #+end_src
 
-** Put the correct agenda files for work
+* Put the correct agenda files for work
 #+begin_src emacs-lisp :tangle yes
 ;; empty the org-agenda-files
 (setq org-agenda-files '(""))
@@ -51,7 +53,7 @@ I work better with fixed fonts in this kind of environments
 (setq org-agenda-files '("~/Nextcloud/agenda/work/work.org"))
 #+end_src
 
-** Refile environment
+* Refile environment
 Since this is a different environment, I also have to change this to refile things in a different way.
 #+begin_src emacs-lisp :tangle yes
 ;;  (setq org-refile-targets (quote (("adidas.org" :maxlevel . 9))))
@@ -66,7 +68,7 @@ Since this is a different environment, I also have to change this to refile thin
 (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
 #+end_src
 
-** TOREVIEW Better searches with custom agenda commands
+* TOREVIEW Better searches with custom agenda commands
 I need a different custom agenda commands to see the tasks better.
  #+begin_src emacs-lisp :tangle yes
 (setq org-agenda-custom-commands
@@ -184,7 +186,7 @@ I need a different custom agenda commands to see the tasks better.
       )
 #+end_src
 
-** Work tags definition
+* Work tags definition
 #+begin_src emacs-lisp :tangle yes
 (setq org-tag-alist '(
                       ("detection" . ?d) ("automation" . ?a)
@@ -195,7 +197,7 @@ I need a different custom agenda commands to see the tasks better.
                       )
       )
 #+end_src
-** Custom status for work related environment
+* Custom status for work related environment
 #+begin_src emacs-lisp :tangle yes
 (setq org-todo-keywords
       '(
@@ -204,7 +206,7 @@ I need a different custom agenda commands to see the tasks better.
         )
       )
 #+end_src
-** Custom work capture templates
+* Custom work capture templates
 As work is different from home, I need specific templates.
 #+begin_src emacs-lisp :tangle yes
 (setq org-capture-templates'(
@@ -228,7 +230,12 @@ As work is different from home, I need specific templates.
                               )))
 #+end_src
 
-** Load the task list for work
+* Load the task list for work
 #+begin_src emacs-lisp :tangle yes
 (find-file "~/Nextcloud/agenda/work/work.org")
 #+end_src
+
+
+# Local Variables:
+# ispell-local-dictionary: "en_US"
+# End:
