@@ -665,8 +665,7 @@ Open a branch into a different frame, but the same buffer:
 * Org config
 ** some org configs for better behavior and usage
 #+begin_src emacs-lisp
-(use-package! org
-  :config
+(after! org
   (setq
    ;; tag alignment
    ;; this value allows for modern themes and column fill to work well together.
@@ -684,8 +683,7 @@ Open a branch into a different frame, but the same buffer:
 ** org-id
 To create and use internal valid and unique links in org-mode, we will use the =org-id= features.
 #+begin_src emacs-lisp
-(use-package! org
-  :config
+(after! org
   ;; org-id are globally unique UUIDs
   (setq org-id-method 'uuid)
   ;; It will use the CUSTOM_ID, if it exists
@@ -699,23 +697,20 @@ To create and use internal valid and unique links in org-mode, we will use the =
 ** Completion notes in to the Logbook
 Change notes are stored in the node's drawer, so we can fold it conveniently.
 #+begin_src emacs-lisp
-(setq org-log-into-drawer t)
+(after! org
+  (setq org-log-into-drawer t))
 #+end_src
 ** Custom states for the tasks
 These are the custom states for the tasks, and the character associated to it.
 
 #+begin_src emacs-lisp
-(use-package! org
-  :config
+(after! org
   (setq org-todo-keywords
         '(
           ;; Status for tasks
           (sequence "TODO(t)" "ONGOING(o)" "WAITING(w@/!)" "|" "DONE(d!)" "CANCELED(c@/!)")
           ;; Status for writing
-          (sequence "TOWRITE(j)" "TOREVIEW(k@/!)" "REDO(l@/!)" "|" "FINISHED(ñ)" "PURGE(p@/!)")
-          )
-        )
-  )
+          (sequence "TOWRITE(j)" "TOREVIEW(k@/!)" "REDO(l@/!)" "|" "FINISHED(ñ)" "PURGE(p@/!)"))))
 #+end_src
 
 ** orgmode Agenda
@@ -726,23 +721,18 @@ All the agenda configs
 We define the agenda files in this variable
 
 #+begin_src emacs-lisp
-(use-package! org
-  :config
+(after! org
   (setq org-agenda-files '(
                            ;; normal task files
                            "~/Nextcloud/agenda/tasks.org"
                            ;; added this one to be able to search in it, and add from here to the main task files.
-  			   "~/Nextcloud/agenda/someday.org"
-                           )
-        )
-  )
+                           "~/Nextcloud/agenda/someday.org")))
 #+end_src
 
 *** icons for the agenda categories
 Have some fancy icons for the categories.
 #+begin_src emacs-lisp
-(use-package! org
-  :config
+(after! org
   (customize-set-value
    'org-agenda-category-icon-alist
    `(
@@ -753,44 +743,35 @@ Have some fancy icons for the categories.
      ("birthdays" "~/Nextcloud/config/icons/heart.svg" nil nil :ascent center :mask heuristic)
      ("revision" "~/Nextcloud/config/icons/shuffle.svg" nil nil :ascent center :mask heuristic)
      ("habits" "~/Nextcloud/config/icons/refresh-ccw.svg" nil nil :ascent center :mask heuristic)
-     ("care" "~/Nextcloud/config/icons/heart.svg" nil nil :ascent center :mask heuristic)
-     )
-   )
-  )
+     ("care" "~/Nextcloud/config/icons/heart.svg" nil nil :ascent center :mask heuristic))))
 #+end_src
 
 *** Get rid of the DONE tasks in the agenda view
 We dont want the cluttering in our views. If a task is done, don't show it on the agenda view.
 
 #+begin_src emacs-lisp
-(use-package! org
-  :config
+(after! org
   (setq org-agenda-skip-scheduled-if-done t)
   (setq org-agenda-skip-deadline-if-done t)
-  (setq org-agenda-skip-timestamp-if-done t)
-  )
+  (setq org-agenda-skip-timestamp-if-done t))
 #+end_src
 
 ** export
 *** Remove the "validate" link from html exports
 #+begin_src emacs-lisp
-(use-package! org
-  :config
+(after! org
   ;; don't show the "validate" link on org-html exports
-  (setq org-html-validation-link nil)
-  )
+  (setq org-html-validation-link nil))
 #+end_src
 
 *** Ignore exporting some headlines (just the headlines)
 This allows headlines to be ignored in the exports. To do so, the ignore tag (C-c C-c ignore) has to be in the header to be ignored. *We only ignore the headlines, the content is still shown.*
 
 #+begin_src emacs-lisp
-(use-package! org
-  :config
+(after! org
   (load "~/Nextcloud/config/.emacs.d/vendor/ox-extra/ox-extra.el")
   (require 'ox-extra)
-  (ox-extras-activate '(ignore-headlines))
-  )
+  (ox-extras-activate '(ignore-headlines)))
 #+end_src
 
 *** Export to Latex
@@ -800,8 +781,8 @@ All the latex exports
 memoir is a class used to create beautiful documents.
 
 #+begin_src emacs-lisp
-(use-package! org
-  :config
+(after! org
+  ;; :config
   (add-to-list 'org-latex-classes
        '("memoir"
                  "\\documentclass[a4paper,17pt,openright,twoside]{memoir}
@@ -854,8 +835,8 @@ memoir is a class used to create beautiful documents.
 memoir is a class used to create beautiful documents.
 
 #+begin_src emacs-lisp
-(use-package! org
-  :config
+(after! org
+  ;; :config
   (add-to-list 'org-latex-classes
        '("memoir_draft"
                  "\\documentclass[a4paper,17pt,draft,openright,twoside]{memoir}
@@ -910,8 +891,8 @@ memoir is a class used to create beautiful documents.
 Same as memoir class, but it start just with chapters, no "part"
 
 #+begin_src emacs-lisp
-(use-package! org
-  :config
+(after! org
+  ;; :config
   (add-to-list 'org-latex-classes
        '("memoir_chapter"
                  "\\documentclass[a4paper,17pt,openright,twoside]{memoir}
@@ -1008,10 +989,9 @@ Same as memoir class, but it start just with chapters, no "part"
 
 **** TODO reporting class for org2latex (complete these options)
 
-
 #+begin_src emacs-lisp
-(use-package! org
-  :config
+(after! org
+  ;; :config
   (add-to-list 'org-latex-classes
        '("reporting"
                  "\\documentclass[a4paper,17pt,openright,twoside]{article}
@@ -1059,16 +1039,15 @@ Same as memoir class, but it start just with chapters, no "part"
 Add smart quotes for latex
 
 #+begin_src emacs-lisp
-(use-package! org
-  :config
-  (setq org-export-with-smart-quotes t)
-  )
+(after! org
+  (setq org-export-with-smart-quotes t))
 #+end_src
 
 ** TODO Capture templates
 Here I will add template captures for doing several things:
 
 #+begin_src emacs-lisp
+(after! org
   (setq org-capture-templates'(
   			     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                ;; task related captures
@@ -1110,6 +1089,7 @@ Here I will add template captures for doing several things:
                                 :empty-lines-after 1)
                                )
         )
+  )
   #+end_src
 
 ** org-ql
@@ -1123,6 +1103,7 @@ https://github.com/ballantony/emacs-writing/blob/main/DoomEmacsWriting.org
 Used to capture notes in this file. It will create a note under the heading "Notes".
 Useful to maintain notes and snippets separated by projects. I will use this for my writing projects.
 #+begin_src emacs-lisp
+(after! org
 (defun my/capture-to-this-buffer ()
   "Capture note to this buffer"
   (interactive)
@@ -1133,7 +1114,7 @@ Useful to maintain notes and snippets separated by projects. I will use this for
                 (org-capture-templates
                  `(("t" "Todo" entry (file+headline ,this-file "Notes")
                     "** TODO %?"))))
-           (org-capture)))))
+           (org-capture))))))
 #+end_src
 
 ** Orgmode org-roam config
