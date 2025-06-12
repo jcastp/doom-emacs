@@ -210,7 +210,7 @@ As work is different from home, I need specific templates.
 (setq org-capture-templates'(
                              ("i" "Inbox (work)" entry
                               (file+headline "~/Nextcloud/agenda/work/work.org" "Inbox")
-                              "** TODO %? %^g ")
+                              "** TODO %? %^g %^{EFFORT}p")
 
                              ("I" "New incident." entry
                               (file+headline "~/Nextcloud/agenda/work/work.org" "Incidents")
