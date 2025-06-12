@@ -20,9 +20,8 @@ It is supposed to run over the generic emacs config, and overwrites that config 
 * recent files for work
 #+begin_src emacs-lisp
 (setq recentf-save-file (expand-file-name "recentf-work" my-data-dir))
-#+end_#+begin_src
-
 #+end_src
+
 * icons for the agenda categories
 Have some fancy icons for the categories.
 #+begin_src emacs-lisp
@@ -197,6 +196,7 @@ I need a different custom agenda commands to see the tasks better.
                       )
       )
 #+end_src
+
 * Custom status for work related environment
 #+begin_src emacs-lisp :tangle yes
 (setq org-todo-keywords
@@ -206,6 +206,7 @@ I need a different custom agenda commands to see the tasks better.
         )
       )
 #+end_src
+
 * Custom work capture templates
 As work is different from home, I need specific templates.
 #+begin_src emacs-lisp :tangle yes
@@ -234,7 +235,6 @@ As work is different from home, I need specific templates.
 #+begin_src emacs-lisp :tangle yes
 (find-file "~/Nextcloud/agenda/work/work.org")
 #+end_src
-
 
 # Local Variables:
 # ispell-local-dictionary: "en_US"
