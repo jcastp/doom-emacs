@@ -540,6 +540,7 @@ This mode restricts the lines up until a set margin, and wraps them logically at
 (setq visual-fill-column-width 110)
 (setq visual-fill-column-center-text t)
 
+;; Map the visual mode toggle
 (map! :leader
       ;; remapping this as I don't use it that much
       :desc "visible mode"            "t V" #'visible-mode
