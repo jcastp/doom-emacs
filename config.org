@@ -1736,6 +1736,32 @@ The DWIM behaviour of this command is as follows:
 (global-set-key [remap keyboard-quit] #'er-keyboard-quit-dwim)
 #+end_src
 
+** calibre
+https://github.com/chenyanming/calibredb.el
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! calibredb)
+#+end_src
+
+#+begin_src emacs-lisp
+;; load this only on my home env
+  (if (and
+       my-homeenvironment-p
+       ;; the calibre library ddbb exists
+       (file-exists-p "/home/calibre_libros/metadata.db"))
+      (progn
+        ;; here comes the actions I want to be done at a home environment
+        (use-package! calibredb
+          :config
+          (setq calibredb-root-dir "/home/calibre_libros/")
+          (setq calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir))
+          (setq calibredb-library-alist '(("/home/calibre_libros/")
+                                          ))
+          (setq calibredb-size-show t)
+          (setq calibredb-id-width 10)
+          )))
+#+end_src
+
 * My custom key bindings
 This is where I'm going to define my own keybindings.
 
