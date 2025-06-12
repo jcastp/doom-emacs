@@ -561,6 +561,13 @@ Some keys redefined to better adjust to the whole emacs key environment.
       "M-s r" #'consult-ripgrep
       )
 #+end_src
+
+** avy can select from any window
+To make avy able to select from any window in sight. This allows to change from one window to another in just one step.
+#+begin_src emacs-lisp :tangle yes
+(setq avy-all-windows t)
+#+end_src
+
 ** Keyboard chords
 Shortcuts to commands using just quick key combinations.
 
