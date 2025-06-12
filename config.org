@@ -363,6 +363,13 @@ Put time and date on the status line
 (display-time)
 #+end_src
 
+** full path in the title bar
+Put the complete path on the title bar, along the filename.
+
+#+begin_src emacs-lisp
+(setq-default frame-title-format "%b - (%f)")
+#+end_src
+
 ** Battery management
 On laptops it's nice to know how much power you have.
 
