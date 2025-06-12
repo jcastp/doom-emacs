@@ -1492,8 +1492,7 @@ Since I work in two languages, I need a method to change the dictionary. It will
 I write more and more in spanish. I will take the spanish dictionary as the default one, and will be adding the en_US one as ispell-local-dictionary local variable in the files I need it.
 
 #+begin_src emacs-lisp :tangle yes
-(after! ispell
-  (setq ispell-dictionary "es_ES"))
+(setq ispell-dictionary "es_ES")
 #+end_src
 ** org-journal
 This is for journaling every day, if possible.
