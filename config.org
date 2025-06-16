@@ -98,6 +98,15 @@ It contains the variables =user-full-name= and =user-mail-address=
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+end_src
 
+** undo-tree config
+#+begin_src emacs-lisp :tangle yes
+;; unmap the C-z keybinding
+(global-unset-key (kbd "C-z"))
+;; map C-z to undo
+(map!
+ "C-z" #'undo-tree-visualize)
+#+end_src
+
 ** evil-escape mapped to a key chord
 #+begin_src emacs-lisp :tangle yes
 (after! evil-escape
@@ -235,14 +244,6 @@ To interact with ollama local llms.
                                                     :models present_models))))))
 #+end_src
 
-** C-z to undo
-#+begin_src emacs-lisp :tangle yes
-;; unmap the C-z keybinding
-(global-unset-key (kbd "C-z"))
-;; map C-z to undo
-(map!
- "C-z" #'undo)
-#+end_src
 ** set firefox as the default browser
 Setting firefox as the default browser for opening http/s links.
 #+begin_src emacs-lisp
@@ -1761,6 +1762,7 @@ https://github.com/chenyanming/calibredb.el
           (setq calibredb-id-width 10)
           )))
 #+end_src
+
 
 * My custom key bindings
 This is where I'm going to define my own keybindings.
