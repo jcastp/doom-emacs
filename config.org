@@ -1457,6 +1457,25 @@ I don't use all the org-modern features, so I disable some of them here:
   (setq org-modern-progress 8))
 #+end_src
 
+** org tags aligned to the right of the window
+I want to have a dynamic tag alignment, dependent on the width of the current window.
+
+#+begin_src emacs-lisp :tangle yes
+(defun my/org-adjust-tags-column ()
+  "Dynamically set `org-tags-column` to align tags to the right edge of the window."
+  (interactive)
+  (when (derived-mode-p 'org-mode)
+    ;; Calculate the window width and adjust some margins
+    ;; choose between a fixed max width or the right margin of the window
+    (setq org-tags-column (max -150 (- 0 (- (window-width) 15))))
+    (org-align-tags t)))
+
+;; Optionally, hook it to window size changes and Org Mode
+(add-hook 'org-mode-hook #'my/org-adjust-tags-column)
+(add-hook 'window-configuration-change-hook #'my/org-adjust-tags-column)
+(add-hook 'window-size-change-functions
+          (lambda (_frame) (my/org-adjust-tags-column)))
+#+end_src
 * Writing
 ** CANCELED guess-language
 :LOGBOOK:
