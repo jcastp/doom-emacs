@@ -1477,37 +1477,17 @@ I want to have a dynamic tag alignment, dependent on the width of the current wi
           (lambda (_frame) (my/org-adjust-tags-column)))
 #+end_src
 * Writing
-** CANCELED guess-language
-:LOGBOOK:
-- State "CANCELED"   from "TODO"       [2025-06-03 Tue 08:22]
-:END:
-Since I work in two languages, I need a method to change the dictionary. It will be better if it can be done automatically.
-
-#+begin_src emacs-lisp :tangle no
-(package! guess-language)
-#+end_src
-
-#+begin_src emacs-lisp :tangle no
-(use-package guess-language
-  :config
-  (setq guess-language-languages '(en es))
-  (setq guess-language-min-paragraph-length 50)
-  ;; define the dicts I want to use for my languages
-  (setq guess-language-langcodes
-  	'((en . ("en_US" "English"))
-  	  (es . ("es_ES" "Spanish"))))
-  (guess-language-mode)
-  ;; activate the mode when I go to text files
-  (add-hook 'text-mode-hook (lambda () (guess-language-mode 1)))
-  (add-hook 'org-mode-hook (lambda () (guess-language-mode 1)))
-  )
-#+end_src
 ** Default dictionary
 I write more and more in spanish. I will take the spanish dictionary as the default one, and will be adding the en_US one as ispell-local-dictionary local variable in the files I need it.
 
+Also adding the "spanish" path, because somehow it doesn't work. It finds "castellano", but not "spanish".
+
 #+begin_src emacs-lisp :tangle yes
-(setq ispell-dictionary "es_ES")
+(after! ispell
+  (setq ispell-dictionary "es_ES")
+  (add-to-list 'ispell-hunspell-dict-paths-alist '("spanish" "/usr/share/hunspell/es_ES.aff")))
 #+end_src
+
 ** org-journal
 This is for journaling every day, if possible.
 Documentation can be found here:
