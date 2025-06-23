@@ -1467,7 +1467,7 @@ I want to have a dynamic tag alignment, dependent on the width of the current wi
   (when (derived-mode-p 'org-mode)
     ;; Calculate the window width and adjust some margins
     ;; choose between a fixed max width or the right margin of the window
-    (setq org-tags-column (max -150 (- 0 (- (window-width) 15))))
+    (setq org-tags-column (max -110 (- 0 (- (window-width) 15))))
     (org-align-tags t)))
 
 ;; Optionally, hook it to window size changes and Org Mode
