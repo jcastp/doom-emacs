@@ -1454,7 +1454,8 @@ I don't use all the org-modern features, so I disable some of them here:
 #+begin_src emacs-lisp :tangle yes
 (after! org-modern
   (setq org-modern-table nil)
-  (setq org-modern-progress 8))
+  (setq org-modern-progress 8)
+  (setq org-modern-star "replace"))
 #+end_src
 
 ** org tags aligned to the right of the window
