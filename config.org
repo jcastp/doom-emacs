@@ -1665,6 +1665,58 @@ This function relies on a property in the org-heading called WORDCOUNT, that is 
         (org-table-align))))
 #+end_src
 
+** Create a story file on the fly
+Sometimes I want to create a story prompt on the fly. These functions allow for creating the prompts and the file, so I can immediately start writing.
+
+#+begin_src emacs-lisp
+  (defvar my-stories-directory "~/Nextcloud/escritura/historias/ejercicios"
+    "Directory where org files created by `my/create-org-file' will be stored.")
+
+  (defun my/create-empty-writing-file (title)
+    "Create a new empty org file with name format `%Y%m%d-<title>.org', where <title> is the `title' argument with spaces replaced by underscores. The file will be stored in `my-stories-directory'."
+    (interactive "sEnter file name: ")
+    (let* ((date (format-time-string "%Y%m%d"))
+           ;; Create the filename with the timestamp and the title
+           (filename (concat date "-" (replace-regexp-in-string " " "_" title) ".org"))
+           ;; create the full path of the file
+           (full-path (concat my-stories-directory "/" filename))
+	   ;; Create a string with the title and author
+	   (initial_title (format "#+TITLE: %s\n#+AUTHOR: %s\n#+EMAIL: %s" title user-full-name user-mail-address))
+           )
+      ;; very crude way to include some title in the file created
+      (append-to-file initial_title nil full-path)
+      (find-file full-path)
+      ))
+  ;;(global-set-key (kbd "C-c d e") 'my/create-empty-writing-file)
+
+  (defun my/create-writing-exercise (title)
+    "Create a new file with the current date and the specified TITLE.
+  The file is saved in the directory specified by `my-stories-directory'.
+  The file name format is \"%Y%m%d-<text>.org\", with spaces in TEXT replaced by \"_\".
+  The function runs a Python script that generates a writing prompt
+  and stores the output in the file."
+    (interactive "sEnter file name: ")
+    (let* ((date (format-time-string "%Y%m%d"))
+           ;; Create the filename with the timestamp and the title
+           (file-name (concat date "-" (replace-regexp-in-string " " "_" title) ".org"))
+           ;; create the full path of the file
+           (file-path (concat my-stories-directory "/" file-name))
+           ;; Get the output from the python script
+           (python-output (shell-command-to-string "python  ~/Nextcloud/escritura/software/writing_companion/writing_companion.py -s all prompt"))
+	   ;; Create the initial org front matter
+           (initial_title (format "#+TITLE: %s\n#+AUTHOR: %s\n#+EMAIL: %s" title user-full-name user-mail-address)))
+      ;; insert the data in the file
+      (with-temp-file file-path
+        (insert initial_title )
+        (insert "\n\n" python-output))
+      ;; open the file
+      (find-file file-path)
+      ))
+  ;;(global-set-key (kbd "C-c d w") 'my/create-writing-exercise)
+#+end_src
+
+
+
 * Testing
 ** TODO elfeed and elfeed-org
 Configuration for the elfeed and the org files.
@@ -1790,7 +1842,11 @@ I use one of the free prefixes, SPC d, to map my own functions, the ones I will 
        :desc "elfeed"                  "e"  #'my/elfeed
        :desc "fontaine preset"         "f"  #'fontaine-set-preset
        :desc "theme changer"           "0"  #'my/theme-changer
-       ))
+       ;; map my writing functions
+       (:prefix ("w" . "writing functions")
+                :desc "create empty writing file" "e" #'my/create-empty-writing-file
+                :desc "create writing exercise"   "f" #'my/create-writing-exercise
+                )))
 #+end_src
 
 Mapping my org roam functions:
@@ -1802,9 +1858,9 @@ Mapping my org roam functions:
 (map! :leader
       :desc "random todo roam node"      "n r t" #'my/random-roam-todo-node
       :desc "random roam node"           "n r T" #'my/random-roam-node
-      :desc "roam agenda"                "n r a" #'my/agenda-restrict-to-roam
-      )
+      :desc "roam agenda"                "n r a" #'my/agenda-restrict-to-roam)
 #+end_src
+
 * Work environment
 This will be my working environment config
 
