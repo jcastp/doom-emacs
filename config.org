@@ -1848,8 +1848,9 @@ I use one of the free prefixes, SPC d, to map my own functions, the ones I will 
        :desc "theme changer"           "0"  #'my/theme-changer
        ;; map my writing functions
        (:prefix ("w" . "writing functions")
-                :desc "create empty writing file" "e" #'my/create-empty-writing-file
-                :desc "create writing exercise"   "f" #'my/create-writing-exercise
+        :desc "count words - only prose"  "c" #'my/count-words-ascii
+        :desc "create empty writing file" "e" #'my/create-empty-writing-file
+        :desc "create writing exercise"   "f" #'my/create-writing-exercise
                 )))
 #+end_src
 
