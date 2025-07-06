@@ -136,6 +136,10 @@ Configure where we save the recent files opened, so I don't loose them once I re
   (setq persp-save-dir (expand-file-name "persp-confs/" my-data-dir))
 )
 #+end_src
+** TODO dired omit mode disabled
+#+begin_src emacs-lisp :tangle yes
+(remove-hook 'dired-mode-hook 'dired-omit-mode)
+#+end_src
 ** auto revert mode
 When a file is changed in disk, the buffer reloads to reflect that change.
 #+begin_src emacs-lisp
