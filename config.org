@@ -676,6 +676,8 @@ Open a branch into a different frame, but the same buffer:
    org-special-ctrl-a/e t
    ;; insert new heading after the current subtree
    org-insert-heading-respect-content t
+   ;; we can close parent tasks even if successors are still open
+   org-enforce-todo-dependencies nil
    ))
 #+end_src
 
