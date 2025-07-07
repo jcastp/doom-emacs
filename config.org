@@ -1722,6 +1722,29 @@ Sometimes I want to create a story prompt on the fly. These functions allow for 
 #+end_src
 
 
+** TODO Insert edit snippet
+I want to add edit snippets with a quick keybinding:
+
+#+begin_src emacs-lisp :tangle yes
+(defun my/insert-edit-snippet ()
+  "Insert the edit snippet."
+  (interactive)
+  (yas-expand-snippet (yas-lookup-snippet "edición: comentarios para edición de texto")))
+
+(global-set-key (kbd "C-c 3") 'my/insert-edit-snippet)
+#+end_src
+
+I want also to get all the occurrences in the file:
+https://www.masteringemacs.org/article/searching-buffers-occur-mode
+
+#+begin_src emacs-lisp :tangle yes
+(defun my/view-my-edits ()
+  "Check the occurrences of the edit notes."
+  (interactive)
+  (occur "# EDIT" 1))
+
+(global-set-key (kbd "C-c 4") 'my/view-my-edits)
+#+end_src
 
 * Testing
 ** TODO elfeed and elfeed-org
