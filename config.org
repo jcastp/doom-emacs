@@ -478,7 +478,7 @@ https://protesilaos.com/emacs/fontaine
         '(
           ;; daily operations, same config as normal config
           (regular
-           :default-family "DejaVu Sans Mono"
+           :default-family "Noto Sans Mono"
            :default-weight normal
            :default-height 110
            :fixed-pitch-family "DejaVu Sans Mono"
