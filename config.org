@@ -669,7 +669,7 @@ Open a branch into a different frame, but the same buffer:
    ;; tag alignment
    ;; this value allows for modern themes and column fill to work well together.
    org-auto-align-tags t
-   org-tags-column -100
+   org-tags-column -77
    ;; org fold - edit in an invisible region
    org-fold-catch-invisible-edits 'show-and-error
    ;; C-a and C-e will move the cursor just the heading. No todo keyworks, no tags
@@ -1464,10 +1464,12 @@ I don't use all the org-modern features, so I disable some of them here:
   (setq org-modern-star "replace"))
 #+end_src
 
-** org tags aligned to the right of the window
+** CANCELED org tags aligned to the right of the window
 I want to have a dynamic tag alignment, dependent on the width of the current window.
 
-#+begin_src emacs-lisp :tangle yes
+CANCELED: Every time I change the window size, the tags realign, and that makes a change in the buffer, so I need to save it again. Canceling this and going back to the normal behavior.
+
+#+begin_src emacs-lisp :tangle no
 (defun my/org-adjust-tags-column ()
   "Dynamically set `org-tags-column` to align tags to the right edge of the window."
   (interactive)
