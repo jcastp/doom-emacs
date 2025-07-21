@@ -547,6 +547,17 @@ This mode restricts the lines up until a set margin, and wraps them logically at
       :desc "visual fill column"      "t v" #'visual-fill-column-mode
       )
 #+end_src
+
+** TODO emacs-rotate
+https://github.com/daichirata/emacs-rotate
+
+We can now rotate the layout of the windows inside a frame. This can help us to reorganize the layout.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! emacs-rotate
+    :recipe (:host github :repo "daichirata/emacs-rotate"))
+#+end_src
+
 * Navigation
 ** Movement for paragraphs
 Some keys redefined to better adjust to the whole emacs key environment.
@@ -1873,6 +1884,7 @@ I use one of the free prefixes, SPC d, to map my own functions, the ones I will 
        :desc "elfeed"                  "e"  #'my/elfeed
        :desc "fontaine preset"         "f"  #'fontaine-set-preset
        :desc "theme changer"           "0"  #'my/theme-changer
+       :desc "rotate layout"           "r"  #'rotate-layout
        ;; map my writing functions
        (:prefix ("w" . "writing functions")
         :desc "count words - only prose"  "c" #'my/count-words-ascii
