@@ -1097,7 +1097,7 @@ Here I will add template captures for doing several things:
 
                                ;; An interesenting character
                                ("P" "Personaje" entry
-                                (file "~/Nextcloud/escritura/retazos/personajes.org")
+                                (file+headline "~/Nextcloud/escritura/retazos/ideas.org" "Ideas Personajes")
                                 "* %i%?"
                                 :empty-lines-after 1)
                                )
