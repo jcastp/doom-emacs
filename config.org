@@ -567,6 +567,7 @@ Open a branch into a different frame, but the same buffer:
 #+begin_src emacs-lisp :tangle no
 (package! hydra)
 #+end_src
+
 * Org config
 
 #+begin_src emacs-lisp
@@ -1268,22 +1269,17 @@ Load a custom implementation of the org-tracktable package, using the org-contex
 #+end_src
 ** TODO org-scribe
 Load the org-scribe package. Information is [[https://codeberg.org/jcastp/org-scribe][here]].
-#+begin_src emacs-lisp :tangle no
-  ;; testing purposes. It will change once the package is ready
-(after! org-tracktable
-  (load! "~/Nextcloud/escritura/software/org-scribe/org-scribe.el"))
-  ;;   :hook (org-mode . org-scribe-mode)
-  ;;   :config
-  ;;   ;; Customize settings
-  ;;   (setq my-org-scribe-env-work-theme 'poet)
-  ;;   (setq my-org-scribe-env-normal-theme 'ef-deuteranopia-dark)
-  ;;   (setq writing-stories-directory "~/writing/exercises")
 
-  ;;   ;; Keybindings
-  ;;   (global-set-key (kbd "<f8> <f8>") 'hydra-org-scribe/body))
+Load org-scribe directly from the repository to preserve directory structure:
+#+begin_src emacs-lisp :tangle no
+;; Load org-scribe from local development directory
+(let ((org-scribe-dir (expand-file-name "~/Nextcloud/escritura/software/org-scribe")))
+  (when (file-directory-p org-scribe-dir)
+    (add-to-list 'load-path org-scribe-dir)
+    (require 'org-scribe)))
 #+end_src
 
-** org-scribe-planner
+** TODO org-scribe-planner
 Load the org-scribe-planner package
 #+begin_src emacs-lisp :tangle no
   (use-package org-scribe-planner
