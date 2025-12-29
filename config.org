@@ -480,7 +480,7 @@ To make avy able to select from any window in sight. This allows to change from 
 ** Keyboard chords
 Shortcuts to commands using just quick key combinations.
 
-#+begin_src emacs :tangle packages.el
+#+begin_src emacs-lisp :tangle packages.el
 (package! key-chord)
 #+end_src
 
@@ -562,6 +562,11 @@ Open a branch into a different frame, but the same buffer:
   ;;       "b 8" #'my/org-tree-open-in-right-frame)
   )
   #+end_src
+  
+** hydra
+#+begin_src emacs-lisp :tangle no
+(package! hydra)
+#+end_src
 * Org config
 
 #+begin_src emacs-lisp
@@ -1103,6 +1108,189 @@ https://github.com/bastibe/org-journal
   (setq org-journal-date-format "%A, %d %B %Y")
   (setq org-journal-encrypt-journal nil)
   )
+#+end_src
+
+** TODO guess-language
+Since I write in different languages, the dictionary applied is really important. If I write in Spanish, I want the spanish dict to be applied, and not the english one.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! guess-language)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! guess-language
+    :ensure t
+    :config
+    (setq guess-language-languages '(en es))
+    (setq guess-language-min-paragraph-length 40)
+    ;; define the dicts I want to use for my languages
+    (setq guess-language-langcodes
+  	'((en . ("en_US" "English"))
+  	  (es . ("es_ES" "Spanish"))))
+    (guess-language-mode)
+    ;; activate the mode when I go to text files
+    (add-hook 'text-mode-hook (lambda () (guess-language-mode 1)))
+    (add-hook 'org-mode-hook (lambda () (guess-language-mode 1)))
+    )
+#+end_src
+
+** Translate from english
+https://github.com/lorniu/gt.el
+Translate from english to spanish
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! gt)
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package! gt
+    :ensure t
+    :config
+    (setq gt-langs '(en es))
+    ;; Configure the default translator
+    (setq gt-default-translator
+  	(gt-translator
+  	 ;; Optional: Use a more specific Taker to ensure correct language handling
+  	 ;; This Taker focuses on the word or selected region, using the global gt-langs
+  	 :taker (gt-taker :langs gt-langs :text 'word)
+  	 ;; Specify the translation engine(s)
+  	 :engines (gt-bing-engine)
+  	 ;; Optional: Change the output method for potentially better readability
+  	 ;; For example, using a dedicated buffer instead of the echo area:
+  	 ;; :render (gt-buffer-render)
+  	 ;; Or using a floating window:
+  	 ;; :render (gt-posframe-pop-render)
+  	 ;; The default render (gt-render) outputs to the echo area.
+  	 )))
+#+end_src
+
+** TODO powerthesaurus
+https://github.com/SavchenkoValeriy/emacs-powerthesaurus
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! powerthesaurus)
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package! powerthesaurus
+    :ensure t)
+#+end_src
+
+** org-remark for text annotations
+Text annotations in org mode
+https://github.com/nobiot/org-remark
+Manual: https://nobiot.github.io/org-remark/
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-remark)
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package! org-remark
+    :ensure t
+    :after org
+    :config
+    (require 'org-remark-global-tracking)
+    (org-remark-global-tracking-mode +1)
+
+    ;; Create a file of notes for each file, with the buffer name appended by "-notes"
+    (defun my/org-remark-file-name ()
+      (concat (file-name-base (org-remark-notes-file-name-function))
+              ".org"))
+    (setq org-remark-notes-file-name
+          #'my/org-remark-file-name)
+
+    ;; Key-bind `org-remark-mark' to global-map so that you can call it
+    ;; globally before the library is loaded.
+    (define-key global-map (kbd "C-c n m") #'org-remark-mark)
+    ;; The rest of keybidings are done only on loading `org-remark'
+    (with-eval-after-load 'org-remark
+      (define-key org-remark-mode-map (kbd "C-c n o") #'org-remark-open)
+      (define-key org-remark-mode-map (kbd "C-c n n") #'org-remark-view-next)
+      (define-key org-remark-mode-map (kbd "C-c n p") #'org-remark-view-prev)
+      (define-key org-remark-mode-map (kbd "C-c n r") #'org-remark-remove)
+      (define-key org-remark-mode-map (kbd "C-c n j") #'org-remark-change)
+      )
+    )
+  ;; Create highlighter pens for different parts
+  (with-eval-after-load 'org-remark
+    ;; Since I use alternate dark and clear themes, these must be useful for both
+    (org-remark-create "blue-structure"
+                       '(:underline "sky blue" :background "deep sky blue")
+                       '(CATEGORY "structure"))
+
+    ;; can be properly seen in both dark and clear themes
+    (org-remark-create "dark-blue-line"
+                       '(:underline "deep sky blue")
+                       '(CATEGORY "editing"))
+
+    (org-remark-create "gray-plot"
+                       '(:background "dim gray")
+  		     '(CATEGORY "plot"))
+
+    (org-remark-create "salmon-character"
+                       '(:background "salmon")
+  		     '(CATEGORY "character"))
+
+    (org-remark-create "yellow-dialogue"
+                       '(:background "yellow")
+  		     '(CATEGORY "dialogue"))
+
+    (org-remark-create "royal-blue-other"
+                       '(:background "royal blue")
+  		     '(CATEGORY "other"))
+    )
+#+end_src
+
+** org-context-extended and org-tracktable
+Here, I document all the config related to my writing.
+
+Load the org-context-extended code, that adds helper functions and a flexible prose word count function:
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-context-extended
+    :recipe (:host codeberg :repo "jcastp/org-context-extended"))
+  ;; (use-package org-context-extended
+  ;;   :ensure t
+  ;;   :vc (:url "https://codeberg.org/jcastp/org-context-extended"
+  ;; 	    :branch "main"
+  ;; 	    :rev :newest))
+#+end_src
+
+Load a custom implementation of the org-tracktable package, using the org-context-extended word counting function:
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-tracktable
+    :recipe (:host codeberg :repo "jcastp/org-tracktable"))
+  ;; (use-package org-tracktable
+  ;;   :ensure t
+  ;;   :vc (:url "https://codeberg.org/jcastp/org-tracktable"
+  ;; 	    :branch "main"
+  ;; 	    :rev :newest))
+#+end_src
+** TODO org-scribe
+Load the org-scribe package. Information is [[https://codeberg.org/jcastp/org-scribe][here]].
+#+begin_src emacs-lisp :tangle no
+  ;; testing purposes. It will change once the package is ready
+(after! org-tracktable
+  (load! "~/Nextcloud/escritura/software/org-scribe/org-scribe.el"))
+  ;;   :hook (org-mode . org-scribe-mode)
+  ;;   :config
+  ;;   ;; Customize settings
+  ;;   (setq my-org-scribe-env-work-theme 'poet)
+  ;;   (setq my-org-scribe-env-normal-theme 'ef-deuteranopia-dark)
+  ;;   (setq writing-stories-directory "~/writing/exercises")
+
+  ;;   ;; Keybindings
+  ;;   (global-set-key (kbd "<f8> <f8>") 'hydra-org-scribe/body))
+#+end_src
+
+** org-scribe-planner
+Load the org-scribe-planner package
+#+begin_src emacs-lisp :tangle no
+  (use-package org-scribe-planner
+  :vc (:url "https://codeberg.org/jcastp/org-scribe-planner"
+  	    :branch "main"
+  	    :rev :newest)
+  :after org)
 #+end_src
 
 * Testing
