@@ -271,4 +271,381 @@ To automatically close parenthesis and other punctuation signs.
       `(lambda (c)
          (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c)))
       )
+      #+end_src
+
+* UI
+** Time and date
+Put time and date on the status line
+
+#+begin_src emacs-lisp
+(setq display-time-day-and-date t
+      display-time-24hr-format t)
+(display-time)
+#+end_src
+
+** full path in the title bar
+Put the complete path on the title bar, along the filename.
+
+#+begin_src emacs-lisp
+(setq-default frame-title-format "%b - (%f)")
+#+end_src
+
+** Battery management
+On laptops it's nice to know how much power you have.
+
+#+begin_src emacs-lisp
+(unless (string-match-p "^Power N/A" (battery))
+  (display-battery-mode 1)
+  )
+#+end_src
+
+** Parens mode global
+To show matching parens in all the buffers and modes.
+
+#+begin_src emacs-lisp
+(show-smartparens-global-mode 1)
+#+end_src
+
+** ace-window
+To better manage more buffers in screen, as seen here: https://github.com/abo-abo/ace-window
+
+Used in the hydra snippets.
+#+begin_src emacs-lisp
+(use-package! ace-window
+  :config
+  (setq aw-scope 'frame)
+  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+  (global-set-key (kbd "M-o") 'ace-window)
+  ;; make the characters bigger, so it is easy to see
+  (custom-set-faces
+   '(aw-leading-char-face
+     ((t (:inherit ace-jump-face-foreground :height 3.0)))))
+  )
+#+end_src
+
+** dimmer
+I want to differentiate the window I'm working with.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! dimmer
+  :recipe (:host github :repo "gonewest818/dimmer.el"))
+#+end_src
+
+#+begin_src emacs-lisp
+;;(dimmer-configure-which-key)
+(dimmer-mode t)
+(dimmer-configure-magit)
+(dimmer-configure-org)
+
+;; configure the dimmer
+(setq dimmer-adjustment-mode :both)
+(setq dimmer-fraction 0.3)
+#+end_src
+** Font size increase/decrease
+Increase or decrease the font size
+#+begin_src emacs-lisp
+(global-set-key (kbd "M-+") 'text-scale-increase)
+(global-set-key (kbd "M--") 'text-scale-decrease)
+#+end_src
+
+** visual fill column
+https://github.com/joostkremers/visual-fill-column
+This mode restricts the lines up until a set margin, and wraps them logically at that point.
+
+#+begin_src emacs-lisp :tangle yes
+(setq visual-fill-column-width 110)
+(setq visual-fill-column-center-text t)
+
+;; Map the visual mode toggle
+(map! :leader
+      ;; remapping this as I don't use it that much
+      :desc "visible mode"            "t V" #'visible-mode
+      ;; assigning this to my more used visible-fill-column-mode
+      :desc "visual fill column"      "t v" #'visual-fill-column-mode
+      )
+#+end_src
+
+* Navigation
+** Movement for paragraphs
+Some keys redefined to better adjust to the whole emacs key environment.
+#+begin_src emacs-lisp
+(global-set-key (kbd "M-p") 'backward-paragraph)
+(global-set-key (kbd "M-n") 'forward-paragraph)
+#+end_src
+
+** consult-line to C-s
+#+begin_src emacs-lisp :tangle yes
+(map!
+      "C-s" #'consult-line
+      "M-y" #'consult-yank-from-kill-ring
+      "M-i" #'consult-imenu
+      "M-g i" #'consult-imenu-multi
+      "M-g h" #'consult-org-heading
+      "M-g m" #'consult-mark
+      "M-s f" #'consult-find
+      "M-s r" #'consult-ripgrep
+      )
+#+end_src
+
+** avy can select from any window
+To make avy able to select from any window in sight. This allows to change from one window to another in just one step.
+#+begin_src emacs-lisp :tangle yes
+(setq avy-all-windows t)
+#+end_src
+
+** Keyboard chords
+Shortcuts to commands using just quick key combinations.
+
+#+begin_src emacs :tangle packages.el
+(package! key-chord)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! key-chord
+  :config
+  (key-chord-mode 1)
+  ;; Max time delay between two presses of the same key to be considered a key chord.
+  ;; Should normally be a little longer than `key-chord-two-keys-delay'.
+  (setq key-chord-two-keys-delay 0.1)
+  (setq key-chord-one-key-delay 0.2) ; default 0.2
+  (key-chord-define-global "ññ" 'eshell)
+  (key-chord-define-global "kk" 'other-window)
+  (key-chord-define-global "hh" 'ace-window)
+  (key-chord-define-global "jj" 'avy-goto-char-2)
+  (key-chord-define-global "jk" 'avy-goto-char-timer)
+  (key-chord-define-global "jl" 'avy-goto-line)
+  ;;(key-chord-define-global "zz" 'undo-tree-visualize)
+  ;;(key-chord-define-global "ww" 'hydra-move/body)
+  ;;(key-chord-define-global "yy" 'hydra-buffer-mgmt/body)
+  )
+#+end_src
+
+** imenu-list
+Better menus list.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! imenu-list
+  :recipe (:host github :repo "bmag/imenu-list"))
+#+end_src
+
+#+begin_src emacs-lisp
+(after! imenu-list
+  ;; put the imenu in the position we want to
+  (setq imenu-list-position 'right)
+  ;; Establish the depth of the entries shown
+  (setq org-imenu-depth 5)
+  (setq imenu-list-size 0.2)
+  ;; Once you open imenu, focus on it
+  (setq imenu-list-focus-after-activation t))
+
+;; configuring the keybinding as /la/ doom emacs
+;; https://rameezkhan.me/posts/2020/2020-07-03--adding-keybindings-to-doom-emacs/
+(map! :leader
+      :desc "imenu toggle"
+      "s I" #'imenu-list-smart-toggle)
+#+end_src
+
+** avy keyconfig
+I want to map the avy jump functions to some doom emacs keybindings.
+
+#+begin_src emacs-lisp :tangle yes
+(map! :leader
+      (:prefix-map ("j" . "jump")
+       :desc "jump to 2 chars"           "j"   #'avy-goto-char-2
+       :desc "jump to chars-timer"       "k"   #'avy-goto-char-timer
+       :desc "jump to line"              "l"   #'avy-goto-line))
+#+end_src
+
+** Open indirect buffer
+Open a branch into a different frame, but the same buffer:
+
+#+begin_src emacs-lisp
+;; this is done to open the indirect buffer in another window
+;; instead on the main one
+(use-package! org
+  :config
+  (setq org-indirect-buffer-display 'other-window)
+
+  (defun my/org-tree-open-in-right-frame ()
+    (interactive)
+    (org-tree-to-indirect-buffer)
+    ;;(windmove-right)
+    (other-window 1) ;; to move to the newly generated window
+    )
+  (global-set-key (kbd "C-c 8" ) 'my/org-tree-open-in-right-frame)
+  ;; (map! :leader
+  ;;       :desc "Open org tree to indirect buffer"
+  ;;       "b 8" #'my/org-tree-open-in-right-frame)
+  )
+  #+end_src
+* Org config
+** some org configs for better behavior and usage
+#+begin_src emacs-lisp
+(after! org
+  (setq
+   ;; tag alignment
+   ;; this value allows for modern themes and column fill to work well together.
+   org-auto-align-tags t
+   org-tags-column -77
+   ;; org fold - edit in an invisible region
+   org-fold-catch-invisible-edits 'show-and-error
+   ;; C-a and C-e will move the cursor just the heading. No todo keyworks, no tags
+   org-special-ctrl-a/e t
+   ;; insert new heading after the current subtree
+   org-insert-heading-respect-content t
+   ;; we can close parent tasks even if successors are still open
+   org-enforce-todo-dependencies nil
+   ))
+   #+end_src
+
+** org-id
+To create and use internal valid and unique links in org-mode, we will use the =org-id= features.
+#+begin_src emacs-lisp
+(after! org
+  ;; org-id are globally unique UUIDs
+  (setq org-id-method 'uuid)
+  ;; It will use the CUSTOM_ID, if it exists
+  ;;or will create a new one in the form or UUID, as seen above
+  (setq org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
+  ;; file to store the local =org-id= locations
+  ;; This way is synced to all my computers
+  (setq org-id-locations-file (expand-file-name "org-id-locations" my-data-dir)))
+#+end_src
+
+** Completion notes in to the Logbook
+Change notes are stored in the node's drawer, so we can fold it conveniently.
+#+begin_src emacs-lisp
+(after! org
+  (setq org-log-into-drawer t))
+#+end_src
+
+** Custom states for the tasks
+These are the custom states for the tasks, and the character associated to it.
+
+#+begin_src emacs-lisp
+(after! org
+  (setq org-todo-keywords
+        '(
+          ;; Status for tasks
+          (sequence "TODO(t)" "ONGOING(o)" "WAITING(w@/!)" "|" "DONE(d!)" "CANCELED(c@/!)")
+          ;; Status for writing
+          (sequence "TOWRITE(j)" "TOREVIEW(k@/!)" "REDO(l@/!)" "|" "FINISHED(ñ)" "PURGE(p@/!)"))))
+#+end_src
+
+** orgmode Agenda
+
+All the agenda configs
+
+*** Agenda files
+We define the agenda files in this variable
+
+#+begin_src emacs-lisp
+(after! org
+  (setq org-agenda-files '(
+                           ;; normal task files
+                           "~/Nextcloud/agenda/tasks.org"
+                           ;; added this one to be able to search in it, and add from here to the main task files.
+                           "~/Nextcloud/agenda/someday.org")))
+#+end_src
+
+*** icons for the agenda categories
+Have some fancy icons for the categories.
+#+begin_src emacs-lisp
+(after! org
+  (customize-set-value
+   'org-agenda-category-icon-alist
+   `(
+     ("calendar" "~/Nextcloud/config/icons/calendar.svg" nil nil :ascent center :mask heuristic)
+     ("tasks" "~/Nextcloud/config/icons/check-square.svg" nil nil :ascent center :mask heuristic)
+     ("projects" "~/Nextcloud/config/icons/list.svg" nil nil :ascent center :mask heuristic)
+     ("financial" "~/Nextcloud/config/icons/dollar-sign.svg" nil nil :ascent center :mask heuristic)
+     ("birthdays" "~/Nextcloud/config/icons/heart.svg" nil nil :ascent center :mask heuristic)
+     ("revision" "~/Nextcloud/config/icons/shuffle.svg" nil nil :ascent center :mask heuristic)
+     ("habits" "~/Nextcloud/config/icons/refresh-ccw.svg" nil nil :ascent center :mask heuristic)
+     ("care" "~/Nextcloud/config/icons/heart.svg" nil nil :ascent center :mask heuristic))))
+#+end_src
+
+*** Get rid of the DONE tasks in the agenda view
+We dont want the cluttering in our views. If a task is done, don't show it on the agenda view.
+
+#+begin_src emacs-lisp
+(after! org
+  (setq org-agenda-skip-scheduled-if-done t)
+  (setq org-agenda-skip-deadline-if-done t)
+  (setq org-agenda-skip-timestamp-if-done t))
+#+end_src
+
+** TODO Capture templates
+Here I will add template captures for doing several things:
+
+#+begin_src emacs-lisp :tangle yes
+(after! org
+  (setq org-capture-templates'(
+                               ;; task related captures
+
+  			       ("t" "My TODO task format." entry
+                                (file+headline "~/Nextcloud/agenda/tasks.org" "Tasks")
+  			             "** TODO %i%? %^g\n:PROPERTIES:\n:CATEGORY: task\n:END:\n"
+                                :empty-lines-after 1)
+
+  			       ("p" "New project." entry
+                                (file+headline "~/Nextcloud/agenda/tasks.org" "Tasks")
+                                "** TODO %? %^g\n:PROPERTIES:\n:COOKIE_DATA: todo recursive\n:CATEGORY: project\n:END:\n"
+                                :empty-lines-after 1)
+
+                               ;; Writing related things
+
+  			       ;; Everything that I find interesting to create, no matter what it is
+  			       ("h" "Compost heap" item
+                                (file+headline "~/Nextcloud/escritura/retazos/compost_heap.org" "Compost heap")
+                                "%i"
+                                :empty-lines-after 1)
+
+  			       ;; A possible writing idea
+                           ("w" "Writing idea." entry
+                                (file+headline "~/Nextcloud/escritura/retazos/ideas.org" "Ideas")
+                                "** TODO %?\n*** Personajes\n- \n*** Ambientación\n*** Eventos\n"
+                                :empty-lines-after 1)
+
+                           ;; An interesenting character
+                           ("P" "Personaje" entry
+                                (file "~/Nextcloud/escritura/retazos/personajes.org")
+                                "* %i%?"
+                                :empty-lines-after 1)
+                               )
+        )
+  )
+  #+end_src
+
+** org-ql
+https://github.com/alphapapa/org-ql
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-ql)
+#+end_src
+
+** Capture to this buffer
+Inspired by https://github.com/ballantony/emacs-writing/blob/main/DoomEmacsWriting.org
+
+Used to capture notes in this file. Useful to maintain notes and snippets separated by projects.
+#+begin_src emacs-lisp
+(after! org
+  (defun my/capture-to-this-buffer ()
+    "Capture a note to the current buffer’s file, under the headline \"Notes\")."
+    (interactive)
+    ;; Make sure we are in an Org buffer.
+    (unless (derived-mode-p 'org-mode)
+      (user-error "Can’t capture to a non‑Org buffer"))
+
+    ;; Choose the destination that actually exists.
+    (let ((target (buffer-file-name)))
+      ;; Build a temporary capture template that points at TARGET.
+      (let ((org-capture-templates
+             `(("t" "Todo"
+                entry
+                (file+headline ,target "Notes")
+                "** TODO %?"))))
+        ;; Run the capture UI.
+        (org-capture)))))
+
+;; (global-set-key (kbd "C-c C") 'my/capture-to-this-buffer)
 #+end_src
