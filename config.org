@@ -1128,3 +1128,49 @@ https://github.com/chenyanming/calibredb.el
           (setq calibredb-id-width 10)
           )))
 #+end_src
+
+* My custom key bindings
+This is where I'm going to define my own keybindings.
+
+I use one of the free prefixes, SPC d, to map my own functions, the ones I will be using more.
+#+begin_src emacs-lisp :tangle yes
+(map! :leader
+      (:prefix-map ("d" . "my own functions")
+       :desc "capture to this buffer"  "c"  #'my/capture-to-this-buffer
+       :desc "elfeed"                  "e"  #'my/elfeed
+       ;;:desc "fontaine preset"         "f"  #'fontaine-set-preset
+       ;;:desc "theme changer"           "0"  #'my/theme-changer
+       ;;:desc "rotate layout"           "r"  #'rotate-layout
+       ;; map my writing functions
+       (:prefix ("w" . "writing functions")
+        ;;:desc "count words - only prose"  "c" #'my/count-words-ascii
+        ;;:desc "create empty writing file" "e" #'my/create-empty-writing-file
+        ;;:desc "create writing exercise"   "f" #'my/create-writing-exercise
+                )))
+#+end_src
+
+Mapping my org roam functions:
+- my random roam node
+- my random todo roam node
+- my agenda restricted to roam
+
+#+begin_src emacs-lisp :tangle yes
+(map! :leader
+      :desc "random todo roam node"      "n r t" #'my/random-roam-todo-node
+      :desc "random roam node"           "n r T" #'my/random-roam-node
+      :desc "roam agenda"                "n r a" #'my/agenda-restrict-to-roam)
+#+end_src
+
+* Work environment
+This will be my working environment config
+
+#+begin_src emacs-lisp
+;; Load this config when using the work computer
+(if my-workenvironment-p
+    (progn
+      (org-babel-load-file "~/.doom.d/emacs-org-init-trabajo.org")))
+#+end_src
+
+# Local Variables:
+# ispell-local-dictionary: "en_US"
+# End:
