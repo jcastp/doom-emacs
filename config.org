@@ -3,94 +3,17 @@
 #+EMAIL: jcastp@pm.me
 #+language: en
 
-* original doom config
-
-#+begin_src emacs-lisp
-;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-#+end_src
-
-#+begin_src emacs-lisp
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
-
-
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets. It is optional.
-;; (setq user-full-name "John Doe"
-;;       user-mail-address "john@doe.com")
-
-;; Doom exposes five (optional) variables for controlling fonts in Doom:
-;;
-;; - `doom-font' -- the primary font to use
-;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
-;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-;; - `doom-symbol-font' -- for symbols
-;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
-;;
-;; See 'C-h v doom-font' for documentation and more examples of what they
-;; accept. For example:
-;;
-;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
-;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
-;;
-;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
-;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
-;; refresh your font settings. If Emacs still can't find your font, it likely
-;; wasn't installed correctly. Font issues are rarely Doom issues!
-
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
-
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
-
-
-;; Whenever you reconfigure a package, make sure to wrap your config in an
-;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
-;;
-;;   (after! PACKAGE
-;;     (setq x y))
-;;
-;; The exceptions to this rule:
-;;
-;;   - Setting file/directory variables (like `org-directory')
-;;   - Setting variables which explicitly tell you to set them before their
-;;     package is loaded (see 'C-h v VARIABLE' to look up their documentation).
-;;   - Setting doom variables (which start with 'doom-' or '+').
-;;
-;; Here are some additional functions/macros that will help you configure Doom.
-;;
-;; - `load!' for loading external *.el files relative to this one
-;; - `use-package!' for configuring packages
-;; - `after!' for running code after a package has loaded
-;; - `add-load-path!' for adding directories to the `load-path', relative to
-;;   this file. Emacs searches the `load-path' when you load packages with
-;;   `require' or `use-package'.
-;; - `map!' for binding new keys
-;;
-;; To get information about any of these functions/macros, move the cursor over
-;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
-;; This will open documentation for it, including demos of how they are used.
-;; Alternatively, use `C-h o' to look up a symbol (functions, variables, faces,
-;; etc).
-;;
-;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
-;; they are implemented.
-#+end_src
 * Summary
 This is the literate config for my doom emacs use cases.
 
 I will try to document and compartmentalize the sections, so it's easier to follow up, but it won't always be possible, as some functions overlap, and I'm usually a messy person when speaking of testing.
 
 * General
+** emacs lisp lexical binding
+#+begin_src emacs-lisp :tangle yes
+;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+#+end_src
+
 ** variable definition
 I define here some very basic variables to configure several parts of the config.
 
@@ -342,11 +265,172 @@ I want to differentiate the window I'm working with.
 (setq dimmer-adjustment-mode :both)
 (setq dimmer-fraction 0.3)
 #+end_src
+
+** Initial theme
+#+begin_src emacs-lisp :tangle yes
+;; There are two ways to load a theme. Both assume the theme is installed and
+;; available. You can either set `doom-theme' or manually load a theme with the
+;; `load-theme' function. This is the default:
+(setq doom-theme 'doom-one)
+#+end_src
+
+** line numbers
+#+begin_src emacs-lisp :tangle yes
+;; This determines the style of line numbers in effect. If set to `nil', line
+;; numbers are disabled. For relative line numbers, set this to `relative'.
+(setq display-line-numbers-type t)
+#+end_src
+
+** Define default fonts
+#+begin_src emacs-lisp :tangle yes
+;; Doom exposes five (optional) variables for controlling fonts in Doom:
+;;
+;; - `doom-font' -- the primary font to use
+;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
+;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
+;;   presentations or streaming.
+;; - `doom-symbol-font' -- for symbols
+;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
+;;
+;; See 'C-h v doom-font' for documentation and more examples of what they
+;; accept. For example:
+;;
+;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
+;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
+;;
+;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
+;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
+;; refresh your font settings. If Emacs still can't find your font, it likely
+;; wasn't installed correctly. Font issues are rarely Doom issues!
+(setq doom-font (font-spec :family "DejaVu Sans Mono" :size 15 :weight 'semi-light)
+      doom-variable-pitch-font (font-spec :family "DejaVu Sans Mono" :size 15))
+#+end_src
+
 ** Font size increase/decrease
-Increase or decrease the font size
+Increase or decrease the font size.
 #+begin_src emacs-lisp
 (global-set-key (kbd "M-+") 'text-scale-increase)
 (global-set-key (kbd "M--") 'text-scale-decrease)
+#+end_src
+
+** fontaine
+I can change the fonts with just a single command.
+https://protesilaos.com/emacs/fontaine
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! fontaine
+  :recipe (:host github :repo "protesilaos/fontaine"))
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+(use-package! fontaine
+  :config
+      (setq fontaine-presets
+          '(
+            ;; daily operations, same config as normal config
+            (regular
+             :default-family "Aporetic Sans Mono"
+             :default-weight normal
+             :default-height 120
+             :fixed-pitch-family "Aporetic Sans Mono"
+             :fixed-pitch-weight Light ; falls back to :default-weight
+             :fixed-pitch-height 110
+             :variable-pitch-family "Aporetic Sans"
+             :variable-pitch-weight Medium
+             :variable-pitch-height 140
+             :bold-family nil ; use whatever the underlying face has
+             :bold-weight bold
+             :italic-family "Aporetic Sans"
+             :italic-slant italic
+             :line-spacing 0
+             )
+            (regular-aporetic-mono
+             :default-family "Aporetic Sans Mono"
+             :default-weight normal
+             :default-height 110
+             :fixed-pitch-family "Aporetic Sans Mono"
+             :fixed-pitch-weight Light ; falls back to :default-weight
+             :fixed-pitch-height 110
+             :variable-pitch-family "Aporetic Sans Mono"
+             :variable-pitch-weight Medium
+             :variable-pitch-height 110
+             :bold-family nil ; use whatever the underlying face has
+             :bold-weight bold
+             :italic-family "Aporetic Sans Mono"
+             :italic-slant italic
+             :line-spacing 0
+             )
+            ;; Bigger face for variable width, so I can focus on it
+            (writing
+             :default-family "ETBembo"
+             :default-weight normal
+             :default-height 150
+             :fixed-pitch-family "Aporetic Sans Mono"
+             :fixed-pitch-weight Light ; falls back to :default-weight
+             :fixed-pitch-height 120
+             :variable-pitch-family "ETBembo"
+             :variable-pitch-weight Medium
+             :variable-pitch-height 150
+             :bold-family nil ; use whatever the underlying face has
+             :bold-weight bold
+             :italic-family "ETBembo"
+             :italic-slant italic
+             :line-spacing 1
+             )
+            ;; Bigger face for variable width, so I can focus on it
+            (writing-big
+             :default-family "ETBembo"
+             :default-weight normal
+             :default-height 180
+             :fixed-pitch-family "Aporetic Sans Mono"
+             :fixed-pitch-weight Light ; falls back to :default-weight
+             :fixed-pitch-height 140
+             :variable-pitch-family "ETBembo"
+             :variable-pitch-weight Medium
+             :variable-pitch-height 180
+             :bold-family nil ; use whatever the underlying face has
+             :bold-weight bold
+             :italic-family "ETBembo"
+             :italic-slant italic
+             :line-spacing 1
+             )
+            ;; change the variable width face to have a different view when editing
+            (editing
+             :default-family "Aporetic Sans Mono"
+             :default-weight normal
+             :default-height 130
+             :fixed-pitch-family "Aporetic Sans Mono"
+             :fixed-pitch-weight nil ; falls back to :default-weight
+             :fixed-pitch-height 110
+             :variable-pitch-family "Gentium"
+             :variable-pitch-weight normal
+             :variable-pitch-height 150
+             :bold-family nil ; use whatever the underlying face has
+             :bold-weight bold
+             :italic-family "Gentium"
+             :italic-slant italic
+             :line-spacing 1
+             )
+    	  ;; font for work
+    	  (work
+             :default-family "Aporetic Sans"
+             :default-weight normal
+             :default-height 120
+             :fixed-pitch-family "Aporetic Sans Mono"
+             :fixed-pitch-weight Light ; falls back to :default-weight
+             :fixed-pitch-height 110
+             :variable-pitch-family "Aporetic Sans"
+             :variable-pitch-weight Medium
+             :variable-pitch-height 120
+             :bold-family nil ; use whatever the underlying face has
+             :bold-weight bold
+             :italic-family "Aporetic Sans"
+             :italic-slant italic
+             :line-spacing 0
+             )
+            )
+          )
+  )
 #+end_src
 
 ** visual fill column
@@ -480,6 +564,13 @@ Open a branch into a different frame, but the same buffer:
   )
   #+end_src
 * Org config
+
+#+begin_src emacs-lisp
+;; If you use `org' and don't want your org files in the default location below,
+;; change `org-directory'. It must be set before org loads!
+(setq org-directory "~/org/")
+#+end_src
+
 ** some org configs for better behavior and usage
 #+begin_src emacs-lisp
 (after! org
@@ -1040,7 +1131,7 @@ Configuration for the elfeed and the org files.
     (elfeed-update)))
 #+end_src
 
-* Nov.el
+** Nov.el
 Read e-pub in emacs.
 
 https://tech.toryanderson.com/2022/11/23/viewing-epub-in-emacs/
@@ -1072,7 +1163,7 @@ https://tech.toryanderson.com/2022/11/23/viewing-epub-in-emacs/
      )
 #+end_src
 
-* TODO Alternative and better C-g function
+** TODO Alternative and better C-g function
 https://emacsredux.com/blog/2025/06/01/let-s-make-keyboard-quit-smarter/
 
 #+begin_src emacs-lisp :tangle yes
@@ -1103,7 +1194,7 @@ The DWIM behaviour of this command is as follows:
 (global-set-key [remap keyboard-quit] #'er-keyboard-quit-dwim)
 #+end_src
 
-** calibre
+*** calibre
 https://github.com/chenyanming/calibredb.el
 
 #+begin_src emacs-lisp :tangle packages.el
@@ -1138,7 +1229,7 @@ I use one of the free prefixes, SPC d, to map my own functions, the ones I will 
       (:prefix-map ("d" . "my own functions")
        :desc "capture to this buffer"  "c"  #'my/capture-to-this-buffer
        :desc "elfeed"                  "e"  #'my/elfeed
-       ;;:desc "fontaine preset"         "f"  #'fontaine-set-preset
+       :desc "fontaine preset"         "f"  #'fontaine-set-preset
        ;;:desc "theme changer"           "0"  #'my/theme-changer
        ;;:desc "rotate layout"           "r"  #'rotate-layout
        ;; map my writing functions
