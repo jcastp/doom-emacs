@@ -564,7 +564,9 @@ Open a branch into a different frame, but the same buffer:
   #+end_src
   
 ** hydra
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp :tangle packages.el
+;; loading the lv package, as it is required by hydra
+(package! lv)
 (package! hydra)
 #+end_src
 
@@ -1278,12 +1280,13 @@ Load a custom implementation of the org-tracktable package, using the org-contex
 Load the org-scribe package. Information is [[https://codeberg.org/jcastp/org-scribe][here]].
 
 Load org-scribe directly from the repository to preserve directory structure:
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp :tangle yes
 ;; Load org-scribe from local development directory
 (let ((org-scribe-dir (expand-file-name "~/Nextcloud/escritura/software/org-scribe")))
   (when (file-directory-p org-scribe-dir)
     (add-to-list 'load-path org-scribe-dir)
-    (require 'org-scribe)))
+    (require 'org-scribe))
+  (global-set-key (kbd "<f8> <f8>") 'hydra-org-scribe/body))
 #+end_src
 
 ** TODO org-scribe-planner
