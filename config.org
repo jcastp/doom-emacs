@@ -1177,7 +1177,6 @@ When you want to write something fast using org mode, but you don't want to crea
       "f o" #'my/scratch-org-buffer)
 #+end_src
 
-
 * Writing
 ** Default dictionary
 I write more and more in spanish. I will take the spanish dictionary as the default one, and will be adding the en_US one as ispell-local-dictionary local variable in the files I need it.
@@ -1446,25 +1445,76 @@ The DWIM behaviour of this command is as follows:
 
 * My custom key bindings
 This is where I'm going to define my own keybindings.
-
+** CANCELED testing ~C-q~ prefix
 I use one of the free prefixes, SPC d, to map my own functions, the ones I will be using more.
-#+begin_src emacs-lisp :tangle yes
-(map! :leader
-      (:prefix-map ("d" . "my own functions")
-       :desc "capture to this buffer"  "c"  #'my/capture-to-this-buffer
-       :desc "elfeed"                  "e"  #'my/elfeed
-       :desc "fontaine preset"         "f"  #'fontaine-set-preset
-       ;;:desc "theme changer"           "0"  #'my/theme-changer
-       ;;:desc "rotate layout"           "r"  #'rotate-layout
-       ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-       ;; map my writing functions
-       (:prefix ("w" . "writing functions")
-        ;;:desc "count words - only prose"  "c" #'my/count-words-ascii
-        ;;:desc "create empty writing file" "e" #'my/create-empty-writing-file
-        ;;:desc "create writing exercise"   "f" #'my/create-writing-exercise
-                )))
+#+begin_src emacs-lisp :tangle no
+;; First, unbind C-q (it's normally `quoted-insert`)
+(map! "C-q" nil)
+
+;; Define your prefix with submenus
+(map! :prefix "C-q"
+      :desc "My menu" "" nil  ; optional: gives the prefix a which-key label
+
+      ;; Direct commands
+      "i" #'yas-insert-snippet
+      "s" #'save-buffer
+      "z" #'quoted-insert  ; recover the original C-q if you want
+
+      ;; Nested submenu for "files"
+      (:prefix ("f" . "files")
+               "f" #'find-file
+               "r" #'recentf-open-files
+               "s" #'save-buffer)
+
+      ;; Nested submenu for "buffers"
+      (:prefix ("b" . "buffers")
+               "b" #'switch-to-buffer
+               "k" #'kill-current-buffer
+               "l" #'list-buffers
+               "o" #'my/scratch-org-buffer
+               )
+
+      ;; Online functions
+      (:prefix ("o" . "online")
+               "e" #'eww
+               "f" (cons "elfeed" #'my/elfeed)
+               )
+
+      ;; Quick file access functions
+      (:prefix ("q" . "quick file access")
+               "c" (cons "personal config" (lambda () (interactive) (find-file "~/.doom.d/config.org")))
+               "k" (cons "emacs keys" (lambda () (interactive) (find-file "~/Nextcloud/tech/org-keys.org")))
+               "t" (cons "tasks file" (lambda () (interactive) (find-file "~/Nextcloud/agenda/tasks.org")))
+               )
+
+      ;; Quick file access functions
+      (:prefix ("t" . "themes and fonts")
+               "f" #'fontaine-set-preset
+               "t" #'consult-theme
+               )
+
+      ;; Writing functions
+      (:prefix ("w" . "writing functions")
+
+               )
+      )
 #+end_src
 
+** Buffer related keybindings
+Mapping special keybindings for buffer related functions.
+
+#+begin_src emacs-lisp :tangle yes
+(map! :leader
+      (:prefix-map ("b" . "buffers")
+       :desc "capture to this buffer"  "c"  #'my/capture-to-this-buffer
+       :desc "switch to buffer" "b" #'switch-to-buffer
+       :desc "kill buffer" "k" #'kill-current-buffer
+       :desc "list buffers" "l" #'list-buffers
+       :desc "ibuffer" "i" #'ibuffer
+       :desc "orgmode scratch buffer" "o" #'my/scratch-org-buffer))
+#+end_src
+
+** roam related keybindings
 Mapping my org roam functions:
 - my random roam node
 - my random todo roam node
@@ -1475,6 +1525,29 @@ Mapping my org roam functions:
       :desc "random todo roam node"      "n r t" #'my/random-roam-todo-node
       :desc "random roam node"           "n r T" #'my/random-roam-node
       :desc "roam agenda"                "n r a" #'my/agenda-restrict-to-roam)
+#+end_src
+
+** Additional keybindings
+
+file related keybinding
+#+begin_src emacs-lisp :tangle yes
+(map! :leader
+      :desc "save buffer"      "f s" #'save-buffer)
+#+end_src
+
+Online related keybindings
+#+begin_src emacs-lisp :tangle yes
+(map! :leader
+      :desc "eww"      "o b" #'eww
+      :desc "elfeed"   "o e" #'my/elfeed)
+#+end_src
+
+** Personal keybindings
+This is reserved for additional keybindings:
+
+#+begin_src emacs-lisp :tangle yes
+(map! :leader
+      (:prefix-map ("d" . "personal prefix")))
 #+end_src
 
 * Work environment
