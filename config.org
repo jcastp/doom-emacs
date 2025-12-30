@@ -570,6 +570,64 @@ Open a branch into a different frame, but the same buffer:
 (package! hydra)
 #+end_src
 
+** Nov.el
+Read e-pub in emacs.
+
+https://tech.toryanderson.com/2022/11/23/viewing-epub-in-emacs/
+
+#+begin_src emacs-lisp :tangle packages.el
+  (package! esxml
+    :recipe (:host github :repo "tali713/esxml"))
+
+   (package! nov
+     :recipe (:host nil :repo "https://depp.brause.cc/nov.el.git"))
+#+end_src
+
+
+#+begin_src emacs-lisp
+(use-package! nov
+     :config
+     (setq nov-text-width t)
+     (setq visual-fill-column-center-text t)
+     (add-hook 'nov-mode-hook 'visual-line-mode)
+     (add-hook 'nov-mode-hook 'visual-fill-column-mode)
+     ;; We save the place we left the e-pub in this file:
+     (setq nov-save-place-file (expand-file-name "nov-places" my-data-dir))
+     ;; Define the font used for the nov.el mode
+     (defun my-nov-font-setup ()
+       (face-remap-add-relative 'variable-pitch :family "Liberation Serif"
+                                :height 1.5))
+     (add-hook 'nov-mode-hook 'my-nov-font-setup)
+     (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+     )
+#+end_src
+
+** calibre
+https://github.com/chenyanming/calibredb.el
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! calibredb)
+#+end_src
+
+#+begin_src emacs-lisp
+;; load this only on my home env
+  (if (and
+       my-homeenvironment-p
+       ;; the calibre library ddbb exists
+       (file-exists-p "/home/calibre_libros/metadata.db"))
+      (progn
+        ;; here comes the actions I want to be done at a home environment
+        (use-package! calibredb
+          :config
+          (setq calibredb-root-dir "/home/calibre_libros/")
+          (setq calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir))
+          (setq calibredb-library-alist '(("/home/calibre_libros/")
+                                          ))
+          (setq calibredb-size-show t)
+          (setq calibredb-id-width 10)
+          )))
+#+end_src
+
 * Org config
 
 #+begin_src emacs-lisp
@@ -596,7 +654,6 @@ Open a branch into a different frame, but the same buffer:
    org-enforce-todo-dependencies nil
    ))
    #+end_src
-
 
 ** org heading numbering
 I like to have numbering in the org headings.
@@ -1300,6 +1357,7 @@ Load the org-scribe-planner package
 #+end_src
 
 * Testing
+
 ** TODO elfeed and elfeed-org
 Configuration for the elfeed and the org files.
 #+begin_src emacs-lisp
@@ -1322,38 +1380,6 @@ Configuration for the elfeed and the org files.
     (interactive)
     (elfeed)
     (elfeed-update)))
-#+end_src
-
-** Nov.el
-Read e-pub in emacs.
-
-https://tech.toryanderson.com/2022/11/23/viewing-epub-in-emacs/
-
-#+begin_src emacs-lisp :tangle packages.el
-  (package! esxml
-    :recipe (:host github :repo "tali713/esxml"))
-
-   (package! nov
-     :recipe (:host nil :repo "https://depp.brause.cc/nov.el.git"))
-#+end_src
-
-
-#+begin_src emacs-lisp
-(use-package! nov
-     :config
-     (setq nov-text-width t)
-     (setq visual-fill-column-center-text t)
-     (add-hook 'nov-mode-hook 'visual-line-mode)
-     (add-hook 'nov-mode-hook 'visual-fill-column-mode)
-     ;; We save the place we left the e-pub in this file:
-     (setq nov-save-place-file (expand-file-name "nov-places" my-data-dir))
-     ;; Define the font used for the nov.el mode
-     (defun my-nov-font-setup ()
-       (face-remap-add-relative 'variable-pitch :family "Liberation Serif"
-                                :height 1.5))
-     (add-hook 'nov-mode-hook 'my-nov-font-setup)
-     (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
-     )
 #+end_src
 
 ** TODO Alternative and better C-g function
@@ -1385,32 +1411,6 @@ The DWIM behaviour of this command is as follows:
     (keyboard-quit))))
 
 (global-set-key [remap keyboard-quit] #'er-keyboard-quit-dwim)
-#+end_src
-
-*** calibre
-https://github.com/chenyanming/calibredb.el
-
-#+begin_src emacs-lisp :tangle packages.el
-(package! calibredb)
-#+end_src
-
-#+begin_src emacs-lisp
-;; load this only on my home env
-  (if (and
-       my-homeenvironment-p
-       ;; the calibre library ddbb exists
-       (file-exists-p "/home/calibre_libros/metadata.db"))
-      (progn
-        ;; here comes the actions I want to be done at a home environment
-        (use-package! calibredb
-          :config
-          (setq calibredb-root-dir "/home/calibre_libros/")
-          (setq calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir))
-          (setq calibredb-library-alist '(("/home/calibre_libros/")
-                                          ))
-          (setq calibredb-size-show t)
-          (setq calibredb-id-width 10)
-          )))
 #+end_src
 
 * My custom key bindings
