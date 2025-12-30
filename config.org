@@ -196,6 +196,21 @@ To automatically close parenthesis and other punctuation signs.
       )
       #+end_src
 
+** set firefox or librewolf as the default browser
+Setting firefox or librewolf as the default browser for opening http/s links.
+#+begin_src emacs-lisp
+  (setq librewolf_path "/usr/bin/librewolf")
+  ;; check if librewolf is installed
+  (if (file-exists-p librewolf_path)
+       (progn
+         (setq browse-url-firefox-program "librewolf")
+         (setq browse-url-browser-function 'browse-url-firefox))
+    ;; if no librewolf installed, we fall back to firefox
+     (progn
+       (setq browse-url-firefox-program "firefox")
+       (setq browse-url-browser-function 'browse-url-firefox)))
+#+end_src
+
 * UI
 ** Time and date
 Put time and date on the status line
