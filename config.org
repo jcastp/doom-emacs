@@ -1192,6 +1192,212 @@ When you want to write something fast using org mode, but you don't want to crea
       "f o" #'my/scratch-org-buffer)
 #+end_src
 
+** Orgmode export config
+All the functions defined for the org mode export
+
+*** Ignore exporting some headlines (just the headlines)
+This allows headlines to be ignored in the exports. To do so, the ignore tag (=C-c C-c ignore=) has to be in the header to be ignored. *We only ignore the headlines, the content is still shown.*
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-contrib)
+#+end_src
+
+#+begin_src emacs-lisp
+  ;;(load (expand-file-name "vendor/ox-extra/ox-extra.el" my-data-dir))
+  (use-package! org-contrib
+    :ensure t
+    :config
+    (require 'ox-extra)
+    (ox-extras-activate '(ignore-headlines)))
+#+end_src
+
+*** TODO Latex export
+All the latex exports in just one place.
+
+Config extracted from the Emacs Writing Studio ebook.
+#+begin_src emacs-lisp
+  (use-package ox-latex
+    :ensure nil
+    :demand t
+    :custom
+    ;; Multiple LaTeX passes for bibliographies
+    (org-latex-pdf-process
+     '("pdflatex -interaction nonstopmode -output-directory %o %f"
+       "bibtex %b"
+       "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+       "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+    ;; Add smart quotes for latex
+    (org-export-with-smart-quotes t)
+    ;; Clean temporary files after export
+    (org-latex-logfiles-extensions
+     (quote ("lof" "lot" "tex~" "aux" "idx" "log" "out"
+             "toc" "nav" "snm" "vrb" "dvi" "fdb_latexmk"
+             "blg" "brf" "fls" "entoc" "ps" "spl" "bbl"
+             "tex" "bcf"))))
+#+end_src
+**** ews format
+Extracted from the Emacs Writing Studio config.
+
+#+begin_src emacs-lisp
+  (with-eval-after-load 'ox-latex
+    (add-to-list
+     'org-latex-classes
+     '("ews"
+       "\\documentclass[11pt, twoside, hidelinks]{memoir}
+      \\setstocksize{9.25in}{7.5in}
+      \\settrimmedsize{\\stockheight}{\\stockwidth}{*}
+      \\setlrmarginsandblock{2cm}{1cm}{*}
+      \\setulmarginsandblock{1.5cm}{2.25cm}{*}
+      \\checkandfixthelayout
+      \\setcounter{tocdepth}{0}
+      \\OnehalfSpacing
+      \\usepackage{ebgaramond}
+      \\usepackage[htt]{hyphenat}
+      \\chapterstyle{bianchi}
+      \\setsecheadstyle{\\normalfont \\raggedright \\textbf}
+      \\setsubsecheadstyle{\\normalfont \\raggedright \\textbf}
+      \\setsubsubsecheadstyle{\\normalfont\\centering}
+      \\renewcommand\\texttt[1]{{\\normalfont\\fontfamily{cmvtt}
+        \\selectfont #1}}
+      \\usepackage[font={small, it}]{caption}
+      \\pagestyle{myheadings}
+      \\usepackage{ccicons}
+      \\usepackage[authoryear]{natbib}
+      \\bibliographystyle{apalike}
+      \\usepackage{svg}"
+       ("\\chapter{%s}" . "\\chapter*{%s}")
+       ("\\section{%s}" . "\\section*{%s}")
+       ("\\subsection{%s}" . "\\subsection*{%s}")
+       ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
+#+end_src
+
+**** Consolidated Memoir LaTeX Export Classes
+https://www.ctan.org/pkg/memoir
+https://mirror.ibcp.fr/pub/CTAN/macros/latex/contrib/memoir/memman.pdf
+=memoir= is a class used to create beautiful documents.
+
+This consolidated function creates all memoir variants (draft/final, with parts/chapter-only).
+
+#+begin_src emacs-lisp
+  (defun my/add-memoir-class (name &optional draft chapter-only)
+    "Add memoir LaTeX class with NAME.
+  When DRAFT is non-nil, enable draft mode.
+  When CHAPTER-ONLY is non-nil, start with chapters (no parts)."
+    (let* ((draft-option (if draft ",draft" ",final"))
+           (levels (if chapter-only
+                       ;; Chapter-only: no \\part level
+                       '(("\\chapter{%s}" . "\\chapter*{%s}")
+                         ("\\section{%s}" . "\\section*{%s}")
+                         ("\\subsection{%s}" . "\\subsection*{%s}")
+                         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                         ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                         ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
+                     ;; Standard: includes \\part level
+                     '(("\\part{%s}" . "\\part*{%s}")
+                       ("\\chapter{%s}" . "\\chapter*{%s}")
+                       ("\\section{%s}" . "\\section*{%s}")
+                       ("\\subsection{%s}" . "\\subsection*{%s}")
+                       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                       ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                       ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+           (preamble (format "\\documentclass[a4paper,17pt%s,openright,twoside]{memoir}
+  \\usepackage{ucs}
+  \\usepackage[utf8]{inputenc}
+  \\usepackage[spanish]{babel}
+  \\usepackage{fontenc}
+  \\usepackage{graphicx}
+  \\usepackage{minted}
+
+  %% Para poner notas en los márgenes
+  \\usepackage{todonotes}
+
+  %% Para tachar palabras
+  \\usepackage[normalem]{ulem}
+
+  %% for hyperlinks in the pdf
+  \\usepackage{hyperref}
+  %% space between the paragraphs
+  \\usepackage{parskip}
+  %% Needed for the utopia font
+  \\usepackage{fourier}
+
+  \\renewcommand*\\rmdefault{put}
+
+  %% new command that establish 3 newlines for breaking scenes
+  \\newcommand{\\fin}{\\plainbreak*{3}}
+
+  %% command to add edit notes with tiny size
+  \\newcommand{\\edit}[1] {\\todo[inline]{#1}}
+  \\newcommand{\\adendo}[1] {\\todo[size=\\tiny]{#1}}
+
+  %% Chapter style
+  \\chapterstyle{dash}
+
+  %% How the page is formatted
+  \\pagestyle{Ruled}
+
+  %% change the paragraph spacing
+  \\setlength{\\parskip}{0.2\\baselineskip}
+
+                 [NO-DEFAULT-PACKAGES]
+                 [NO-PACKAGES]" draft-option)))
+      (add-to-list 'org-latex-classes
+                   `(,name ,preamble ,@levels))))
+
+  ;; Create all four memoir class variants
+  (my/add-memoir-class "memoir" nil nil)           ; Standard with parts
+  (my/add-memoir-class "memoir_draft" t nil)       ; Draft with parts
+  (my/add-memoir-class "memoir_chapter" nil t)     ; Final, chapter-only
+  (my/add-memoir-class "memoir_chapter_draft" t t) ; Draft, chapter-only
+#+end_src
+
+**** TODO reporting class for org2latex (complete these options)
+
+#+begin_src emacs-lisp
+  (add-to-list 'org-latex-classes
+  	     '("reporting"
+                 "\\documentclass[a4paper,17pt,openright,twoside]{article}
+  \\usepackage{ucs}
+  \\usepackage[utf8]{inputenc}
+  \\usepackage[spanish]{babel}
+  \\usepackage{fontenc}
+  \\usepackage{graphicx}
+
+  \% Para poner notas en los márgenes
+  \\usepackage{todonotes}
+
+  \% Para tachar palabras
+  \\usepackage[normalem]{ulem}
+
+  \\usepackage{hyperref}
+  \\usepackage{parskip}
+  \\usepackage{fourier}
+
+  \\renewcommand*\\rmdefault{put}
+
+  \\newcommand{\\fin}{\\plainbreak*{3}}
+
+  \% command to add edit notes with tiny size
+  \\newcommand{\\edit}[1] {\\todo[inline]{#1}}
+  \\newcommand{\\adendo}[1] {\\todo[size=\\tiny]{#1}}
+
+
+
+
+                 [NO-DEFAULT-PACKAGES]
+                 [NO-PACKAGES]"
+                 ("\\part{%s}" . "\\part*{%s}")
+                 ("\\chapter{%s}" . "\\chapter*{%s}")
+                 ("\\section*{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
+               )
+
+#+end_src
+
+
 * Writing
 ** Default dictionary
 I write more and more in spanish. I will take the spanish dictionary as the default one, and will be adding the en_US one as ispell-local-dictionary local variable in the files I need it.
