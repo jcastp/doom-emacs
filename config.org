@@ -595,6 +595,13 @@ Open a branch into a different frame, but the same buffer:
    ))
    #+end_src
 
+
+** org heading numbering
+I like to have numbering in the org headings.
+#+begin_src emacs-lisp :tangle yes
+(add-hook 'org-mode-hook 'org-num-mode)
+#+end_src
+
 ** org-id
 To create and use internal valid and unique links in org-mode, we will use the =org-id= features.
 #+begin_src emacs-lisp
