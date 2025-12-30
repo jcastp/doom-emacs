@@ -1545,7 +1545,7 @@ Online related keybindings
 Outline
 #+begin_src emacs-lisp :tangle yes
 (map! :leader
-      :desc "outline"   "o o" #'consult-outline)
+      :desc "Search outline"   "s o" #'consult-outline)
 #+end_src
 
 ** Personal keybindings
