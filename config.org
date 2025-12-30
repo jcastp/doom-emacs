@@ -1147,6 +1147,37 @@ Open a random roam node with the roamtag tag (that maps to a TODO entry).
 ;; (global-set-key (kbd "C-c n T") 'my/random-roam-todo-node)
 #+end_src
 
+** Create an org scratch buffer
+https://emacs.stackexchange.com/questions/16492/is-it-possible-to-create-an-org-mode-scratch-buffer
+
+When you want to write something fast using org mode, but you don't want to create a new file.
+
+#+begin_src emacs-lisp
+(defun my/scratch-org-buffer ()
+  "Create a new scratch buffer -- \*hello-world\*"
+  (interactive)
+  (let ((n 0)
+        bufname buffer)
+    (catch 'done
+      (while t
+        (setq bufname (concat "*org-scratch"
+                              (if (= n 0) "" (int-to-string n))
+                              "*"))
+        (setq n (1+ n))
+        (when (not (get-buffer bufname))
+          (setq buffer (get-buffer-create bufname))
+          (with-current-buffer buffer
+            (org-mode)
+            (insert "# org-scratch buffer\n"))
+          ;; When called non-interactively, the `t` targets the other window (if it exists).
+          (throw 'done (select-window (display-buffer buffer t))))))))
+
+(map! :leader
+      :desc "Open an org scratch buffer"
+      "f o" #'my/scratch-org-buffer)
+#+end_src
+
+
 * Writing
 ** Default dictionary
 I write more and more in spanish. I will take the spanish dictionary as the default one, and will be adding the en_US one as ispell-local-dictionary local variable in the files I need it.
