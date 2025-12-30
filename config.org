@@ -1542,6 +1542,12 @@ Online related keybindings
       :desc "elfeed"   "o e" #'my/elfeed)
 #+end_src
 
+Outline
+#+begin_src emacs-lisp :tangle yes
+(map! :leader
+      :desc "outline"   "o o" #'consult-outline)
+#+end_src
+
 ** Personal keybindings
 This is reserved for additional keybindings:
 
