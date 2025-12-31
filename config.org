@@ -1396,7 +1396,11 @@ This consolidated function creates all memoir variants (draft/final, with parts/
                )
 
 #+end_src
-
+** org habits
+I want to track some habits in orgmode:
+#+begin_src emacs-lisp :tangle yes
+(add-to-list 'org-modules 'org-habit t)
+#+end_src
 
 * Writing
 ** Default dictionary
