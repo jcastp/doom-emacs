@@ -1443,8 +1443,8 @@ Since I write in different languages, the dictionary applied is really important
     (setq guess-language-min-paragraph-length 40)
     ;; define the dicts I want to use for my languages
     (setq guess-language-langcodes
-  	'((en . ("en_US" "English"))
-  	  (es . ("es_ES" "Spanish"))))
+	  '((en . ("en_US" "English"))
+	    (es . ("es_ES" "Spanish"))))
     (guess-language-mode)
     ;; activate the mode when I go to text files
     (add-hook 'text-mode-hook (lambda () (guess-language-mode 1)))
@@ -1461,25 +1461,25 @@ Translate from english to spanish
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package! gt
-    :ensure t
-    :config
-    (setq gt-langs '(en es))
-    ;; Configure the default translator
-    (setq gt-default-translator
-  	(gt-translator
-  	 ;; Optional: Use a more specific Taker to ensure correct language handling
-  	 ;; This Taker focuses on the word or selected region, using the global gt-langs
-  	 :taker (gt-taker :langs gt-langs :text 'word)
-  	 ;; Specify the translation engine(s)
-  	 :engines (gt-bing-engine)
-  	 ;; Optional: Change the output method for potentially better readability
-  	 ;; For example, using a dedicated buffer instead of the echo area:
-  	 ;; :render (gt-buffer-render)
-  	 ;; Or using a floating window:
-  	 ;; :render (gt-posframe-pop-render)
-  	 ;; The default render (gt-render) outputs to the echo area.
-  	 )))
+(use-package! gt
+  :ensure t
+  :config
+  (setq gt-langs '(en es))
+  ;; Configure the default translator
+  (setq gt-default-translator
+	(gt-translator
+	 ;; Optional: Use a more specific Taker to ensure correct language handling
+	 ;; This Taker focuses on the word or selected region, using the global gt-langs
+	 :taker (gt-taker :langs gt-langs :text 'word)
+	 ;; Specify the translation engine(s)
+	 :engines (gt-bing-engine)
+	 ;; Optional: Change the output method for potentially better readability
+	 ;; For example, using a dedicated buffer instead of the echo area:
+	 ;; :render (gt-buffer-render)
+	 ;; Or using a floating window:
+	 ;; :render (gt-posframe-pop-render)
+	 ;; The default render (gt-render) outputs to the echo area.
+	 )))
 #+end_src
 
 ** TODO powerthesaurus
