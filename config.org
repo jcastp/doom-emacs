@@ -1719,6 +1719,7 @@ The DWIM behaviour of this command is as follows:
 #+end_src
 ** TODO gptel config
 Emacs config for my llama.cpp / llama.swap installation.
+
 #+begin_src emacs-lisp :tangle yes
 ;; Llama.cpp offers an OpenAI compatible API
 (gptel-make-openai "llama-cpp"          ;Any name
@@ -1735,64 +1736,8 @@ Emacs config for my llama.cpp / llama.swap installation.
             qwen3-30b))
 #+end_src
 
-
 * My custom key bindings
 This is where I'm going to define my own keybindings.
-** CANCELED testing ~C-q~ prefix
-I use one of the free prefixes, SPC d, to map my own functions, the ones I will be using more.
-#+begin_src emacs-lisp :tangle no
-;; First, unbind C-q (it's normally `quoted-insert`)
-(map! "C-q" nil)
-
-;; Define your prefix with submenus
-(map! :prefix "C-q"
-      :desc "My menu" "" nil  ; optional: gives the prefix a which-key label
-
-      ;; Direct commands
-      "i" #'yas-insert-snippet
-      "s" #'save-buffer
-      "z" #'quoted-insert  ; recover the original C-q if you want
-
-      ;; Nested submenu for "files"
-      (:prefix ("f" . "files")
-               "f" #'find-file
-               "r" #'recentf-open-files
-               "s" #'save-buffer)
-
-      ;; Nested submenu for "buffers"
-      (:prefix ("b" . "buffers")
-               "b" #'switch-to-buffer
-               "k" #'kill-current-buffer
-               "l" #'list-buffers
-               "o" #'my/scratch-org-buffer
-               )
-
-      ;; Online functions
-      (:prefix ("o" . "online")
-               "e" #'eww
-               "f" (cons "elfeed" #'my/elfeed)
-               )
-
-      ;; Quick file access functions
-      (:prefix ("q" . "quick file access")
-               "c" (cons "personal config" (lambda () (interactive) (find-file "~/.doom.d/config.org")))
-               "k" (cons "emacs keys" (lambda () (interactive) (find-file "~/Nextcloud/tech/org-keys.org")))
-               "t" (cons "tasks file" (lambda () (interactive) (find-file "~/Nextcloud/agenda/tasks.org")))
-               )
-
-      ;; Quick file access functions
-      (:prefix ("t" . "themes and fonts")
-               "f" #'fontaine-set-preset
-               "t" #'consult-theme
-               )
-
-      ;; Writing functions
-      (:prefix ("w" . "writing functions")
-
-               )
-      )
-#+end_src
-
 ** Buffer related keybindings
 Mapping special keybindings for buffer related functions.
 
