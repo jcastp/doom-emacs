@@ -1782,7 +1782,8 @@ Mapping special keybindings for buffer related functions.
        :desc "kill buffer" "k" #'kill-current-buffer
        :desc "list buffers" "l" #'list-buffers
        :desc "ibuffer" "i" #'ibuffer
-       :desc "orgmode scratch buffer" "o" #'my/scratch-org-buffer))
+       :desc "orgmode scratch buffer" "o" #'my/scratch-org-buffer
+       :desc "scratch buffer" "x" #'doom/toggle-scratch-buffer))
 #+end_src
 
 ** roam related keybindings
