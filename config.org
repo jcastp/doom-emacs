@@ -1717,6 +1717,24 @@ The DWIM behaviour of this command is as follows:
 
 (global-set-key [remap keyboard-quit] #'er-keyboard-quit-dwim)
 #+end_src
+** TODO gptel config
+Emacs config for my llama.cpp / llama.swap installation.
+#+begin_src emacs-lisp :tangle yes
+;; Llama.cpp offers an OpenAI compatible API
+(gptel-make-openai "llama-cpp"          ;Any name
+  :stream t                             ;Stream responses
+  :protocol "http"
+  :host "localhost:8080"                ;Llama.cpp server location
+  ;Any names, doesn't matter for Llama
+  :models '(llama3.1
+            llama3.2
+            gpt-oss
+            phi4-mini-4b-augmented
+            phi4-mini-4b
+            phi4-reasoning
+            qwen3-30b))
+#+end_src
+
 
 * My custom key bindings
 This is where I'm going to define my own keybindings.
