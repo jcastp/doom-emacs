@@ -762,7 +762,7 @@ Here I will add template captures for doing several things:
                                ;; task related captures
                                ("t" "My TODO task format." entry
                                 (file+headline "~/Nextcloud/agenda/tasks.org" "Tasks")
-                                "** TODO %i%? %^g\n:PROPERTIES:\n:CATEGORY: task\n:END:\n"
+                                "** TODO %i%? %^g\n:PROPERTIES:\n:CATEGORY: tasks\n:END:\n"
                                 :empty-lines-after 1)
 
                                ("p" "New project." entry
