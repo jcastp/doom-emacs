@@ -60,7 +60,7 @@ I define here some very basic variables to configure several parts of the config
 #+begin_src emacs-lisp
 ;; define my clear directory
 (defvar my-clear-directory (expand-file-name "Nextcloud_claro/gocryptfs_claro" (getenv "HOME"))
-  "My decrupted directory.")
+  "My decrypted directory.")
 
 ;; check the directory exists
 ;;(file-directory-p my-clear-directory)
