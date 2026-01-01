@@ -92,7 +92,8 @@
        :checkers
        (syntax              ; tasing you for every semicolon you forget
         +flymake)
-       (spell +flyspell) ; tasing you for misspelling mispelling
+       (spell +flyspell
+              +hunspell) ; tasing you for misspelling mispelling
        ;;grammar           ; tasing grammar mistake every you make
 
        :tools
