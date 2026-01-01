@@ -881,13 +881,13 @@ Org-roam capture templates:
          "* TODO ${title}\n%?"
          :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
          :unnarrowed t)
-        ("b" "book notes" plain (file "~/.emacs.d/roamtemplates/BookNoteTemplate.org")
+        ("b" "book notes" plain (file "~/.doom.d/roamtemplates/BookNoteTemplate.org")
          :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: book")
          :unnarrowed t)
-        ("w" "writing idea" plain (file "~/.emacs.d/roamtemplates/WritingIdea.org")
+        ("w" "writing idea" plain (file "~/.doom.d/roamtemplates/WritingIdea.org")
          :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: writing")
          :unnarrowed t)
-        ("c" "writing character" plain (file "~/.emacs.d/roamtemplates/CharacterIdea.org")
+        ("c" "writing character" plain (file "~/.doom.d/roamtemplates/CharacterIdea.org")
          :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: writing character")
          :unnarrowed t)))
 #+end_src
