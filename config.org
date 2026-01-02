@@ -571,7 +571,7 @@ Open a branch into a different frame, but the same buffer:
     ;;(windmove-right)
     (other-window 1) ;; to move to the newly generated window
     )
-  ;; (global-set-key (kbd "C-c 8" ) 'my/org-tree-open-in-right-frame)
+
   (map! :leader
         :desc "Open org tree to indirect buffer"
         "8" #'my/org-tree-open-in-right-frame)
@@ -821,8 +821,6 @@ Used to capture notes in this file. Useful to maintain notes and snippets separa
                 "** TODO %?"))))
         ;; Run the capture UI.
         (org-capture)))))
-
-;; (global-set-key (kbd "C-c C") 'my/capture-to-this-buffer)
 #+end_src
 
 ** Orgmode org-roam config
