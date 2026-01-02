@@ -94,7 +94,7 @@ This uses a special file, not commited, with my personal information, located in
 It contains the variables =user-full-name= and =user-mail-address=
 #+begin_src emacs-lisp
 ;; to protect my personal information, this file is not commited
-(load (expand-file-name "Nextcloud/config/.emacs.d/personal_info.el" (getenv "HOME")))
+(load (expand-file-name "personal_info.el" my-data-dir))
 #+end_src
 ** Start with a maximized frame
 #+begin_src emacs-lisp
