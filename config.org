@@ -155,7 +155,7 @@ I want to see all the files in the directory.
 Change dired buffers when the directory is changed:
 #+begin_src emacs-lisp :tangle yes
 ;; auto refresh dired when file changes
-(add-hook 'dired-mode-hook 'auto-revert-mode)
+;; (add-hook 'dired-mode-hook 'auto-revert-mode)
 #+end_src
 
 ** Bookmarks
