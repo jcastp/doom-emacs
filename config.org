@@ -566,6 +566,7 @@ Open a branch into a different frame, but the same buffer:
   (setq org-indirect-buffer-display 'other-window)
 
   (defun my/org-tree-open-in-right-frame ()
+    "Open the subtree in a dedicated buffer."
     (interactive)
     (org-tree-to-indirect-buffer)
     ;;(windmove-right)
@@ -1406,7 +1407,7 @@ I write more and more in spanish. I will take the spanish dictionary as the defa
 
 Also adding the "spanish" path, because somehow it doesn't work. It finds "castellano", but not "spanish".
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
 (after! ispell
   (setq ispell-dictionary "es_ES")
   (add-to-list 'ispell-hunspell-dict-paths-alist '("spanish" "/usr/share/hunspell/es_ES.aff")))
