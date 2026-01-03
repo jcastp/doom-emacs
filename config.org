@@ -464,6 +464,24 @@ This mode restricts the lines up until a set margin, and wraps them logically at
       )
 #+end_src
 
+** pulsar - line flash when jumping
+I want to know where my cursor is when jumping or when I press some keybinding.
+#+begin_src emacs-lisp :tangle packages.el
+(package! pulsar)
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+(pulsar-global-mode 1)
+(setq pulsar-delay 0.1)
+(setq pulsar-iterations 10)
+(setq pulsar-face 'pulsar-yellow)
+(setq pulsar-region-face 'pulsar-yellow)
+(setq pulsar-highlight-face 'pulsar-magenta)
+
+(map!
+ "C-x l" #'pulsar-pulse-line
+ "C-x L" #'pulsar-highlight-permanently-dwim)
+#+end_src
 * Navigation
 ** Movement for paragraphs
 Some keys redefined to better adjust to the whole emacs key environment.
