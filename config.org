@@ -1449,14 +1449,14 @@ https://github.com/bastibe/org-journal
   )
 #+end_src
 
-** TODO guess-language
+** CANCELED guess-language
 Since I write in different languages, the dictionary applied is really important. If I write in Spanish, I want the spanish dict to be applied, and not the english one.
 
-#+begin_src emacs-lisp :tangle packages.el
+#+begin_src emacs-lisp :tangle no
 (package! guess-language)
 #+end_src
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 (use-package! guess-language
     :ensure t
     :config
