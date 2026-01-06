@@ -1804,6 +1804,12 @@ Outline
       :desc "Search outline"   "s o" #'consult-outline)
 #+end_src
 
+Fontaine - set the fonts
+#+begin_src emacs-lisp :tangle yes
+(map! :leader
+      :desc "Change fonts"   "t o" #'fontaine-set-preset)
+#+end_src
+
 ** Personal keybindings
 This is reserved for additional keybindings:
 
