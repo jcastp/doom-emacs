@@ -476,8 +476,8 @@ Uses `jc/vfc-prog-mode-width' for prog-mode derivatives and
   (add-hook 'prog-mode-hook #'jc/set-visual-fill-column-width)
   (add-hook 'text-mode-hook #'jc/set-visual-fill-column-width)
 
-;; Center text configuration - not centered
-(setq visual-fill-column-center-text nil))
+;; Center text configuration
+(setq visual-fill-column-center-text t))
 
 ;; Map the visual mode toggle (outside the after! block)
 (map! :leader
