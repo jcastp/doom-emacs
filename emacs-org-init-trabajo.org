@@ -40,7 +40,7 @@ Have some fancy icons for the categories.
 I work better with fixed fonts in this kind of environments
 
 #+begin_src emacs-lisp
-(fontaine-set-preset 'work)
+;; (fontaine-set-preset 'work)
 #+end_src
 
 * Put the correct agenda files for work
@@ -67,7 +67,7 @@ Since this is a different environment, I also have to change this to refile thin
 (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
 #+end_src
 
-* TOREVIEW Better searches with custom agenda commands
+* TODO TOREVIEW Better searches with custom agenda commands
 I need a different custom agenda commands to see the tasks better.
  #+begin_src emacs-lisp :tangle yes
 (setq org-agenda-custom-commands
@@ -188,7 +188,7 @@ I need a different custom agenda commands to see the tasks better.
 * Work tags definition
 #+begin_src emacs-lisp :tangle yes
 (setq org-tag-alist '(
-                      ("detection" . ?d) ("automation" . ?a)
+                      ("detection" . ?d) ("automation" . ?a) ("emailsec" . ?e)
                       ;; other tags
                       ("documentation" . ?D) ("procedures" . ?P)
                       ("knowledge" . ?K) ("training" . ?T)
