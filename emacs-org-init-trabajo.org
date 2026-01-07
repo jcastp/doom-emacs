@@ -235,7 +235,6 @@ As work is different from home, I need specific templates.
 #+begin_src emacs-lisp :tangle yes
 (message "--- loading work agenda")
 (find-file "~/Nextcloud/agenda/work/work.org")
-( "work.org")
 (message "+++ loaded work agenda")
 #+end_src
 
