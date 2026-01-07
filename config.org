@@ -452,16 +452,39 @@ https://github.com/joostkremers/visual-fill-column
 This mode restricts the lines up until a set margin, and wraps them logically at that point.
 
 #+begin_src emacs-lisp :tangle yes
-(setq visual-fill-column-width 110)
-(setq visual-fill-column-center-text t)
+;;; Visual Fill Column Width Configuration
+(after! visual-fill-column
+  ;; Customizable variables
+  (defvar jc/vfc-prog-mode-width 110
+    "Visual fill column width for programming modes.")
 
-;; Map the visual mode toggle
+  (defvar jc/vfc-text-mode-width 80
+    "Visual fill column width for text modes.")
+
+  ;; Core function
+  (defun jc/set-visual-fill-column-width ()
+    "Set `visual-fill-column-width' based on current major mode.
+Uses `jc/vfc-prog-mode-width' for prog-mode derivatives and
+`jc/vfc-text-mode-width' for text-mode derivatives."
+    (setq-local visual-fill-column-width
+                (cond
+                 ((derived-mode-p 'prog-mode) jc/vfc-prog-mode-width)
+                 ((derived-mode-p 'text-mode) jc/vfc-text-mode-width)
+                 (t visual-fill-column-width))))
+
+  ;; Hook configuration
+  (add-hook 'prog-mode-hook #'jc/set-visual-fill-column-width)
+  (add-hook 'text-mode-hook #'jc/set-visual-fill-column-width)
+
+;; Center text configuration - not centered
+(setq visual-fill-column-center-text nil))
+
+;; Map the visual mode toggle (outside the after! block)
 (map! :leader
       ;; remapping this as I don't use it that much
       :desc "visible mode"            "t V" #'visible-mode
       ;; assigning this to my more used visible-fill-column-mode
-      :desc "visual fill column"      "t v" #'visual-fill-column-mode
-      )
+      :desc "visual fill column"      "t v" #'visual-fill-column-mode)
 #+end_src
 
 ** pulsar - line flash when jumping
@@ -622,7 +645,7 @@ https://tech.toryanderson.com/2022/11/23/viewing-epub-in-emacs/
 (use-package! nov
      :config
      (setq nov-text-width t)
-     (setq visual-fill-column-center-text t)
+     (setq-local visual-fill-column-center-text t)
      (add-hook 'nov-mode-hook 'visual-line-mode)
      (add-hook 'nov-mode-hook 'visual-fill-column-mode)
      ;; We save the place we left the e-pub in this file:
@@ -677,7 +700,7 @@ https://github.com/chenyanming/calibredb.el
    ;; tag alignment
    ;; this value allows for modern themes and column fill to work well together.
    org-auto-align-tags t
-   org-tags-column -100
+   org-tags-column -80
    ;; org fold - edit in an invisible region
    org-fold-catch-invisible-edits 'show-and-error
    ;; C-a and C-e will move the cursor just the heading. No todo keyworks, no tags
@@ -1827,10 +1850,11 @@ This is reserved for additional keybindings:
 * Work environment
 This will be my working environment config
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
 ;; Load this config when using the work computer
 (if my-workenvironment-p
     (progn
+      (message "loading the work file")
       (org-babel-load-file "~/.doom.d/emacs-org-init-trabajo.org")))
 #+end_src
 
