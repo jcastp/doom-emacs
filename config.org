@@ -427,18 +427,18 @@ https://protesilaos.com/emacs/fontaine
              )
     	  ;; font for work
     	  (work
-             :default-family "Aporetic Sans"
+             :default-family "Aporetic Sans Mono"
              :default-weight normal
-             :default-height 120
+             :default-height 140
              :fixed-pitch-family "Aporetic Sans Mono"
              :fixed-pitch-weight Light ; falls back to :default-weight
-             :fixed-pitch-height 110
-             :variable-pitch-family "Aporetic Sans"
+             :fixed-pitch-height 120
+             :variable-pitch-family "Aporetic Sans Mono"
              :variable-pitch-weight Medium
-             :variable-pitch-height 120
+             :variable-pitch-height 140
              :bold-family nil ; use whatever the underlying face has
              :bold-weight bold
-             :italic-family "Aporetic Sans"
+             :italic-family "Aporetic Sans Mono"
              :italic-slant italic
              :line-spacing 0
              )
