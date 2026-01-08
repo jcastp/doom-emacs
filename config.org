@@ -752,6 +752,10 @@ These are the custom states for the tasks, and the character associated to it.
           (sequence "TOWRITE(j)" "TOREVIEW(k@/!)" "REDO(l@/!)" "|" "FINISHED(ñ)" "PURGE(p@/!)"))))
 #+end_src
 ** TODO custom faces for org-todo-keywords
+I want to have different faces for different task status. Also, I have 2 workflows, and I want to have them visually distinct.
+
+Items with backgrounds are my "active" states in each workflow—ONGOING and TOREVIEW—making them pop when scanning a document.
+
 #+begin_src emacs-lisp :tangle yes
 (after! org
   ;; ============================================
