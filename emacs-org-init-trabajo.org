@@ -8,8 +8,17 @@ It is supposed to run over the generic emacs config, and overwrites that config 
 
 * Defining my own work directory
 #+begin_src emacs-lisp :tangle yes
-;; (defvar my-work-dir "/mnt/c/Users/castifrc/OneDrive - adidas/agenda/"
-;;   "My own working directory")
+(defvar my-work-dir "~/Nextcloud/trabajo/agenda/"
+  "My own working directory")
+
+(defvar my-work-file (concat my-work-dir "work.org")
+  "My own work file")
+
+(defvar my-backlog-file (concat my-work-dir "work_backlog.org")
+  "My own work backlog file")
+
+(defvar my-meetings-file (concat my-work-dir "work_meetings.org")
+  "My own work meetings file")
 #+end_src
 
 * clear theme
@@ -49,7 +58,7 @@ I work better with fixed fonts in this kind of environments
 (setq org-agenda-files '(""))
 ;; And now, populate with the work environment
 ;; This needs to be changed when you change company!!!
-(setq org-agenda-files '("~/Nextcloud/agenda/work/work.org"))
+(setq org-agenda-files (list my-work-file))
 #+end_src
 
 * Refile environment
@@ -60,7 +69,7 @@ Since this is a different environment, I also have to change this to refile thin
 (setq org-refile-targets '(
                            (nil :maxlevel . 9)
                            (org-agenda-files :maxlevel . 9)
-                           ("~/Nextcloud/agenda/work/work_backlog.org" :maxlevel . 9)
+                           (my-backlog-file :maxlevel . 9)
                            )
       )
 (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
@@ -212,20 +221,20 @@ As work is different from home, I need specific templates.
 #+begin_src emacs-lisp :tangle yes
 (setq org-capture-templates'(
                              ("i" "Inbox (work)" entry
-                              (file+headline "~/Nextcloud/agenda/work/work.org" "Inbox")
+                              (file+headline my-work-file "Inbox")
                               "** TODO %? %^g %^{EFFORT}p")
 
                              ("I" "New incident." entry
-                              (file+headline "~/Nextcloud/agenda/work/work.org" "Incidents")
+                              (file+headline my-work-file "Incidents")
                               "** TODO %?")
 
                              ("b" "Backlog entry." entry
-                              (file+headline "~/Nextcloud/agenda/work/work_backlog.org" "Backlog")
+                              (file+headline my-backlog-file "Backlog")
                               "** TODO %?\n")
 
                              ;; For meeting note taking
                              ("m" "Meeting notes" entry
-                              (file+headline "~/Nextcloud/agenda/work/work_meetings.org" "Meetings")
+                              (file+headline my-meetings-file "Meetings")
                               "** %T - %?\n"
                               :jump-to-captured t
                               )))
@@ -234,7 +243,7 @@ As work is different from home, I need specific templates.
 * Load the task list for work
 #+begin_src emacs-lisp :tangle yes
 (message "--- loading work agenda")
-(find-file "~/Nextcloud/agenda/work/work.org")
+(find-file my-work-file)
 (message "+++ loaded work agenda")
 #+end_src
 
