@@ -751,6 +751,102 @@ These are the custom states for the tasks, and the character associated to it.
           ;; Status for writing
           (sequence "TOWRITE(j)" "TOREVIEW(k@/!)" "REDO(l@/!)" "|" "FINISHED(ñ)" "PURGE(p@/!)"))))
 #+end_src
+** TODO custom faces for org-todo-keywords
+#+begin_src emacs-lisp :tangle yes
+(after! org
+  ;; ============================================
+  ;; Task workflow faces (warmer palette)
+  ;; ============================================
+  (defface my/org-todo
+    '((((class color) (background light))
+       :foreground "#b60000" :weight bold)
+      (((class color) (background dark))
+       :foreground "#ff8f88" :weight bold))
+    "Face for TODO - task needs action.")
+
+  (defface my/org-ongoing
+    '((((class color) (background light))
+       :foreground "#005f5f" :background "#c4ede0" :weight bold)
+      (((class color) (background dark))
+       :foreground "#6ae4b9" :background "#00382f" :weight bold))
+    "Face for ONGOING - actively working on.")
+
+  (defface my/org-waiting
+    '((((class color) (background light))
+       :foreground "#813e00" :background "#fff0c0" :weight bold)
+      (((class color) (background dark))
+       :foreground "#fec43f" :background "#4a3000" :weight bold))
+    "Face for WAITING - blocked or on hold.")
+
+  (defface my/org-done
+    '((((class color) (background light))
+       :foreground "#006800" :weight bold)
+      (((class color) (background dark))
+       :foreground "#44bc44" :weight bold))
+    "Face for DONE - task completed.")
+
+  (defface my/org-canceled
+    '((((class color) (background light))
+       :foreground "#70627f" :strike-through t)
+      (((class color) (background dark))
+       :foreground "#9f94a5" :strike-through t))
+    "Face for CANCELED - task abandoned.")
+
+  ;; ============================================
+  ;; Writing workflow faces (cooler palette)
+  ;; ============================================
+  (defface my/org-towrite
+    '((((class color) (background light))
+       :foreground "#721045" :weight bold)
+      (((class color) (background dark))
+       :foreground "#feacd0" :weight bold))
+    "Face for TOWRITE - content needs writing.")
+
+  (defface my/org-toreview
+    '((((class color) (background light))
+       :foreground "#1f3f7f" :background "#dae5ff" :weight bold)
+      (((class color) (background dark))
+       :foreground "#82b0ec" :background "#132a4f" :weight bold))
+    "Face for TOREVIEW - draft ready for review.")
+
+  (defface my/org-redo
+    '((((class color) (background light))
+       :foreground "#a0132f" :background "#ffd5d5" :weight bold)
+      (((class color) (background dark))
+       :foreground "#ff9077" :background "#4a1418" :weight bold))
+    "Face for REDO - needs rewriting.")
+
+  (defface my/org-finished
+    '((((class color) (background light))
+       :foreground "#006800" :weight bold)
+      (((class color) (background dark))
+       :foreground "#44bc44" :weight bold))
+    "Face for FINISHED - writing complete.")
+
+  (defface my/org-purge
+    '((((class color) (background light))
+       :foreground "#70627f" :strike-through t)
+      (((class color) (background dark))
+       :foreground "#9f94a5" :strike-through t))
+    "Face for PURGE - content to be removed.")
+
+  ;; ============================================
+  ;; Apply faces to keywords
+  ;; ============================================
+  (setq org-todo-keyword-faces
+        '(;; Task workflow
+          ("TODO"     . my/org-todo)
+          ("ONGOING"  . my/org-ongoing)
+          ("WAITING"  . my/org-waiting)
+          ("DONE"     . my/org-done)
+          ("CANCELED" . my/org-canceled)
+          ;; Writing workflow
+          ("TOWRITE"  . my/org-towrite)
+          ("TOREVIEW" . my/org-toreview)
+          ("REDO"     . my/org-redo)
+          ("FINISHED" . my/org-finished)
+          ("PURGE"    . my/org-purge))))
+#+end_src
 
 ** orgmode Agenda
 
@@ -1816,7 +1912,6 @@ Useful for reading books or long texts.
            (margin (max 0 (/ (- width my/centered-content-width) 2))))
       (set-window-margins nil margin margin)))
 #+end_src
-
 
 * My custom key bindings
 This is where I'm going to define my own keybindings.
