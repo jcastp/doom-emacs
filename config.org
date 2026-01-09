@@ -1541,6 +1541,21 @@ I want to track some habits in orgmode:
 #+begin_src emacs-lisp :tangle yes
 (add-to-list 'org-modules 'org-habit t)
 #+end_src
+** Refile entries
+This lets you choose refiling targets in heading depth of 9, and lets you get also the files in the same directory hierarchy.
+
+#+begin_src emacs-lisp
+  ;; all the targets
+  (setq org-refile-targets '(
+                             (org-agenda-files :maxlevel . 9)
+                             ("referencias.org" :maxlevel . 9)
+                             ("someday.org" :maxlevel . 9) ;; this is called someday.org now
+                             ("~/Nextcloud/escritura/retazos/ideas.org" :maxlevel . 9)))
+
+  (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
+  ;;(setq org-refile-use-outline-path t)                  ; Show full paths for refiling
+  (setq org-refile-use-outline-path 'file)                  ; Show full paths for refiling
+#+end_src
 
 * Writing
 ** Default dictionary
