@@ -1,7 +1,7 @@
 #+title: emacs config for work
 #+author: Javier Castilla
 #+EMAIL: jcastp@pm.me
-#+language: es
+#+language: en
 
 This configuration is just a patch to work with the work environment.
 It is supposed to run over the generic emacs config, and overwrites that config with the custom config for work environment.
@@ -64,7 +64,6 @@ I work better with fixed fonts in this kind of environments
 * Refile environment
 Since this is a different environment, I also have to change this to refile things in a different way.
 #+begin_src emacs-lisp :tangle yes
-;;  (setq org-refile-targets (quote (("adidas.org" :maxlevel . 9))))
 
 (setq org-refile-targets '(
                            (nil :maxlevel . 9)
