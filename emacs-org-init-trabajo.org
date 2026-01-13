@@ -201,6 +201,8 @@ I need a different custom agenda commands to see the tasks better.
                       ("documentation" . ?D) ("procedures" . ?P)
                       ("knowledge" . ?K) ("training" . ?T)
                       ("incident" . ?I) ("task" . ?t)
+                      ;; based on my current role
+                      ("organization" . ?o)
                       )
       )
 #+end_src
