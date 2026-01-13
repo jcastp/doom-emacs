@@ -1561,6 +1561,22 @@ This lets you choose refiling targets in heading depth of 9, and lets you get al
   ;;(setq org-refile-use-outline-path t)                  ; Show full paths for refiling
   (setq org-refile-use-outline-path 'file)                  ; Show full paths for refiling
 #+end_src
+** custom tags
+Create custom tags for different categories and contexts.
+#+begin_src emacs-lisp :tangle yes
+  (setq org-tag-alist '(
+                        ;; Areas of responsibility
+                        ("personal" . ?p) ("health" . ?H) ("financial" . ?f)
+                        ;; Contexts
+                        ("@home" . ?h)  ("@errands" . ?E) ("@computer" . ?c) ("@online" . ?o)  ("@penpaper" . ?P)
+                        ;; interests
+		        ("emacs" . ?e) ("writing" . ?w) ("reading" . ?r) ("calls" . ?C) ("blog" . ?b)
+                        ;; energy
+                        ("low_energy" . ?l) ("high_energy" . ?H)
+                        )
+        )
+#+end_src
+
 
 * Writing
 ** Default dictionary
