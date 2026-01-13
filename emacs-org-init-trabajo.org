@@ -244,7 +244,7 @@ As work is different from home, I need specific templates.
 * Load the task list for work
 #+begin_src emacs-lisp :tangle yes
 (message "--- loading work agenda")
-(find-file my-work-file)
+(doom/load-session "~/Nextcloud/config/.emacs.d/persp-confs/trabajo")
 (message "+++ loaded work agenda")
 #+end_src
 
