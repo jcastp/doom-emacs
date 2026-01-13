@@ -713,9 +713,13 @@ https://github.com/chenyanming/calibredb.el
    ))
    #+end_src
 
-** org heading numbering
+** CANCELED org heading numbering
+:LOGBOOK:
+- State "CANCELED"   from              [2026-01-13 Tue 08:02] \\
+  Removed from general org files.
+:END:
 I like to have numbering in the org headings.
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
 (add-hook 'org-mode-hook 'org-num-mode)
 #+end_src
 
