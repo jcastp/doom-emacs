@@ -453,14 +453,15 @@ This mode restricts the lines up until a set margin, and wraps them logically at
 
 #+begin_src emacs-lisp :tangle yes
 ;;; Visual Fill Column Width Configuration
+
+;; Customizable variables
+(defvar jc/vfc-prog-mode-width 110
+  "Visual fill column width for programming modes.")
+
+(defvar jc/vfc-text-mode-width 80
+  "Visual fill column width for text modes.")
+
 (after! visual-fill-column
-  ;; Customizable variables
-  (defvar jc/vfc-prog-mode-width 110
-    "Visual fill column width for programming modes.")
-
-  (defvar jc/vfc-text-mode-width 80
-    "Visual fill column width for text modes.")
-
   ;; Core function
   (defun jc/set-visual-fill-column-width ()
     "Set `visual-fill-column-width' based on current major mode.
