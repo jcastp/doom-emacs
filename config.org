@@ -1577,6 +1577,38 @@ Create custom tags for different categories and contexts.
         )
 #+end_src
 
+** org-clock
+Remap the org-clock-in to a better key binding.
+#+begin_src emacs-lisp :tangle yes
+;; this is needed to load the org-clock variables before using this function
+(require 'org-clock)
+(defun my/org-set-clock ()
+  "One-off function for `org-mode' task clocking.
+
+  Behaviour:
+   ,* When there is no running clock, start the clock for the item at point.
+   ,* When there is already a running clock and `point' is at the item which is being clocked stop the corresponding clock.
+   ,* When there is already a running clock but `point' is not at the item which is being clocked, stop the clock and restart it for item at `point'."
+  (interactive)
+  (let ((interrupting (and (not org-clock-resolving-clocks-due-to-idleness)
+                           (org-clocking-p))))
+    (if interrupting
+        (if (save-excursion
+              (org-back-to-heading t)
+              (and (equal (marker-buffer org-clock-hd-marker)
+                          (current-buffer))
+                   (= (marker-position org-clock-hd-marker)
+                      (point))
+                   (equal org-clock-current-task (nth 4 (org-heading-components)))))
+            (org-clock-out)
+          (org-clock-in))
+      (org-clock-in))
+    )
+  )
+
+;; keybindings
+(global-set-key (kbd "C-c C-x i") 'my/org-set-clock)
+#+end_src
 
 * Writing
 ** Default dictionary
