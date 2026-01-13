@@ -49,7 +49,7 @@ Have some fancy icons for the categories.
 I work better with fixed fonts in this kind of environments
 
 #+begin_src emacs-lisp
- (fontaine-set-preset 'regular-aporetic-mono)
+ (fontaine-set-preset 'work)
 #+end_src
 
 * Put the correct agenda files for work
