@@ -149,14 +149,14 @@ I need a different custom agenda commands to see the tasks better.
           )
          )
 
-                                        ; Backlog
+        ;; Backlog
         ("b" "Backlog entries" tags "backlog"
          (
           (org-agenda-overriding-header "Backlog entries")
           )
          )
 
-                                        ; 'In a day' tasks
+        ;; 'In a day' tasks
         ("d" "Today"
          ((agenda "" ((org-agenda-span 1)
                       (org-agenda-sorting-strategy
@@ -165,7 +165,7 @@ I need a different custom agenda commands to see the tasks better.
                       (org-deadline-warning-days 2)
                       ))))
 
-                                        ; 'In a week' tasks
+        ;; 'In a week' tasks
         ("w" "Week ahead"
          ((agenda "" ((org-agenda-span 7)
                       (org-agenda-sorting-strategy
@@ -176,14 +176,14 @@ I need a different custom agenda commands to see the tasks better.
           )
          )
 
-                                        ; only shows home tagged entries
+        ;; only shows home tagged entries
         ("h" "At home" tags-todo "@home"
          (
           (org-agenda-overriding-header "Home")
           )
          )
 
-                                        ; only shows outside tagged entries
+        ;; only shows outside tagged entries
         ("o" "Outside tasks" tags-todo "@outside"
          (
           (org-agenda-overriding-header "Outside")
@@ -191,6 +191,12 @@ I need a different custom agenda commands to see the tasks better.
          )
         )
       )
+
+;; Search for tasks that have no EFFORT set
+(add-to-list 'org-agenda-custom-commands
+             '("e" "Tasks without EFFORT"
+               tags-todo "EFFORT=\"\""
+               ((org-agenda-overriding-header "Tasks missing effort estimates"))))
 #+end_src
 
 * Work tags definition
