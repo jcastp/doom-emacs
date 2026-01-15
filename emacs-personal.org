@@ -1,0 +1,9 @@
+#+title: Doom emacs personal config
+#+author: Javier Castilla
+#+EMAIL: jcastp@pm.me
+#+language: es
+
+This file contains the config that I will use for my personal environment.
+#+begin_src emacs-lisp :tangle yes
+(message "Load test file")
+#+end_src

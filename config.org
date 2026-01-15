@@ -2057,6 +2057,19 @@ This is reserved for additional keybindings:
       )
 #+end_src
 
+* home related load and startup
+This will be loaded automatically when at home.
+
+#+begin_src emacs-lisp :tangle yes
+  (if my-homeenvironment-p
+      (progn
+        ;; here comes the actions I want to be done at a home environment
+        (message "loading the personal file")
+        (org-babel-load-file "~/.doom.d/emacs-personal.org")
+        )
+    )
+#+end_src
+
 * Work environment
 This will be my working environment config
 
