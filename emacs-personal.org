@@ -7,3 +7,45 @@ This file contains the config that I will use for my personal environment.
 #+begin_src emacs-lisp :tangle yes
 (message "Load test file")
 #+end_src
+
+
+* Encrypted data directories
+#+begin_src emacs-lisp :tangle yes
+;; define my clear directory
+(defvar my-clear-directory (expand-file-name "Nextcloud_claro/gocryptfs_claro" (getenv "HOME"))
+  "My decrypted directory.")
+
+;; check the directory exists
+;;(file-directory-p my-clear-directory)
+
+;; check if a directory is a mount point - against "mount" command in the OS.
+(defun is-mount-point-p (path)
+  "Check if the given PATH is a mount point."
+  (let ((mount-output (shell-command-to-string "mount")))
+    (string-match (regexp-quote path) mount-output)))
+
+;; This variable will control if my encrypted dir is mounted on the clear directory
+(defvar my-clear-directory-is-mounted-p 0
+  "My clear directory is correctly mounted - predicate.")
+
+;; Check if the directory is mounted
+(if (is-mount-point-p my-clear-directory)
+    ;; if it is mounted, we change the variable
+    (setq my-clear-directory-is-mounted-p t)
+  ;; if it is not mounted, then we should launch the script here
+  (progn
+    ;; I think we should not launch this from here, but just examine what is wrong in the OS.
+    ;;(shell-command "bash ~/Nextcloud/config/mount-encrypted-dirs.sh")
+    )
+  )
+#+end_src
+
+* Personal information
+Based on the environment variables.
+
+This uses a special file, not commited, with my personal information, located in the path below.
+It contains the variables =user-full-name= and =user-mail-address=
+#+begin_src emacs-lisp
+;; to protect my personal information, this file is not commited
+(load (expand-file-name "personal_info.el" my-data-dir))
+#+end_src

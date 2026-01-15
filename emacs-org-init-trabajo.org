@@ -8,6 +8,9 @@ It is supposed to run over the generic emacs config, and overwrites that config 
 
 * Defining my own work directory
 #+begin_src emacs-lisp :tangle yes
+(defvar my-main-work-dir "~/Nextcloud/trabajo/"
+  "My own working directory")
+
 (defvar my-work-dir "~/Nextcloud/trabajo/agenda/"
   "My own working directory")
 
@@ -19,6 +22,14 @@ It is supposed to run over the generic emacs config, and overwrites that config 
 
 (defvar my-meetings-file (concat my-work-dir "work_meetings.org")
   "My own work meetings file")
+#+end_src
+
+* work information
+This uses a special file, not commited, with my personal information, located in the path below.
+It contains the variables =user-full-name= and =user-mail-address=
+#+begin_src emacs-lisp
+;; to protect my personal information, this file is not commited
+(load (expand-file-name "work_info.el" my-main-work-dir))
 #+end_src
 
 * clear theme
