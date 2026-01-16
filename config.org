@@ -88,13 +88,15 @@ I define here some very basic variables to configure several parts of the config
 #+end_src
 
 ** Personal information
-Based on the environment variables.
+Based on the environment variables, it uses personal file or work one.
 
-This uses a special file, not commited, with my personal information, located in the path below.
+This uses a special file, not committed, with my personal information, located in the path below.
 It contains the variables =user-full-name= and =user-mail-address=
 #+begin_src emacs-lisp
 ;; to protect my personal information, this file is not commited
-(load (expand-file-name "personal_info.el" my-data-dir))
+(if my-homeenvironment-p
+    (load (expand-file-name "personal_info.el" my-data-dir))
+  (load "~/Nextcloud/trabajo/work-info.el"))
 #+end_src
 ** Start with a maximized frame
 #+begin_src emacs-lisp
