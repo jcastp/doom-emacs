@@ -169,6 +169,7 @@
        (org               ; organize your plain life in plain text
         +gnuplot
         +journal
+        +hugo
         +pandoc
         ;;+pretty
         +roam)
