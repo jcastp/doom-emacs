@@ -1689,7 +1689,7 @@ Translate from english to spanish
 	 :engines (gt-bing-engine)
 	 ;; Optional: Change the output method for potentially better readability
 	 ;; For example, using a dedicated buffer instead of the echo area:
-	 ;; :render (gt-buffer-render)
+	 :render (gt-buffer-render)
 	 ;; Or using a floating window:
 	 ;; :render (gt-posframe-pop-render)
 	 ;; The default render (gt-render) outputs to the echo area.
