@@ -29,7 +29,7 @@ This uses a special file, not commited, with my personal information, located in
 It contains the variables =user-full-name= and =user-mail-address=
 #+begin_src emacs-lisp
 ;; to protect my personal information, this file is not commited
-(load (expand-file-name "work_info.el" my-main-work-dir))
+(load (expand-file-name "work-info.el" my-main-work-dir))
 #+end_src
 
 * clear theme
