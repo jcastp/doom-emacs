@@ -1610,6 +1610,14 @@ Remap the org-clock-in to a better key binding.
 (global-set-key (kbd "C-c C-x i") 'my/org-set-clock)
 #+end_src
 
+** TODO org-modern changes
+I want to change some things in the org-modern
+#+begin_src emacs-lisp :tangle yes
+(after! org-modern
+  (setq org-modern-progress 8)
+)
+#+end_src
+
 * Writing
 ** Default dictionary
 I write more and more in spanish. I will take the spanish dictionary as the default one, and will be adding the en_US one as ispell-local-dictionary local variable in the files I need it.
@@ -1814,8 +1822,8 @@ Load the org-scribe-planner package
 #+begin_src emacs-lisp :tangle no
   (use-package org-scribe-planner
   :vc (:url "https://codeberg.org/jcastp/org-scribe-planner"
-  	    :branch "main"
-  	    :rev :newest)
+       :branch "main"
+       :rev :newest)
   :after org)
 #+end_src
 
