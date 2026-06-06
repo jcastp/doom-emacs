@@ -14,7 +14,7 @@
 ;;   Alternatively, press 'gd' (or 'C-c c d') on a module to browse its
 ;;   directory (for easy access to its source code).
 
-doom! :input
+(doom! :input
 ;;bidi              ; (tfel ot) thgir etirw uoy gnipleh
 ;;chinese
 ;;japanese
@@ -201,4 +201,4 @@ sh                ; she sells {ba,z,fi}sh shells on the C xor
 
 :config
 literate
-(default +bindings +smartparens)
+(default +bindings +smartparens))
