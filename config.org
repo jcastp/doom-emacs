@@ -1,0 +1,18 @@
+#+title: Config
+* Testing values to start the config
+#+begin_src emacs-lisp :tangle yes
+(setq my-test-var "testing value")
+#+end_src
+* Evil customizations
+** evil-escape
+Instead of hitting ESC, that is outside my normal home reach, we will use a key chord for it.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! evil-escape)
+#+end_src
+
+I will use this chord to mark escape.
+#+begin_src emacs-lisp :tangle yes
+(evil-escape-mode)
+(setq-default evil-escape-key-sequence "jk")
+#+end_src
