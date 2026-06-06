@@ -87,6 +87,16 @@ I define here some very basic variables to configure several parts of the config
   )
 #+end_src
 
+** Personal information
+Based on the environment variables.
+
+This uses a special file, not commited, with my personal information, located in the path below.
+It contains the variables =user-full-name= and =user-mail-address=
+#+begin_src emacs-lisp
+;; to protect my personal information, this file is not commited
+(load (expand-file-name "personal_info.el" my-data-dir))
+#+end_src
+
 * Evil customizations
 ** evil-escape
 Instead of hitting ESC, that is outside my normal home reach, we will use a key chord for it.
