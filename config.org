@@ -1,4 +1,17 @@
-#+title: personal doom emacs config
+#+title: doom emacs config
+#+author: Javier Castilla
+#+EMAIL: jcastp@pm.me
+#+language: en
+* Summary
+This is the literate config for my doom emacs use cases.
+
+I will try to document and compartmentalize the sections, so it's easier to follow up, but it won't always be possible, as some functions overlap, and I'm usually a messy person when speaking of testing.
+
+* General
+** emacs lisp lexical binding
+#+begin_src emacs-lisp :tangle yes
+;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+#+end_src
 
 * Evil customizations
 ** evil-escape
