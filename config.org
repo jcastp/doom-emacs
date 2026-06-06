@@ -1,8 +1,5 @@
-#+title: Config
-* Testing values to start the config
-#+begin_src emacs-lisp :tangle yes
-(setq my-test-var "testing value")
-#+end_src
+#+title: personal doom emacs config
+
 * Evil customizations
 ** evil-escape
 Instead of hitting ESC, that is outside my normal home reach, we will use a key chord for it.
