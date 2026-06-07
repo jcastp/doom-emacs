@@ -138,6 +138,48 @@ All the config related to the bookmarks.
 (setq bookmark-default-file (expand-file-name "bookmarks" my-data-dir))
 (setq bookmark-save-flag 1)  ;save bookmarks to .emacs.bmk after each entry
 #+end_src
+** Abbreviation mode
+Defines a set of abbreviations that permits complete words with just some characters.
+
+#+begin_src emacs-lisp
+;;where do we read the abbrevs from
+(setq abbrev-file-name (expand-file-name "abbrev_defs" my-data-dir))
+(setq-default abbrev-mode t)
+;; save abbrevs when files are saved
+(setq save-abbrevs 'silently)
+#+end_src
+** electric pair mode
+To automatically close parenthesis and other punctuation signs.
+
+#+begin_src emacs-lisp
+(electric-pair-mode 1)
+;; make electric-pair-mode work on more sets of punctuation signs.
+(setq electric-pair-pairs
+      '(
+        (?\¡ . ?\!)
+        (?\¿ . ?\?)
+        )
+      )
+
+(setq electric-pair-inhibit-predicate
+      `(lambda (c)
+         (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c)))
+      )
+      #+end_src
+** set firefox or librewolf as the default browser
+Setting firefox or librewolf as the default browser for opening http/s links.
+#+begin_src emacs-lisp
+  (setq librewolf_path "/usr/bin/librewolf")
+  ;; check if librewolf is installed
+  (if (file-exists-p librewolf_path)
+       (progn
+         (setq browse-url-firefox-program "librewolf")
+         (setq browse-url-browser-function 'browse-url-firefox))
+    ;; if no librewolf installed, we fall back to firefox
+     (progn
+       (setq browse-url-firefox-program "firefox")
+       (setq browse-url-browser-function 'browse-url-firefox)))
+#+end_src
 
 * Evil customizations
 ** evil-escape
@@ -151,4 +193,52 @@ I will use this chord to mark escape.
 #+begin_src emacs-lisp :tangle yes
 (evil-escape-mode)
 (setq-default evil-escape-key-sequence "jk")
+#+end_src
+* UI
+** Time and date
+Put time and date on the status line
+
+#+begin_src emacs-lisp
+(setq display-time-day-and-date t
+      display-time-24hr-format t)
+(display-time)
+#+end_src
+
+** full path in the title bar
+Put the complete path on the title bar, along the filename.
+
+#+begin_src emacs-lisp
+(setq-default frame-title-format "%b - (%f)")
+#+end_src
+
+** Battery management
+On laptops it's nice to know how much power you have.
+
+#+begin_src emacs-lisp
+(unless (string-match-p "^Power N/A" (battery))
+  (display-battery-mode 1)
+  )
+#+end_src
+
+** Parens mode global
+To show matching parens in all the buffers and modes.
+
+#+begin_src emacs-lisp
+(show-smartparens-global-mode 1)
+#+end_src
+** TODO ace-window
+To better manage more buffers in screen, as seen here: https://github.com/abo-abo/ace-window
+
+Used in the hydra snippets.
+#+begin_src emacs-lisp
+(use-package! ace-window
+  :config
+  (setq aw-scope 'frame)
+  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+  ;; (global-set-key (kbd "M-o") 'ace-window)
+  ;; make the characters bigger, so it is easy to see
+  (custom-set-faces
+   '(aw-leading-char-face
+     ((t (:inherit ace-jump-face-foreground :height 3.0)))))
+  )
 #+end_src
