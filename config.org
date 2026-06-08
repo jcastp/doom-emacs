@@ -556,3 +556,14 @@ Outline
 (map! :leader
       :desc "Search outline"   "s o" #'consult-outline)
 #+end_src
+
+* Work environment
+This will be my working environment config
+
+#+begin_src emacs-lisp :tangle yes
+;; Load this config when using the work computer
+(if my-workenvironment-p
+    (progn
+      (message "loading the work file")
+      (org-babel-load-file "~/.doom.d/emacs-org-init-trabajo.org")))
+#+end_src
