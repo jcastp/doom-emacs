@@ -930,6 +930,18 @@ Open a random roam node with the roamtag tag (that maps to a TODO entry).
 ;; (global-set-key (kbd "C-c n T") 'my/random-roam-todo-node)
 #+end_src
 
+* Writing
+** english and spanish dictionaries
+#+begin_src emacs-lisp :tangle yes
+(after! ispell
+  (setq ispell-program-name "hunspell")
+  (setq ispell-extra-args '("-i" "utf-8"))
+  (add-to-list 'ispell-local-dictionary-alist
+               '("en_US,es_ES"
+                 "[[:alpha:]]" "[^[:alpha:]]" "[']" t
+                 ("-d" "en_US,es_ES") nil utf-8))
+  (setq ispell-dictionary "en_US,es_ES"))
+#+end_src
 * Testing
 
 ** TODO elfeed and elfeed-org
