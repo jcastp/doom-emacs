@@ -257,3 +257,46 @@ I want to map the avy jump functions to some doom emacs keybindings.
       :map evilem-map
       "l" #'evil-avy-goto-line)
 #+end_src
+
+** Open indirect buffer
+Open a branch into a different frame, but the same buffer:
+
+#+begin_src emacs-lisp
+;; this is done to open the indirect buffer in another window
+;; instead on the main one
+(use-package! org
+  :config
+  (setq org-indirect-buffer-display 'other-window)
+
+  (defun my/org-tree-open-in-right-frame ()
+    "Open the subtree in a dedicated buffer."
+    (interactive)
+    (org-tree-to-indirect-buffer)
+    ;;(windmove-right)
+    (other-window 1) ;; to move to the newly generated window
+    )
+
+  (map! :leader
+        :desc "Open org tree to indirect buffer"
+        "8" #'my/org-tree-open-in-right-frame)
+  )
+  #+end_src
+* org
+** some org configs for better behavior and usage
+#+begin_src emacs-lisp
+(after! org
+  (setq
+   ;; tag alignment
+   ;; this value allows for modern themes and column fill to work well together.
+   org-auto-align-tags t
+   org-tags-column -80
+   ;; org fold - edit in an invisible region
+   org-fold-catch-invisible-edits 'show-and-error
+   ;; C-a and C-e will move the cursor just the heading. No todo keyworks, no tags
+   org-special-ctrl-a/e t
+   ;; insert new heading after the current subtree
+   org-insert-heading-respect-content t
+   ;; we can close parent tasks even if successors are still open
+   org-enforce-todo-dependencies nil
+   ))
+   #+end_src
