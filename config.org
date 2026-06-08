@@ -230,8 +230,10 @@ I will use this chord to mark escape.
 ;; wasn't installed correctly. Font issues are rarely Doom issues!
 ;; (setq doom-font (font-spec :family "DejaVu Sans Mono" :size 15 :weight 'semi-light)
       ;; doom-variable-pitch-font (font-spec :family "DejaVu Sans Mono" :size 15))
-(setq doom-font (font-spec :family "Hack" :size 15 :weight 'semi-light)
-      doom-variable-pitch-font (font-spec :family "DejaVu Sans Mono" :size 15))
+(setq doom-font (font-spec :family "Hack" :size 15)
+      doom-variable-pitch-font (font-spec :family "ETBembo" :size 15)
+      doom-big-font (font-spec :family "Hack" :size 28)
+      )
 
 #+end_src
 
