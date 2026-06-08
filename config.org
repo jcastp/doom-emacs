@@ -321,3 +321,57 @@ Change notes are stored in the node's drawer, so we can fold it conveniently.
 (after! org
   (setq org-log-into-drawer t))
 #+end_src
+** Custom states for the tasks
+These are the custom states for the tasks, and the character associated to it.
+
+#+begin_src emacs-lisp
+(after! org
+  (setq org-todo-keywords
+        '(
+          ;; Status for tasks
+          (sequence "TODO(t)" "ONGOING(o)" "WAITING(w@/!)" "|" "DONE(d!)" "CANCELED(c@/!)")
+          ;; Status for writing
+          (sequence "TOWRITE(j)" "TOREVIEW(k@/!)" "REDO(l@/!)" "|" "FINISHED(ñ)" "PURGE(p@/!)"))))
+#+end_src
+** orgmode Agenda
+
+All the agenda configs
+
+*** Agenda files
+We define the agenda files in this variable
+
+#+begin_src emacs-lisp
+(after! org
+  (setq org-agenda-files '(
+                           ;; normal task files
+                           "~/Nextcloud/agenda/tasks.org"
+                           ;; added this one to be able to search in it, and add from here to the main task files.
+                           "~/Nextcloud/agenda/someday.org")))
+#+end_src
+
+*** icons for the agenda categories
+Have some fancy icons for the categories.
+#+begin_src emacs-lisp
+(after! org
+  (customize-set-value
+   'org-agenda-category-icon-alist
+   `(
+     ("calendar" "~/Nextcloud/config/icons/calendar.svg" nil nil :ascent center :mask heuristic)
+     ("tasks" "~/Nextcloud/config/icons/check-square.svg" nil nil :ascent center :mask heuristic)
+     ("projects" "~/Nextcloud/config/icons/list.svg" nil nil :ascent center :mask heuristic)
+     ("financial" "~/Nextcloud/config/icons/dollar-sign.svg" nil nil :ascent center :mask heuristic)
+     ("birthdays" "~/Nextcloud/config/icons/heart.svg" nil nil :ascent center :mask heuristic)
+     ("revision" "~/Nextcloud/config/icons/shuffle.svg" nil nil :ascent center :mask heuristic)
+     ("habits" "~/Nextcloud/config/icons/refresh-ccw.svg" nil nil :ascent center :mask heuristic)
+     ("care" "~/Nextcloud/config/icons/heart.svg" nil nil :ascent center :mask heuristic))))
+#+end_src
+
+*** Get rid of the DONE tasks in the agenda view
+We dont want the cluttering in our views. If a task is done, don't show it on the agenda view.
+
+#+begin_src emacs-lisp
+(after! org
+  (setq org-agenda-skip-scheduled-if-done t)
+  (setq org-agenda-skip-deadline-if-done t)
+  (setq org-agenda-skip-timestamp-if-done t))
+#+end_src
