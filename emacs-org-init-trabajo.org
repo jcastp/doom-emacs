@@ -53,6 +53,7 @@ Have some fancy icons for the categories.
      ("tasks" "~/Nextcloud/config/icons/check-square.svg" nil nil :ascent center :mask heuristic)
      ("projects" "~/Nextcloud/config/icons/list.svg" nil nil :ascent center :mask heuristic)
      ("okr" "~/Nextcloud/config/icons/target.svg" nil nil :ascent center :mask heuristic)
+     ("management" "~/Nextcloud/config/icons/users.svg" nil nil :ascent center :mask heuristic)
      ("inbox" "~/Nextcloud/config/icons/inbox.svg" nil nil :ascent center :mask heuristic))))
 #+end_src
 
@@ -107,10 +108,10 @@ I need a different custom agenda commands to see the tasks better.
              '("d" "Daily driver"
                (
                 ;; Incidents override everything — deal with them first
-                (tags-todo "+incident"
-                           ((org-agenda-overriding-header "[ INCIDENTS ]")
-                            (org-agenda-sorting-strategy '(priority-down ts-up))
-                            (org-agenda-prefix-format " %i %-16:c %5e ")))
+                ;; (tags-todo "+incident"
+                ;; 	   ((org-agenda-overriding-header "[ INCIDENTS ]")
+                ;; 	    (org-agenda-sorting-strategy '(priority-down ts-up))
+                ;; 	    (org-agenda-prefix-format " %i %-16:c %5e ")))
 
                 ;; Priority A: explicit commitments
                 (tags-todo "+PRIORITY=\"A\"-incident"
@@ -262,11 +263,11 @@ I need a different custom agenda commands to see the tasks better.
              '("ca" "By domain area"
                (
                 ;; Incidents cut across all domains — show them first
-                (tags-todo "+incident"
-                           ((org-agenda-overriding-header "[ INCIDENTS ]")
-                            (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo '("DONE" "DELEGATED" "CANCELED")))
-                            (org-agenda-sorting-strategy '(priority-down ts-up))
-                            (org-agenda-prefix-format " %i %-16:c %5e ")))
+                ;; (tags-todo "+incident"
+                ;; 	   ((org-agenda-overriding-header "[ INCIDENTS ]")
+                ;; 	    (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo '("DONE" "DELEGATED" "CANCELED")))
+                ;; 	    (org-agenda-sorting-strategy '(priority-down ts-up))
+                ;; 	    (org-agenda-prefix-format " %i %-16:c %5e ")))
 
                 (tags-todo "+detection-incident"
                            ((org-agenda-overriding-header "[ DETECTION ]")
@@ -286,14 +287,26 @@ I need a different custom agenda commands to see the tasks better.
                             (org-agenda-sorting-strategy '(todo-state-up priority-down effort-up))
                             (org-agenda-prefix-format " %i %-16:c %5e ")))
 
-                (tags-todo "+organization-incident"
-                           ((org-agenda-overriding-header "[ ORGANIZATION / MANAGEMENT ]")
+                (tags-todo "+management-incident"
+                           ((org-agenda-overriding-header "[ MANAGEMENT ]")
+                            (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo '("DONE" "DELEGATED" "CANCELED")))
+                            (org-agenda-sorting-strategy '(todo-state-up priority-down effort-up))
+                            (org-agenda-prefix-format " %i %-16:c %5e ")))
+
+                (tags-todo "+edr-incident"
+                           ((org-agenda-overriding-header "[ EDR ]")
+                            (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo '("DONE" "DELEGATED" "CANCELED")))
+                            (org-agenda-sorting-strategy '(todo-state-up priority-down effort-up))
+                            (org-agenda-prefix-format " %i %-16:c %5e ")))
+
+                (tags-todo "+ai-incident"
+                           ((org-agenda-overriding-header "[ AI ]")
                             (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo '("DONE" "DELEGATED" "CANCELED")))
                             (org-agenda-sorting-strategy '(todo-state-up priority-down effort-up))
                             (org-agenda-prefix-format " %i %-16:c %5e ")))
 
                 ;; Catch-all: tasks with no domain tag — they need one
-                (tags-todo "-incident-detection-automation-emailsec-organization"
+                (tags-todo "-incident-detection-automation-emailsec-edr-ai-management"
                            ((org-agenda-overriding-header "[ UNTAGGED — needs a domain tag ]")
                             (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo '("DONE" "DELEGATED" "CANCELED")))
                             (org-agenda-sorting-strategy '(priority-down effort-up))
@@ -346,7 +359,7 @@ I need a different custom agenda commands to see the tasks better.
              '("ci" "Inbox triage — process captured items"
                (
                 ;; Tasks with no domain: they are floating and invisible in the domain view
-                (tags-todo "-incident-detection-automation-emailsec-organization-okr"
+                (tags-todo "-incident-detection-automation-emailsec-edr-ai-okr-management"
                            ((org-agenda-overriding-header "[ NEEDS DOMAIN TAG ]")
                             (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo '("DONE" "DELEGATED" "CANCELED")))
                             (org-agenda-sorting-strategy '(ts-up))
@@ -379,13 +392,14 @@ I need a different custom agenda commands to see the tasks better.
 * Work tags definition
 #+begin_src emacs-lisp :tangle yes
 (setq org-tag-alist '(
-                      ("detection" . ?d) ("automation" . ?a) ("emailsec" . ?e)
+                      ("detection" . ?d) ("automation" . ?a) ("emailsec" . ?E)
+                      ("edr" . ?e) ("ai" . ?A) ("management" . ?m)
                       ;; other tags
                       ("documentation" . ?D) ("procedures" . ?P)
                       ("knowledge" . ?K) ("training" . ?T)
                       ("incident" . ?I) ("task" . ?t)
                       ;; based on my current role
-                      ("organization" . ?o) ("people" . ?p)
+                      ("people" . ?p)
                       )
       )
 #+end_src
@@ -414,10 +428,10 @@ As work is different from home, I need specific templates.
                (file+headline my-work-file "Inbox")
                "** TODO %? %^g %^{EFFORT}p"))
 
-(add-to-list 'org-capture-templates
-             '("I" "New incident." entry
-               (file+headline my-work-file "Incidents")
-               "** TODO %?"))
+;; (add-to-list 'org-capture-templates
+;;              '("I" "New incident." entry
+;;                (file+headline my-work-file "Incidents")
+;;                "** TODO %?"))
 
 (add-to-list 'org-capture-templates
              '("b" "Backlog entry." entry
