@@ -496,6 +496,12 @@ Create custom tags for different categories and contexts.
                         )
         )
 #+end_src
+** reassign org-capture keybinding
+#+begin_src emacs-lisp :tangle yes
+(map! :leader
+      :desc "org-capture"
+      "x" #'org-capture)
+#+end_src
 * Testing
 
 ** TODO elfeed and elfeed-org
