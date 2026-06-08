@@ -300,3 +300,24 @@ Open a branch into a different frame, but the same buffer:
    org-enforce-todo-dependencies nil
    ))
    #+end_src
+
+** org-id
+To create and use internal valid and unique links in org-mode, we will use the =org-id= features.
+#+begin_src emacs-lisp
+(after! org
+  ;; org-id are globally unique UUIDs
+  (setq org-id-method 'uuid)
+  ;; It will use the CUSTOM_ID, if it exists
+  ;;or will create a new one in the form or UUID, as seen above
+  (setq org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
+  ;; file to store the local =org-id= locations
+  ;; This way is synced to all my computers
+  (setq org-id-locations-file (expand-file-name "org-id-locations" my-data-dir)))
+#+end_src
+
+** Completion notes in to the Logbook
+Change notes are stored in the node's drawer, so we can fold it conveniently.
+#+begin_src emacs-lisp
+(after! org
+  (setq org-log-into-drawer t))
+#+end_src
