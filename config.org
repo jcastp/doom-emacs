@@ -466,3 +466,33 @@ When you want to write something fast using org mode, but you don't want to crea
       :desc "Open an org scratch buffer"
       "f o" #'my/scratch-org-buffer)
 #+end_src
+** Refile entries
+This lets you choose refiling targets in heading depth of 9, and lets you get also the files in the same directory hierarchy.
+
+#+begin_src emacs-lisp
+  ;; all the targets
+  (setq org-refile-targets '(
+                             (org-agenda-files :maxlevel . 9)
+                             ("referencias.org" :maxlevel . 9)
+                             ("someday.org" :maxlevel . 9) ;; this is called someday.org now
+                             ("~/Nextcloud/escritura/retazos/ideas.org" :maxlevel . 9)))
+
+  (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
+  ;;(setq org-refile-use-outline-path t)                  ; Show full paths for refiling
+  (setq org-refile-use-outline-path 'file)                  ; Show full paths for refiling
+#+end_src
+** custom tags
+Create custom tags for different categories and contexts.
+#+begin_src emacs-lisp :tangle yes
+  (setq org-tag-alist '(
+                        ;; Areas of responsibility
+                        ("personal" . ?p) ("health" . ?H) ("financial" . ?f)
+                        ;; Contexts
+                        ("@home" . ?h)  ("@errands" . ?E) ("@computer" . ?c) ("@online" . ?o)  ("@penpaper" . ?P)
+                        ;; interests
+		        ("emacs" . ?e) ("writing" . ?w) ("reading" . ?r) ("calls" . ?C) ("blog" . ?b)
+                        ;; energy
+                        ("low_energy" . ?l) ("high_energy" . ?H)
+                        )
+        )
+#+end_src
