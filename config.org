@@ -413,3 +413,56 @@ Here I will add template captures for doing several things:
                                 :empty-lines-after 1)
                                )))
   #+end_src
+** Capture to this buffer
+Inspired by https://github.com/ballantony/emacs-writing/blob/main/DoomEmacsWriting.org
+
+Used to capture notes in this file. Useful to maintain notes and snippets separated by projects.
+#+begin_src emacs-lisp
+(after! org
+  (defun my/capture-to-this-buffer ()
+    "Capture a note to the current buffer’s file, under the headline \"Notes\")."
+    (interactive)
+    ;; Make sure we are in an Org buffer.
+    (unless (derived-mode-p 'org-mode)
+      (user-error "Can’t capture to a non‑Org buffer"))
+
+    ;; Choose the destination that actually exists.
+    (let ((target (buffer-file-name)))
+      ;; Build a temporary capture template that points at TARGET.
+      (let ((org-capture-templates
+             `(("t" "Todo"
+                entry
+                (file+headline ,target "Notes")
+                "** TODO %?"))))
+        ;; Run the capture UI.
+        (org-capture)))))
+#+end_src
+** Create an org scratch buffer
+https://emacs.stackexchange.com/questions/16492/is-it-possible-to-create-an-org-mode-scratch-buffer
+
+When you want to write something fast using org mode, but you don't want to create a new file.
+
+#+begin_src emacs-lisp
+(defun my/scratch-org-buffer ()
+  "Create a new scratch buffer -- \*hello-world\*"
+  (interactive)
+  (let ((n 0)
+        bufname buffer)
+    (catch 'done
+      (while t
+        (setq bufname (concat "*org-scratch"
+                              (if (= n 0) "" (int-to-string n))
+                              "*"))
+        (setq n (1+ n))
+        (when (not (get-buffer bufname))
+          (setq buffer (get-buffer-create bufname))
+          (with-current-buffer buffer
+            (org-mode)
+            (insert "# org-scratch buffer\n"))
+          ;; When called non-interactively, the `t` targets the other window (if it exists).
+          (throw 'done (select-window (display-buffer buffer t))))))))
+
+(map! :leader
+      :desc "Open an org scratch buffer"
+      "f o" #'my/scratch-org-buffer)
+#+end_src
