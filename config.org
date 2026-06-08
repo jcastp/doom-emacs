@@ -312,6 +312,47 @@ Open a branch into a different frame, but the same buffer:
         "8" #'my/org-tree-open-in-right-frame)
   )
   #+end_src
+** visual fill column
+https://github.com/joostkremers/visual-fill-column
+This mode restricts the lines up until a set margin, and wraps them logically at that point.
+
+#+begin_src emacs-lisp :tangle yes
+;;; Visual Fill Column Width Configuration
+
+;; Customizable variables
+(defvar jc/vfc-prog-mode-width 110
+  "Visual fill column width for programming modes.")
+
+(defvar jc/vfc-text-mode-width 80
+  "Visual fill column width for text modes.")
+
+(after! visual-fill-column
+  ;; Core function
+  (defun jc/set-visual-fill-column-width ()
+    "Set `visual-fill-column-width' based on current major mode.
+Uses `jc/vfc-prog-mode-width' for prog-mode derivatives and
+`jc/vfc-text-mode-width' for text-mode derivatives."
+    (setq-local visual-fill-column-width
+                (cond
+                 ((derived-mode-p 'prog-mode) jc/vfc-prog-mode-width)
+                 ((derived-mode-p 'text-mode) jc/vfc-text-mode-width)
+                 (t visual-fill-column-width))))
+
+  ;; Hook configuration
+  (add-hook 'prog-mode-hook #'jc/set-visual-fill-column-width)
+  (add-hook 'text-mode-hook #'jc/set-visual-fill-column-width)
+
+;; Center text configuration
+(setq visual-fill-column-center-text nil))
+
+;; Map the visual mode toggle (outside the after! block)
+(map! :leader
+      ;; remapping this as I don't use it that much
+      :desc "visible mode"            "t V" #'visible-mode
+      ;; assigning this to my more used visible-fill-column-mode
+      :desc "visual fill column"      "t v" #'visual-fill-column-mode)
+#+end_src
+
 * org
 ** some org configs for better behavior and usage
 #+begin_src emacs-lisp
