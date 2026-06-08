@@ -375,3 +375,41 @@ We dont want the cluttering in our views. If a task is done, don't show it on th
   (setq org-agenda-skip-deadline-if-done t)
   (setq org-agenda-skip-timestamp-if-done t))
 #+end_src
+** TODO Capture templates
+Here I will add template captures for doing several things:
+
+#+begin_src emacs-lisp :tangle yes
+(after! org
+  (setq org-capture-templates'(
+                               ;; task related captures
+                               ("t" "My TODO task format." entry
+                                (file+headline "~/Nextcloud/agenda/tasks.org" "Tasks")
+                                "** TODO %i%? %^g\n:PROPERTIES:\n:CATEGORY: tasks\n:END:\n"
+                                :empty-lines-after 1)
+
+                               ("p" "New project." entry
+                                (file+headline "~/Nextcloud/agenda/tasks.org" "Tasks")
+                                "** TODO %? %^g\n:PROPERTIES:\n:COOKIE_DATA: todo recursive\n:CATEGORY: project\n:END:\n"
+                                :empty-lines-after 1)
+
+                               ;; Writing related things
+
+                               ;; Everything that I find interesting to create, no matter what it is
+                               ("h" "Compost heap" item
+                                (file+headline "~/Nextcloud/escritura/retazos/compost_heap.org" "Compost heap")
+                                "%i"
+                                :empty-lines-after 1)
+
+                               ;; A possible writing idea
+                               ("w" "Writing idea." entry
+                                (file+headline "~/Nextcloud/escritura/retazos/ideas.org" "Ideas")
+                                "** TODO %?\n*** Personajes\n- \n*** Ambientación\n*** Eventos\n"
+                                :empty-lines-after 1)
+
+                               ;; An interesenting character
+                               ("P" "Personaje" entry
+                                (file "~/Nextcloud/escritura/retazos/personajes.org")
+                                "* %i%?"
+                                :empty-lines-after 1)
+                               )))
+  #+end_src
