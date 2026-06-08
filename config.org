@@ -97,6 +97,10 @@ It contains the variables =user-full-name= and =user-mail-address=
 (load (expand-file-name "personal_info.el" my-data-dir))
 #+end_src
 
+** Start with a maximized frame
+#+begin_src emacs-lisp
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+#+end_src
 ** Save command history
 It is nice to have commands and their history saved so that every time you get back to work, you can just re-run stuff as you need it. It isn't a radical feature, it is just part of a good user experience.
 
