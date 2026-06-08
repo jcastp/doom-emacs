@@ -242,3 +242,18 @@ Used in the hydra snippets.
      ((t (:inherit ace-jump-face-foreground :height 3.0)))))
   )
 #+end_src
+
+** avy can select from any window
+To make avy able to select from any window in sight. This allows to change from one window to another in just one step.
+#+begin_src emacs-lisp :tangle yes
+(setq avy-all-windows t)
+#+end_src
+
+** avy keyconfig for goto line
+I want to map the avy jump functions to some doom emacs keybindings.
+
+#+begin_src emacs-lisp :tangle yes
+(map! :after evil-easymotion
+      :map evilem-map
+      "l" #'evil-avy-goto-line)
+#+end_src
