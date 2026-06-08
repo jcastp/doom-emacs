@@ -497,6 +497,7 @@ Create custom tags for different categories and contexts.
         )
 #+end_src
 ** reassign org-capture keybinding
+I want to have a less complex keybinding for my emacs.
 #+begin_src emacs-lisp :tangle yes
 (map! :leader
       :desc "org-capture"
@@ -506,12 +507,7 @@ Create custom tags for different categories and contexts.
 
 ** TODO elfeed and elfeed-org
 Configuration for the elfeed and the org files.
-#+begin_src emacs-lisp :tangle packages.el
-(package! elfeed)
-(package! elfeed-org)
-#+end_src
-
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
 ;; database for elfeed
 (use-package! elfeed
   :config
@@ -532,6 +528,7 @@ Configuration for the elfeed and the org files.
     (elfeed)
     (elfeed-update)))
 #+end_src
+
 * My custom key bindings
 This is where I'm going to define my own keybindings.
 ** Buffer related keybindings
