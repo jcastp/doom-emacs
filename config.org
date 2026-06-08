@@ -255,6 +255,25 @@ Used in the hydra snippets.
   )
 #+end_src
 
+** dimmer
+I want to differentiate the window I'm working with.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! dimmer
+  :recipe (:host github :repo "gonewest818/dimmer.el"))
+#+end_src
+
+#+begin_src emacs-lisp
+;;(dimmer-configure-which-key)
+(dimmer-mode t)
+(dimmer-configure-magit)
+(dimmer-configure-org)
+
+;; configure the dimmer
+(setq dimmer-adjustment-mode :both)
+(setq dimmer-fraction 0.3)
+#+end_src
+
 ** avy can select from any window
 To make avy able to select from any window in sight. This allows to change from one window to another in just one step.
 #+begin_src emacs-lisp :tangle yes
