@@ -526,3 +526,33 @@ Configuration for the elfeed and the org files.
     (elfeed)
     (elfeed-update)))
 #+end_src
+* My custom key bindings
+This is where I'm going to define my own keybindings.
+** Buffer related keybindings
+Mapping special keybindings for buffer related functions.
+
+#+begin_src emacs-lisp :tangle yes
+(map! :leader
+      (:prefix-map ("b" . "buffers")
+       :desc "capture to this buffer"  "c"  #'my/capture-to-this-buffer
+       :desc "switch to buffer" "b" #'switch-to-buffer
+       :desc "kill buffer" "k" #'kill-current-buffer
+       :desc "list buffers" "l" #'list-buffers
+       :desc "ibuffer" "i" #'ibuffer
+       :desc "orgmode scratch buffer" "o" #'my/scratch-org-buffer
+       :desc "scratch buffer" "x" #'doom/toggle-scratch-buffer))
+#+end_src
+** Additional keybindings
+
+Online related keybindings
+#+begin_src emacs-lisp :tangle yes
+(map! :leader
+      :desc "eww"      "o b" #'eww
+      :desc "elfeed"   "o e" #'my/elfeed)
+#+end_src
+
+Outline
+#+begin_src emacs-lisp :tangle yes
+(map! :leader
+      :desc "Search outline"   "s o" #'consult-outline)
+#+end_src
