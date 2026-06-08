@@ -163,6 +163,7 @@
        (org                             ; organize your plain life in plain text
         +dragndrop
         ;; +pretty
+        +journal
         )
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more

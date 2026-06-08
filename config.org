@@ -534,6 +534,24 @@ I want to have a less complex keybinding for my emacs.
       :desc "org-capture"
       "x" #'org-capture)
 #+end_src
+** org-journal
+This is for journaling every day, if possible.
+Documentation can be found here:
+
+https://github.com/bastibe/org-journal
+
+#+begin_src emacs-lisp
+;;("C-c r ñ" . org-journal-new-entry)
+(use-package! org-journal
+  :config
+  (setq org-journal-date-prefix "#+TITLE: ")
+  (setq org-journal-file-format "%Y-%m-%d.org")
+  (setq org-journal-dir (expand-file-name "personal/diario" my-clear-directory))
+  (setq org-journal-date-format "%A, %d %B %Y")
+  (setq org-journal-encrypt-journal nil)
+  )
+#+end_src
+
 * Testing
 
 ** TODO elfeed and elfeed-org
