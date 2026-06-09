@@ -998,6 +998,48 @@ Configuration for the elfeed and the org files.
     (elfeed-update)))
 #+end_src
 
+** Center a buffer in screen
+Sometimes I have just a single window and this is a problem for me in a big screen. This code just centers the text in the middle.
+Useful for reading books or long texts.
+
+#+begin_src emacs-lisp
+  (defcustom my/centered-content-width 100
+    "Width of the centered content area in characters."
+    :type 'integer
+    :group 'editing-basics)
+
+  (defun my/centered-content-width-value ()
+    "Prompt the user for a value and set `my/centered-content-width` to it."
+    (interactive)
+    (setq my/centered-content-width (string-to-number (read-from-minibuffer "Value for centered width: "))))
+
+  (defvar my/centered-mode nil)
+
+  (define-minor-mode my/centered-mode
+    "Minor mode to center buffer content using margins and visual line mode."
+    :init-value nil
+    :global nil
+    :lighter " [Centered]"
+    :group 'editing-basics
+    (if my/centered-mode
+        (progn
+          (visual-line-mode 1)
+          (add-hook 'window-configuration-change-hook
+                    #'my/centered--update-margins nil t)
+          (my/centered--update-margins))
+      (progn
+        (visual-line-mode 1)
+        (remove-hook 'window-configuration-change-hook
+                     #'my/centered--update-margins t)
+        (set-window-margins nil 0 0))))
+
+  (defun my/centered--update-margins ()
+    "Calculate and apply margins to center 100-character content."
+    (let* ((width (frame-width))
+           (margin (max 0 (/ (- width my/centered-content-width) 2))))
+      (set-window-margins nil margin margin)))
+#+end_src
+
 * My custom key bindings
 This is where I'm going to define my own keybindings.
 ** Buffer related keybindings
@@ -1029,19 +1071,24 @@ Mapping my org roam functions:
 
 ** Additional keybindings
 
-Online related keybindings
+Online features related keybindings
 #+begin_src emacs-lisp :tangle yes
 (map! :leader
       :desc "eww"      "o b" #'eww
       :desc "elfeed"   "o e" #'my/elfeed)
 #+end_src
 
-Outline
+Outline search
 #+begin_src emacs-lisp :tangle yes
 (map! :leader
       :desc "Search outline"   "s o" #'consult-outline)
 #+end_src
 
+Center buffer in the screen keybinding.
+#+begin_src emacs-lisp :tangle yes
+(map! :leader
+      :desc "center buffer in screen" "b C" #'my/centered-mode)
+#+end_src
 * Work environment
 This will be my working environment config
 
