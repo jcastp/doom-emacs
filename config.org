@@ -1087,7 +1087,8 @@ Outline search
 Center buffer in the screen keybinding.
 #+begin_src emacs-lisp :tangle yes
 (map! :leader
-      :desc "center buffer in screen" "b C" #'my/centered-mode)
+      :desc "center buffer in screen" "b C" #'my/centered-mode
+      :desc "center buffer in screen" "t C" #'my/centered-mode)
 #+end_src
 
 Get to the scratch buffer.
